@@ -9,6 +9,7 @@ includes: []
 search: false
 highlight_theme: darkula
 headingLevel: 2
+generator: widdershins v4.0.1
 
 ---
 
@@ -19,6 +20,59 @@ headingLevel: 2
 The API for Comrad, source software for radio stations that handles playlist logging, traffic management, reporting, and more
 
 # Getting Started
+
+## Retrieve the Current Show
+
+> Sample code 
+
+```javascript
+var apiKey = 'your api key (it will be a UUID)';
+var comradUrl = 'http://localhost:5000/v1'; //If running Comrad locally. Otherwise, replace with your API URL.
+
+let startDate = new Date(); // the current date/time
+let endDate = new Date(startDate.getTime() + (3 * 60 * 60 * 1000) ); // three hours from now
+
+fetch(
+    comradUrl + '/current-show',
+    { 'headers': {'Authorization': apiKey } }
+  ).then(response => {
+    if (!response.ok) {
+      //API call was unsuccessful
+      console.log('API call unsuccessful. Status code: ' + response.status);
+    } else {
+      response.json().then(jsonResponse => {
+        // output results to the console
+        console.log('Results:');
+        console.log(jsonResponse.show_details.title + ' starts at ' + jsonResponse.start_time_utc + ' (UTC) and ends at ' + jsonResponse.end_time_utc + ' (UTC)');
+        console.log(jsonResponse);
+      });
+    }
+  });
+```
+
+To get started using the API, we will walk through how to authenticate with the API and how to make an API call. See the example code accompanying this section for reference.
+
+First, we will create an API key with the `DJ` role, which has the least amount of permissions of the available roles. To create an API key:
+
+1. Log into Comrad with an account that has the `Admin` role
+2. In the left menu, click on the Users icon at the bottom
+3. At the top of the page, click `Add User`
+4. For First Name, enter your name. For last name, enter "API Usage". 
+5. For email address, enter an email address that does not already have an account in Comrad. This does not have to be a real email address, for instance, you could use `api.test@getcomrad.org`
+6. For Roles, choose `DJ`
+7. Enter a password
+8. Click Submit
+9. Now, you'll be back on the users page. Search for your new user, and click on that user's row in the search results table.
+10. Scroll down and click `Create API` on the left.
+11. Now, at the top of the screen, you'll have a message with your API key. Record the API key and keep it somewhere safe: Comrad will not display it again.
+
+Now, the API key is created. Plug that value into the example code in the `apiKey` variable. In the example code, you'll also want to replace `comradUrl`'s value with the URL of your API. If you're running Comrad locally, that's `http://localhost:5000/v1`, but if you have Comrad hosted on a server, the URL would usually be `https://yourdomain.com/api/v1`.
+
+This code will call the `/current-show` endpoint, one of the [simple API endpoints](#comrad-api-simple-endpoints) that are designed for easily integrating with Comrad. The code passes your API key in the `Authorization` header. It will return a JSON object of the current show, including the playlist of the show, which consists of tracks, voice breaks, comments, and traffic events.
+
+If an error occurs with the API request, a status code will be printed. A `500` error indicates a server error, and the output of the API endpoint may include more details. A `401` error means your credentials are not valid. A `403` error means you have valid credentials, but your API key does not have the proper permissions to access the endpoint. A `404` error means "not found", and if you get that error on this example code, it probably means that you have the wrong value for `comradUrl` or, if you're trying to test locally, your local development environment is not running.
+
+## Using API Endpoints that take parameters.
 
 > Sample code 
 
@@ -61,25 +115,9 @@ fetch(
   });
 ```
 
-To get started using the API, we will walk through how to authenticate with the API and how to make an API call. We will make an API call to get all shows that are occurring in the next three hours. See the example code accompanying this section for reference.
+The endpoints in the [Simple Endpoints](#comrad-api-simple-endpoints) section are designed to cover common use cases without having to deal with the more complex aspects of the API. Many of the other endpoints take parameters and return much more data. One use case for the more complex endpoints would be if you wanted to pull all of the shows in the next three hours. As in the previous example, you'll want to set values for `apiKey` and `comradUrl`. 
 
-First, we will create an API key with the `DJ` role, which has the least amount of permissions of the available roles. To create an API key:
-
-1. Log into Comrad with an account that has the `Admin` role
-2. In the left menu, click on the Users icon at the bottom
-3. At the top of the page, click `Add User`
-4. For First Name, enter your name. For last name, enter "API Usage". 
-5. For email address, enter an email address that does not already have an account in Comrad. This does not have to be a real email address, for instance, you could use `api.test@getcomrad.org`
-6. For Roles, choose `DJ`
-7. Enter a password
-8. Click Submit
-9. Now, you'll be back on the users page. Search for your new user, and click on that user's row in the search results table.
-10. Scroll down and click `Create API` on the left.
-11. Now, at the top of the screen, you'll have a message with your API key. Record the API key and keep it somewhere safe: Comrad will not display it again.
-
-Now, the API key is created. Plug that value into the example code in the `apiKey` variable. In the example code, you'll also want to replace `comradUrl`'s value with the URL of your API. If you're running Comrad locally, that's `http://localhost:5000/v1`, but if you have Comrad hosted on a server, the URL would usually be `https://yourdomain.com/api/v1`.
-
-Once those values are replaced, you can run the sample code to retrieve events in the next three hours. The code is makinng a `GET` request to `/events/shows` with the following parameters:
+The sample code is makinng a `GET` request to `/events/shows` with the following parameters:
 
 - `startDate`: the current date/time
 - `endDate`: three hours in the future from the current date/time
@@ -92,6 +130,824 @@ The example code will write out all of the events in the next three hours. If an
 
 * API Key (ApiKeyAuth)
     - Parameter Name: **Authorization**, in: header. Place the API key in the authorization header
+
+ 
+
+<!-- sort "Simple Endpoints" first -->
+
+<h1 id="comrad-api-simple-endpoints">Simple Endpoints</h1>
+
+## Current Show
+
+<a id="opIdCurrentShow"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/current-show',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /current-show`
+
+Returns the show that's currently playing, or null if there is no show currently playing.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "repeat_rule": {
+    "byweekday": [
+      "MO",
+      "TU",
+      "WE",
+      "TH",
+      "FR"
+    ],
+    "repeat_start_date": "2011-03-28T15:30:00.000Z",
+    "frequency": 2,
+    "repeat_end_date": "9999-01-01T06:00:00.000Z"
+  },
+  "show_details": {
+    "host_type": "User",
+    "guests": [
+      null
+    ],
+    "title": "Morning Sound Alternative",
+    "summary": "Diverse and eclectic sounds, on the mellow side.",
+    "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+    "producer": null,
+    "host": null,
+    "custom": {
+      "my_custom_property": "Custom value"
+    }
+  },
+  "status": "active",
+  "_id": "5f35a6ef783e63454cd918f1",
+  "start_time_utc": "2020-09-16T15:30:00Z",
+  "end_time_utc": "2020-09-16T18:06:00Z",
+  "is_recurring": true,
+  "created_at": "2020-08-13T20:47:43.675Z",
+  "updated_at": "2020-08-13T20:47:43.675Z",
+  "__v": 0,
+  "master_event_id": {
+    "_id": "5f35a6ef783e63454cd918f1"
+  },
+  "master_time_id": "5f35a6ef783e63454cd918f1-1600270200000",
+  "playlist_executed": [
+    {
+      "_id": "5f7b21b818540a4330aba289",
+      "executed_time_utc": "2020-10-05T13:27:27.465Z",
+      "type": "track",
+      "track": {
+        "popularity": 0,
+        "_id": "5f72104dab73564244687fd7",
+        "name": "Low is the Way",
+        "album": {
+          "popularity": 48,
+          "_id": "5f720ef866320235249b55ab",
+          "name": "Uncloudy Day",
+          "artist": "5f720ed9663202352499d351",
+          "label": "Rhino Records",
+          "genre": "5f720ef466320235249b2da0",
+          "compilation": false,
+          "custom": {
+            "my_custom_property": "Custom value"
+          },
+          "type": "album",
+          "created_at": "2020-09-28T16:27:36.929Z",
+          "updated_at": "2020-09-28T16:27:36.929Z"
+        },
+        "track_number": 0,
+        "disk_number": 1,
+        "duration_in_seconds": 0,
+        "custom": {
+          "a_custom_property": "Custom Value"
+        },
+        "type": "track",
+        "artists": [
+          {
+            "popularity": 53,
+            "_id": "5f720ed9663202352499d351",
+            "name": "The Staple Singers",
+            "type": "artist",
+            "created_at": "2020-09-28T16:27:05.636Z",
+            "updated_at": "2020-09-28T16:27:05.636Z"
+          }
+        ],
+        "created_at": "2020-09-28T16:33:17.805Z",
+        "updated_at": "2020-09-28T16:33:17.805Z"
+      }
+    },
+    {
+      "_id": "5f7b219018540a4330aba284",
+      "type": "traffic",
+      "executed_time_utc": "2020-10-05T13:37:20.601Z",
+      "traffic": {
+        "repeat_rule": {
+          "byweekday": [],
+          "repeat_start_date": "2011-04-03T13:00:00.000Z",
+          "frequency": 3,
+          "repeat_end_date": "9999-01-01T06:00:00.000Z"
+        },
+        "traffic_details": {
+          "type": "Legal ID",
+          "title": "Legal Id",
+          "description": "\"KGNU, Boulder, Denver and Fort Collins\"",
+          "producer": null,
+          "custom": {
+            "a_custom_property": "custom value"
+          }
+        },
+        "status": "active",
+        "_id": "5f7211f2ab735642446feea4",
+        "start_time_utc": "2020-10-05T13:00:00Z",
+        "end_time_utc": "2020-10-05T13:01:00Z",
+        "is_recurring": true,
+        "created_at": "2020-09-28T16:40:18.628Z",
+        "updated_at": "2020-09-28T16:40:18.628Z",
+        "__v": 0,
+        "master_event_id": {
+          "_id": "5f7211f2ab735642446feea4"
+        },
+        "master_time_id": "5f7211f2ab735642446feea4-1601902800000"
+      },
+      "master_time_id": "5f7211f2ab735642446feea4-1601902800000"
+    },
+    {
+      "_id": "5f7b219218540a4330aba286",
+      "type": "traffic",
+      "executed_time_utc": "2020-10-05T13:37:22.408Z",
+      "traffic": {
+        "repeat_rule": {
+          "byweekday": [
+            "MO",
+            "FR",
+            "MO",
+            "FR"
+          ],
+          "repeat_start_date": "2020-05-01T13:00:00.000Z",
+          "frequency": 2,
+          "repeat_end_date": "2021-04-02T13:00:00.000Z"
+        },
+        "traffic_details": {
+          "type": "Underwriting",
+          "title": "Comrad Software 2020",
+          "description": "<p>Support comes from</p>\n<p>Comrad Software. </p>",
+          "producer": null,
+          "custom": {
+            "custom_property": "custom value"
+          },
+          "underwriter_name": "Save Home Heat 2020"
+        },
+        "status": "active",
+        "_id": "5f7211feab735642447026c4",
+        "start_time_utc": "2020-10-05T13:00:00Z",
+        "end_time_utc": "2020-10-05T13:01:00Z",
+        "is_recurring": true,
+        "created_at": "2020-09-28T16:40:30.823Z",
+        "updated_at": "2020-09-28T16:40:30.823Z",
+        "__v": 0,
+        "master_event_id": {
+          "_id": "5f7211feab735642447026c4"
+        },
+        "master_time_id": "5f7211feab735642447026c4-1601902800000"
+      },
+      "master_time_id": "5f7211feab735642447026c4-1601902800000"
+    },
+    {
+      "_id": "5f7b219718540a4330aba288",
+      "type": "voice_break",
+      "executed_time_utc": "2020-10-05T13:37:27.465Z"
+    }
+  ]
+}
+```
+
+<h3 id="current-show-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The show that is currently playing, including its playlist. `null` if there is no show currently playing.|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Next Show
+
+<a id="opIdNextShow"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/next-show',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /next-show`
+
+Returns the next show that will be playing. Returns `null` if there are no shows occurring within the next day.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "repeat_rule": {
+    "byweekday": [
+      "MO",
+      "TU",
+      "WE",
+      "TH",
+      "FR"
+    ],
+    "repeat_start_date": "2011-03-28T15:30:00.000Z",
+    "frequency": 2,
+    "repeat_end_date": "9999-01-01T06:00:00.000Z"
+  },
+  "show_details": {
+    "host_type": "User",
+    "guests": [
+      null
+    ],
+    "title": "Morning Sound Alternative",
+    "summary": "Diverse and eclectic sounds, on the mellow side.",
+    "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+    "producer": null,
+    "host": null,
+    "custom": {
+      "my_custom_property": "Custom value"
+    }
+  },
+  "status": "active",
+  "_id": "5f35a6ef783e63454cd918f1",
+  "start_time_utc": "2020-09-16T15:30:00Z",
+  "end_time_utc": "2020-09-16T18:06:00Z",
+  "is_recurring": true,
+  "created_at": "2020-08-13T20:47:43.675Z",
+  "updated_at": "2020-08-13T20:47:43.675Z",
+  "__v": 0,
+  "master_event_id": {
+    "_id": "5f35a6ef783e63454cd918f1"
+  },
+  "master_time_id": "5f35a6ef783e63454cd918f1-1600270200000",
+  "playlist_executed": [
+    {
+      "_id": "5f7b21b818540a4330aba289",
+      "executed_time_utc": "2020-10-05T13:27:27.465Z",
+      "type": "track",
+      "track": {
+        "popularity": 0,
+        "_id": "5f72104dab73564244687fd7",
+        "name": "Low is the Way",
+        "album": {
+          "popularity": 48,
+          "_id": "5f720ef866320235249b55ab",
+          "name": "Uncloudy Day",
+          "artist": "5f720ed9663202352499d351",
+          "label": "Rhino Records",
+          "genre": "5f720ef466320235249b2da0",
+          "compilation": false,
+          "custom": {
+            "my_custom_property": "Custom value"
+          },
+          "type": "album",
+          "created_at": "2020-09-28T16:27:36.929Z",
+          "updated_at": "2020-09-28T16:27:36.929Z"
+        },
+        "track_number": 0,
+        "disk_number": 1,
+        "duration_in_seconds": 0,
+        "custom": {
+          "a_custom_property": "Custom Value"
+        },
+        "type": "track",
+        "artists": [
+          {
+            "popularity": 53,
+            "_id": "5f720ed9663202352499d351",
+            "name": "The Staple Singers",
+            "type": "artist",
+            "created_at": "2020-09-28T16:27:05.636Z",
+            "updated_at": "2020-09-28T16:27:05.636Z"
+          }
+        ],
+        "created_at": "2020-09-28T16:33:17.805Z",
+        "updated_at": "2020-09-28T16:33:17.805Z"
+      }
+    },
+    {
+      "_id": "5f7b219018540a4330aba284",
+      "type": "traffic",
+      "executed_time_utc": "2020-10-05T13:37:20.601Z",
+      "traffic": {
+        "repeat_rule": {
+          "byweekday": [],
+          "repeat_start_date": "2011-04-03T13:00:00.000Z",
+          "frequency": 3,
+          "repeat_end_date": "9999-01-01T06:00:00.000Z"
+        },
+        "traffic_details": {
+          "type": "Legal ID",
+          "title": "Legal Id",
+          "description": "\"KGNU, Boulder, Denver and Fort Collins\"",
+          "producer": null,
+          "custom": {
+            "a_custom_property": "custom value"
+          }
+        },
+        "status": "active",
+        "_id": "5f7211f2ab735642446feea4",
+        "start_time_utc": "2020-10-05T13:00:00Z",
+        "end_time_utc": "2020-10-05T13:01:00Z",
+        "is_recurring": true,
+        "created_at": "2020-09-28T16:40:18.628Z",
+        "updated_at": "2020-09-28T16:40:18.628Z",
+        "__v": 0,
+        "master_event_id": {
+          "_id": "5f7211f2ab735642446feea4"
+        },
+        "master_time_id": "5f7211f2ab735642446feea4-1601902800000"
+      },
+      "master_time_id": "5f7211f2ab735642446feea4-1601902800000"
+    },
+    {
+      "_id": "5f7b219218540a4330aba286",
+      "type": "traffic",
+      "executed_time_utc": "2020-10-05T13:37:22.408Z",
+      "traffic": {
+        "repeat_rule": {
+          "byweekday": [
+            "MO",
+            "FR",
+            "MO",
+            "FR"
+          ],
+          "repeat_start_date": "2020-05-01T13:00:00.000Z",
+          "frequency": 2,
+          "repeat_end_date": "2021-04-02T13:00:00.000Z"
+        },
+        "traffic_details": {
+          "type": "Underwriting",
+          "title": "Comrad Software 2020",
+          "description": "<p>Support comes from</p>\n<p>Comrad Software. </p>",
+          "producer": null,
+          "custom": {
+            "custom_property": "custom value"
+          },
+          "underwriter_name": "Save Home Heat 2020"
+        },
+        "status": "active",
+        "_id": "5f7211feab735642447026c4",
+        "start_time_utc": "2020-10-05T13:00:00Z",
+        "end_time_utc": "2020-10-05T13:01:00Z",
+        "is_recurring": true,
+        "created_at": "2020-09-28T16:40:30.823Z",
+        "updated_at": "2020-09-28T16:40:30.823Z",
+        "__v": 0,
+        "master_event_id": {
+          "_id": "5f7211feab735642447026c4"
+        },
+        "master_time_id": "5f7211feab735642447026c4-1601902800000"
+      },
+      "master_time_id": "5f7211feab735642447026c4-1601902800000"
+    },
+    {
+      "_id": "5f7b219718540a4330aba288",
+      "type": "voice_break",
+      "executed_time_utc": "2020-10-05T13:37:27.465Z"
+    }
+  ]
+}
+```
+
+<h3 id="next-show-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|An object containing the next show, including its playlist. `null` if no shows occur during the next day.|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Previous Show
+
+<a id="opIdPreviousShow"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/previous-show',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /previous-show`
+
+Returns the previous show that was playing. Returns `null` if there are no shows occurring within the previous day.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "repeat_rule": {
+    "byweekday": [
+      "MO",
+      "TU",
+      "WE",
+      "TH",
+      "FR"
+    ],
+    "repeat_start_date": "2011-03-28T15:30:00.000Z",
+    "frequency": 2,
+    "repeat_end_date": "9999-01-01T06:00:00.000Z"
+  },
+  "show_details": {
+    "host_type": "User",
+    "guests": [
+      null
+    ],
+    "title": "Morning Sound Alternative",
+    "summary": "Diverse and eclectic sounds, on the mellow side.",
+    "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+    "producer": null,
+    "host": null,
+    "custom": {
+      "my_custom_property": "Custom value"
+    }
+  },
+  "status": "active",
+  "_id": "5f35a6ef783e63454cd918f1",
+  "start_time_utc": "2020-09-16T15:30:00Z",
+  "end_time_utc": "2020-09-16T18:06:00Z",
+  "is_recurring": true,
+  "created_at": "2020-08-13T20:47:43.675Z",
+  "updated_at": "2020-08-13T20:47:43.675Z",
+  "__v": 0,
+  "master_event_id": {
+    "_id": "5f35a6ef783e63454cd918f1"
+  },
+  "master_time_id": "5f35a6ef783e63454cd918f1-1600270200000",
+  "playlist_executed": [
+    {
+      "_id": "5f7b21b818540a4330aba289",
+      "executed_time_utc": "2020-10-05T13:27:27.465Z",
+      "type": "track",
+      "track": {
+        "popularity": 0,
+        "_id": "5f72104dab73564244687fd7",
+        "name": "Low is the Way",
+        "album": {
+          "popularity": 48,
+          "_id": "5f720ef866320235249b55ab",
+          "name": "Uncloudy Day",
+          "artist": "5f720ed9663202352499d351",
+          "label": "Rhino Records",
+          "genre": "5f720ef466320235249b2da0",
+          "compilation": false,
+          "custom": {
+            "my_custom_property": "Custom value"
+          },
+          "type": "album",
+          "created_at": "2020-09-28T16:27:36.929Z",
+          "updated_at": "2020-09-28T16:27:36.929Z"
+        },
+        "track_number": 0,
+        "disk_number": 1,
+        "duration_in_seconds": 0,
+        "custom": {
+          "a_custom_property": "Custom Value"
+        },
+        "type": "track",
+        "artists": [
+          {
+            "popularity": 53,
+            "_id": "5f720ed9663202352499d351",
+            "name": "The Staple Singers",
+            "type": "artist",
+            "created_at": "2020-09-28T16:27:05.636Z",
+            "updated_at": "2020-09-28T16:27:05.636Z"
+          }
+        ],
+        "created_at": "2020-09-28T16:33:17.805Z",
+        "updated_at": "2020-09-28T16:33:17.805Z"
+      }
+    },
+    {
+      "_id": "5f7b219018540a4330aba284",
+      "type": "traffic",
+      "executed_time_utc": "2020-10-05T13:37:20.601Z",
+      "traffic": {
+        "repeat_rule": {
+          "byweekday": [],
+          "repeat_start_date": "2011-04-03T13:00:00.000Z",
+          "frequency": 3,
+          "repeat_end_date": "9999-01-01T06:00:00.000Z"
+        },
+        "traffic_details": {
+          "type": "Legal ID",
+          "title": "Legal Id",
+          "description": "\"KGNU, Boulder, Denver and Fort Collins\"",
+          "producer": null,
+          "custom": {
+            "a_custom_property": "custom value"
+          }
+        },
+        "status": "active",
+        "_id": "5f7211f2ab735642446feea4",
+        "start_time_utc": "2020-10-05T13:00:00Z",
+        "end_time_utc": "2020-10-05T13:01:00Z",
+        "is_recurring": true,
+        "created_at": "2020-09-28T16:40:18.628Z",
+        "updated_at": "2020-09-28T16:40:18.628Z",
+        "__v": 0,
+        "master_event_id": {
+          "_id": "5f7211f2ab735642446feea4"
+        },
+        "master_time_id": "5f7211f2ab735642446feea4-1601902800000"
+      },
+      "master_time_id": "5f7211f2ab735642446feea4-1601902800000"
+    },
+    {
+      "_id": "5f7b219218540a4330aba286",
+      "type": "traffic",
+      "executed_time_utc": "2020-10-05T13:37:22.408Z",
+      "traffic": {
+        "repeat_rule": {
+          "byweekday": [
+            "MO",
+            "FR",
+            "MO",
+            "FR"
+          ],
+          "repeat_start_date": "2020-05-01T13:00:00.000Z",
+          "frequency": 2,
+          "repeat_end_date": "2021-04-02T13:00:00.000Z"
+        },
+        "traffic_details": {
+          "type": "Underwriting",
+          "title": "Comrad Software 2020",
+          "description": "<p>Support comes from</p>\n<p>Comrad Software. </p>",
+          "producer": null,
+          "custom": {
+            "custom_property": "custom value"
+          },
+          "underwriter_name": "Save Home Heat 2020"
+        },
+        "status": "active",
+        "_id": "5f7211feab735642447026c4",
+        "start_time_utc": "2020-10-05T13:00:00Z",
+        "end_time_utc": "2020-10-05T13:01:00Z",
+        "is_recurring": true,
+        "created_at": "2020-09-28T16:40:30.823Z",
+        "updated_at": "2020-09-28T16:40:30.823Z",
+        "__v": 0,
+        "master_event_id": {
+          "_id": "5f7211feab735642447026c4"
+        },
+        "master_time_id": "5f7211feab735642447026c4-1601902800000"
+      },
+      "master_time_id": "5f7211feab735642447026c4-1601902800000"
+    },
+    {
+      "_id": "5f7b219718540a4330aba288",
+      "type": "voice_break",
+      "executed_time_utc": "2020-10-05T13:37:27.465Z"
+    }
+  ]
+}
+```
+
+<h3 id="previous-show-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|an object containing the previous snow, or `null` if no shows occurred within the previous day|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Recent Plays
+
+<a id="opIdRecentPlays"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/recent-plays',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /recent-plays`
+
+Returns the 10 most recents items played. Items can be tracks, voice breaks, comments, or traffic. Only returns items from the past 24 hours.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "type": "track",
+    "track": {
+      "name": "Morning Morning",
+      "album": "Second Album",
+      "album_artist": "The Fugs",
+      "artists": [
+        "The Fugs"
+      ],
+      "duration_in_seconds": 129
+    }
+  },
+  {
+    "type": "track",
+    "track": {
+      "name": "Watt",
+      "album": "Floored by Four",
+      "album_artist": "Floored by Four",
+      "artists": [
+        "Floored by Four"
+      ],
+      "duration_in_seconds": 237
+    }
+  },
+  {
+    "type": "traffic",
+    "traffic": {
+      "type": "Legal ID",
+      "title": "Legal Id"
+    }
+  },
+  {
+    "type": "track",
+    "track": {
+      "name": "Restless",
+      "album": "Toss Up",
+      "album_artist": "Kevin Krauter",
+      "artists": [
+        "Kevin Krauter"
+      ],
+      "duration_in_seconds": 183
+    }
+  },
+  {
+    "type": "traffic",
+    "traffic": {
+      "type": "Legal ID",
+      "title": "Legal Id"
+    }
+  },
+  {
+    "type": "voice_break"
+  },
+  {
+    "type": "track",
+    "track": {
+      "name": "Clash",
+      "album": "Fantasma",
+      "album_artist": "Cornelius",
+      "artists": [
+        "Cornelius"
+      ],
+      "duration_in_seconds": 356
+    }
+  },
+  {
+    "type": "track",
+    "track": {
+      "name": "Clash",
+      "album": "Night Wave",
+      "album_artist": "Yuko Fujiyama",
+      "artists": [
+        "Yuko Fujiyama"
+      ],
+      "duration_in_seconds": 60
+    }
+  },
+  {
+    "type": "traffic",
+    "traffic": {
+      "type": "Announcement",
+      "title": "Ongoing Promo"
+    }
+  },
+  {
+    "type": "comment",
+    "description": "<p>test comment</p>"
+  }
+]
+```
+
+<h3 id="recent-plays-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of the 10 most recent items played|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="recent-plays-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Description|
+|---|---|---|---|---|
+|Array of items played|[object]|Array of objects, where each object is an item played. Array appears in the order the items were played.|
+|» type|string|The type of item. Possible values: `track`, `traffic`, `comment, `voice_break`|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
 
 <h1 id="comrad-api-access-control">Access Control</h1>
 
@@ -445,6 +1301,226 @@ ApiKeyAuth
 
 <h1 id="comrad-api-shows">Shows</h1>
 
+## Current Show
+
+<a id="opIdCurrentShow"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/current-show',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /current-show`
+
+Returns the show that's currently playing, or null if there is no show currently playing.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "repeat_rule": {
+    "byweekday": [
+      "MO",
+      "TU",
+      "WE",
+      "TH",
+      "FR"
+    ],
+    "repeat_start_date": "2011-03-28T15:30:00.000Z",
+    "frequency": 2,
+    "repeat_end_date": "9999-01-01T06:00:00.000Z"
+  },
+  "show_details": {
+    "host_type": "User",
+    "guests": [
+      null
+    ],
+    "title": "Morning Sound Alternative",
+    "summary": "Diverse and eclectic sounds, on the mellow side.",
+    "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+    "producer": null,
+    "host": null,
+    "custom": {
+      "my_custom_property": "Custom value"
+    }
+  },
+  "status": "active",
+  "_id": "5f35a6ef783e63454cd918f1",
+  "start_time_utc": "2020-09-16T15:30:00Z",
+  "end_time_utc": "2020-09-16T18:06:00Z",
+  "is_recurring": true,
+  "created_at": "2020-08-13T20:47:43.675Z",
+  "updated_at": "2020-08-13T20:47:43.675Z",
+  "__v": 0,
+  "master_event_id": {
+    "_id": "5f35a6ef783e63454cd918f1"
+  },
+  "master_time_id": "5f35a6ef783e63454cd918f1-1600270200000",
+  "playlist_executed": [
+    {
+      "_id": "5f7b21b818540a4330aba289",
+      "executed_time_utc": "2020-10-05T13:27:27.465Z",
+      "type": "track",
+      "track": {
+        "popularity": 0,
+        "_id": "5f72104dab73564244687fd7",
+        "name": "Low is the Way",
+        "album": {
+          "popularity": 48,
+          "_id": "5f720ef866320235249b55ab",
+          "name": "Uncloudy Day",
+          "artist": "5f720ed9663202352499d351",
+          "label": "Rhino Records",
+          "genre": "5f720ef466320235249b2da0",
+          "compilation": false,
+          "custom": {
+            "my_custom_property": "Custom value"
+          },
+          "type": "album",
+          "created_at": "2020-09-28T16:27:36.929Z",
+          "updated_at": "2020-09-28T16:27:36.929Z"
+        },
+        "track_number": 0,
+        "disk_number": 1,
+        "duration_in_seconds": 0,
+        "custom": {
+          "a_custom_property": "Custom Value"
+        },
+        "type": "track",
+        "artists": [
+          {
+            "popularity": 53,
+            "_id": "5f720ed9663202352499d351",
+            "name": "The Staple Singers",
+            "type": "artist",
+            "created_at": "2020-09-28T16:27:05.636Z",
+            "updated_at": "2020-09-28T16:27:05.636Z"
+          }
+        ],
+        "created_at": "2020-09-28T16:33:17.805Z",
+        "updated_at": "2020-09-28T16:33:17.805Z"
+      }
+    },
+    {
+      "_id": "5f7b219018540a4330aba284",
+      "type": "traffic",
+      "executed_time_utc": "2020-10-05T13:37:20.601Z",
+      "traffic": {
+        "repeat_rule": {
+          "byweekday": [],
+          "repeat_start_date": "2011-04-03T13:00:00.000Z",
+          "frequency": 3,
+          "repeat_end_date": "9999-01-01T06:00:00.000Z"
+        },
+        "traffic_details": {
+          "type": "Legal ID",
+          "title": "Legal Id",
+          "description": "\"KGNU, Boulder, Denver and Fort Collins\"",
+          "producer": null,
+          "custom": {
+            "a_custom_property": "custom value"
+          }
+        },
+        "status": "active",
+        "_id": "5f7211f2ab735642446feea4",
+        "start_time_utc": "2020-10-05T13:00:00Z",
+        "end_time_utc": "2020-10-05T13:01:00Z",
+        "is_recurring": true,
+        "created_at": "2020-09-28T16:40:18.628Z",
+        "updated_at": "2020-09-28T16:40:18.628Z",
+        "__v": 0,
+        "master_event_id": {
+          "_id": "5f7211f2ab735642446feea4"
+        },
+        "master_time_id": "5f7211f2ab735642446feea4-1601902800000"
+      },
+      "master_time_id": "5f7211f2ab735642446feea4-1601902800000"
+    },
+    {
+      "_id": "5f7b219218540a4330aba286",
+      "type": "traffic",
+      "executed_time_utc": "2020-10-05T13:37:22.408Z",
+      "traffic": {
+        "repeat_rule": {
+          "byweekday": [
+            "MO",
+            "FR",
+            "MO",
+            "FR"
+          ],
+          "repeat_start_date": "2020-05-01T13:00:00.000Z",
+          "frequency": 2,
+          "repeat_end_date": "2021-04-02T13:00:00.000Z"
+        },
+        "traffic_details": {
+          "type": "Underwriting",
+          "title": "Comrad Software 2020",
+          "description": "<p>Support comes from</p>\n<p>Comrad Software. </p>",
+          "producer": null,
+          "custom": {
+            "custom_property": "custom value"
+          },
+          "underwriter_name": "Save Home Heat 2020"
+        },
+        "status": "active",
+        "_id": "5f7211feab735642447026c4",
+        "start_time_utc": "2020-10-05T13:00:00Z",
+        "end_time_utc": "2020-10-05T13:01:00Z",
+        "is_recurring": true,
+        "created_at": "2020-09-28T16:40:30.823Z",
+        "updated_at": "2020-09-28T16:40:30.823Z",
+        "__v": 0,
+        "master_event_id": {
+          "_id": "5f7211feab735642447026c4"
+        },
+        "master_time_id": "5f7211feab735642447026c4-1601902800000"
+      },
+      "master_time_id": "5f7211feab735642447026c4-1601902800000"
+    },
+    {
+      "_id": "5f7b219718540a4330aba288",
+      "type": "voice_break",
+      "executed_time_utc": "2020-10-05T13:37:27.465Z"
+    }
+  ]
+}
+```
+
+<h3 id="current-show-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The show that is currently playing, including its playlist. `null` if there is no show currently playing.|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
 ## Find
 
 <a id="opIdFindShows"></a>
@@ -548,7 +1624,445 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 
 <h3 id="find-responseschema">Response Schema</h3>
 
-undefined
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Next Show
+
+<a id="opIdNextShow"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/next-show',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /next-show`
+
+Returns the next show that will be playing. Returns `null` if there are no shows occurring within the next day.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "repeat_rule": {
+    "byweekday": [
+      "MO",
+      "TU",
+      "WE",
+      "TH",
+      "FR"
+    ],
+    "repeat_start_date": "2011-03-28T15:30:00.000Z",
+    "frequency": 2,
+    "repeat_end_date": "9999-01-01T06:00:00.000Z"
+  },
+  "show_details": {
+    "host_type": "User",
+    "guests": [
+      null
+    ],
+    "title": "Morning Sound Alternative",
+    "summary": "Diverse and eclectic sounds, on the mellow side.",
+    "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+    "producer": null,
+    "host": null,
+    "custom": {
+      "my_custom_property": "Custom value"
+    }
+  },
+  "status": "active",
+  "_id": "5f35a6ef783e63454cd918f1",
+  "start_time_utc": "2020-09-16T15:30:00Z",
+  "end_time_utc": "2020-09-16T18:06:00Z",
+  "is_recurring": true,
+  "created_at": "2020-08-13T20:47:43.675Z",
+  "updated_at": "2020-08-13T20:47:43.675Z",
+  "__v": 0,
+  "master_event_id": {
+    "_id": "5f35a6ef783e63454cd918f1"
+  },
+  "master_time_id": "5f35a6ef783e63454cd918f1-1600270200000",
+  "playlist_executed": [
+    {
+      "_id": "5f7b21b818540a4330aba289",
+      "executed_time_utc": "2020-10-05T13:27:27.465Z",
+      "type": "track",
+      "track": {
+        "popularity": 0,
+        "_id": "5f72104dab73564244687fd7",
+        "name": "Low is the Way",
+        "album": {
+          "popularity": 48,
+          "_id": "5f720ef866320235249b55ab",
+          "name": "Uncloudy Day",
+          "artist": "5f720ed9663202352499d351",
+          "label": "Rhino Records",
+          "genre": "5f720ef466320235249b2da0",
+          "compilation": false,
+          "custom": {
+            "my_custom_property": "Custom value"
+          },
+          "type": "album",
+          "created_at": "2020-09-28T16:27:36.929Z",
+          "updated_at": "2020-09-28T16:27:36.929Z"
+        },
+        "track_number": 0,
+        "disk_number": 1,
+        "duration_in_seconds": 0,
+        "custom": {
+          "a_custom_property": "Custom Value"
+        },
+        "type": "track",
+        "artists": [
+          {
+            "popularity": 53,
+            "_id": "5f720ed9663202352499d351",
+            "name": "The Staple Singers",
+            "type": "artist",
+            "created_at": "2020-09-28T16:27:05.636Z",
+            "updated_at": "2020-09-28T16:27:05.636Z"
+          }
+        ],
+        "created_at": "2020-09-28T16:33:17.805Z",
+        "updated_at": "2020-09-28T16:33:17.805Z"
+      }
+    },
+    {
+      "_id": "5f7b219018540a4330aba284",
+      "type": "traffic",
+      "executed_time_utc": "2020-10-05T13:37:20.601Z",
+      "traffic": {
+        "repeat_rule": {
+          "byweekday": [],
+          "repeat_start_date": "2011-04-03T13:00:00.000Z",
+          "frequency": 3,
+          "repeat_end_date": "9999-01-01T06:00:00.000Z"
+        },
+        "traffic_details": {
+          "type": "Legal ID",
+          "title": "Legal Id",
+          "description": "\"KGNU, Boulder, Denver and Fort Collins\"",
+          "producer": null,
+          "custom": {
+            "a_custom_property": "custom value"
+          }
+        },
+        "status": "active",
+        "_id": "5f7211f2ab735642446feea4",
+        "start_time_utc": "2020-10-05T13:00:00Z",
+        "end_time_utc": "2020-10-05T13:01:00Z",
+        "is_recurring": true,
+        "created_at": "2020-09-28T16:40:18.628Z",
+        "updated_at": "2020-09-28T16:40:18.628Z",
+        "__v": 0,
+        "master_event_id": {
+          "_id": "5f7211f2ab735642446feea4"
+        },
+        "master_time_id": "5f7211f2ab735642446feea4-1601902800000"
+      },
+      "master_time_id": "5f7211f2ab735642446feea4-1601902800000"
+    },
+    {
+      "_id": "5f7b219218540a4330aba286",
+      "type": "traffic",
+      "executed_time_utc": "2020-10-05T13:37:22.408Z",
+      "traffic": {
+        "repeat_rule": {
+          "byweekday": [
+            "MO",
+            "FR",
+            "MO",
+            "FR"
+          ],
+          "repeat_start_date": "2020-05-01T13:00:00.000Z",
+          "frequency": 2,
+          "repeat_end_date": "2021-04-02T13:00:00.000Z"
+        },
+        "traffic_details": {
+          "type": "Underwriting",
+          "title": "Comrad Software 2020",
+          "description": "<p>Support comes from</p>\n<p>Comrad Software. </p>",
+          "producer": null,
+          "custom": {
+            "custom_property": "custom value"
+          },
+          "underwriter_name": "Save Home Heat 2020"
+        },
+        "status": "active",
+        "_id": "5f7211feab735642447026c4",
+        "start_time_utc": "2020-10-05T13:00:00Z",
+        "end_time_utc": "2020-10-05T13:01:00Z",
+        "is_recurring": true,
+        "created_at": "2020-09-28T16:40:30.823Z",
+        "updated_at": "2020-09-28T16:40:30.823Z",
+        "__v": 0,
+        "master_event_id": {
+          "_id": "5f7211feab735642447026c4"
+        },
+        "master_time_id": "5f7211feab735642447026c4-1601902800000"
+      },
+      "master_time_id": "5f7211feab735642447026c4-1601902800000"
+    },
+    {
+      "_id": "5f7b219718540a4330aba288",
+      "type": "voice_break",
+      "executed_time_utc": "2020-10-05T13:37:27.465Z"
+    }
+  ]
+}
+```
+
+<h3 id="next-show-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|An object containing the next show, including its playlist. `null` if no shows occur during the next day.|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Previous Show
+
+<a id="opIdPreviousShow"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/previous-show',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /previous-show`
+
+Returns the previous show that was playing. Returns `null` if there are no shows occurring within the previous day.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "repeat_rule": {
+    "byweekday": [
+      "MO",
+      "TU",
+      "WE",
+      "TH",
+      "FR"
+    ],
+    "repeat_start_date": "2011-03-28T15:30:00.000Z",
+    "frequency": 2,
+    "repeat_end_date": "9999-01-01T06:00:00.000Z"
+  },
+  "show_details": {
+    "host_type": "User",
+    "guests": [
+      null
+    ],
+    "title": "Morning Sound Alternative",
+    "summary": "Diverse and eclectic sounds, on the mellow side.",
+    "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+    "producer": null,
+    "host": null,
+    "custom": {
+      "my_custom_property": "Custom value"
+    }
+  },
+  "status": "active",
+  "_id": "5f35a6ef783e63454cd918f1",
+  "start_time_utc": "2020-09-16T15:30:00Z",
+  "end_time_utc": "2020-09-16T18:06:00Z",
+  "is_recurring": true,
+  "created_at": "2020-08-13T20:47:43.675Z",
+  "updated_at": "2020-08-13T20:47:43.675Z",
+  "__v": 0,
+  "master_event_id": {
+    "_id": "5f35a6ef783e63454cd918f1"
+  },
+  "master_time_id": "5f35a6ef783e63454cd918f1-1600270200000",
+  "playlist_executed": [
+    {
+      "_id": "5f7b21b818540a4330aba289",
+      "executed_time_utc": "2020-10-05T13:27:27.465Z",
+      "type": "track",
+      "track": {
+        "popularity": 0,
+        "_id": "5f72104dab73564244687fd7",
+        "name": "Low is the Way",
+        "album": {
+          "popularity": 48,
+          "_id": "5f720ef866320235249b55ab",
+          "name": "Uncloudy Day",
+          "artist": "5f720ed9663202352499d351",
+          "label": "Rhino Records",
+          "genre": "5f720ef466320235249b2da0",
+          "compilation": false,
+          "custom": {
+            "my_custom_property": "Custom value"
+          },
+          "type": "album",
+          "created_at": "2020-09-28T16:27:36.929Z",
+          "updated_at": "2020-09-28T16:27:36.929Z"
+        },
+        "track_number": 0,
+        "disk_number": 1,
+        "duration_in_seconds": 0,
+        "custom": {
+          "a_custom_property": "Custom Value"
+        },
+        "type": "track",
+        "artists": [
+          {
+            "popularity": 53,
+            "_id": "5f720ed9663202352499d351",
+            "name": "The Staple Singers",
+            "type": "artist",
+            "created_at": "2020-09-28T16:27:05.636Z",
+            "updated_at": "2020-09-28T16:27:05.636Z"
+          }
+        ],
+        "created_at": "2020-09-28T16:33:17.805Z",
+        "updated_at": "2020-09-28T16:33:17.805Z"
+      }
+    },
+    {
+      "_id": "5f7b219018540a4330aba284",
+      "type": "traffic",
+      "executed_time_utc": "2020-10-05T13:37:20.601Z",
+      "traffic": {
+        "repeat_rule": {
+          "byweekday": [],
+          "repeat_start_date": "2011-04-03T13:00:00.000Z",
+          "frequency": 3,
+          "repeat_end_date": "9999-01-01T06:00:00.000Z"
+        },
+        "traffic_details": {
+          "type": "Legal ID",
+          "title": "Legal Id",
+          "description": "\"KGNU, Boulder, Denver and Fort Collins\"",
+          "producer": null,
+          "custom": {
+            "a_custom_property": "custom value"
+          }
+        },
+        "status": "active",
+        "_id": "5f7211f2ab735642446feea4",
+        "start_time_utc": "2020-10-05T13:00:00Z",
+        "end_time_utc": "2020-10-05T13:01:00Z",
+        "is_recurring": true,
+        "created_at": "2020-09-28T16:40:18.628Z",
+        "updated_at": "2020-09-28T16:40:18.628Z",
+        "__v": 0,
+        "master_event_id": {
+          "_id": "5f7211f2ab735642446feea4"
+        },
+        "master_time_id": "5f7211f2ab735642446feea4-1601902800000"
+      },
+      "master_time_id": "5f7211f2ab735642446feea4-1601902800000"
+    },
+    {
+      "_id": "5f7b219218540a4330aba286",
+      "type": "traffic",
+      "executed_time_utc": "2020-10-05T13:37:22.408Z",
+      "traffic": {
+        "repeat_rule": {
+          "byweekday": [
+            "MO",
+            "FR",
+            "MO",
+            "FR"
+          ],
+          "repeat_start_date": "2020-05-01T13:00:00.000Z",
+          "frequency": 2,
+          "repeat_end_date": "2021-04-02T13:00:00.000Z"
+        },
+        "traffic_details": {
+          "type": "Underwriting",
+          "title": "Comrad Software 2020",
+          "description": "<p>Support comes from</p>\n<p>Comrad Software. </p>",
+          "producer": null,
+          "custom": {
+            "custom_property": "custom value"
+          },
+          "underwriter_name": "Save Home Heat 2020"
+        },
+        "status": "active",
+        "_id": "5f7211feab735642447026c4",
+        "start_time_utc": "2020-10-05T13:00:00Z",
+        "end_time_utc": "2020-10-05T13:01:00Z",
+        "is_recurring": true,
+        "created_at": "2020-09-28T16:40:30.823Z",
+        "updated_at": "2020-09-28T16:40:30.823Z",
+        "__v": 0,
+        "master_event_id": {
+          "_id": "5f7211feab735642447026c4"
+        },
+        "master_time_id": "5f7211feab735642447026c4-1601902800000"
+      },
+      "master_time_id": "5f7211feab735642447026c4-1601902800000"
+    },
+    {
+      "_id": "5f7b219718540a4330aba288",
+      "type": "voice_break",
+      "executed_time_utc": "2020-10-05T13:37:27.465Z"
+    }
+  ]
+}
+```
+
+<h3 id="previous-show-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|an object containing the previous snow, or `null` if no shows occurred within the previous day|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -649,8 +2163,6 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 
 <h3 id="find-responseschema">Response Schema</h3>
 
-undefined
-
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
@@ -728,7 +2240,7 @@ To perform this operation, you must be authenticated by means of one of the foll
 ApiKeyAuth
 </aside>
 
-<h1 id="comrad-api-library-albums-artists-tracks-">Library (Albums, Artists, Tracks)</h1>
+<h1 id="comrad-api-library-albums-artists-tracks">Library (Albums, Artists, Tracks)</h1>
 
 ## Create
 
@@ -893,15 +2405,18 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|undefined|query|string|false|If provided, this endpoint will only return the specified entity type|
+|type|query|string|false|If provided, this endpoint will only return the specified entity type|
+|sortBy|query|undefined|false|If provided, the results will be sorted by this field name. Defaults to `updated_at`|
+|sortDescending|query|undefined|false|Whether to sort the results in a descending manner. Defaults to `true`|
+|page|query|undefined|false|The page number of results to return. Defaults to 1.|
 
 #### Enumerated Values
 
 |Parameter|Value|
 |---|---|
-|undefined|artist|
-|undefined|album|
-|undefined|track|
+|type|artist|
+|type|album|
+|type|track|
 
 > Example responses
 
@@ -1001,8 +2516,6 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
 <h3 id="find-all-responseschema">Response Schema</h3>
-
-undefined
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1147,8 +2660,6 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Music
 
 <h3 id="create-many-responseschema">Response Schema</h3>
 
-undefined
-
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
@@ -1239,8 +2750,6 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 
 <h3 id="get-by-id-responseschema">Response Schema</h3>
 
-undefined
-
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
@@ -1315,12 +2824,8 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Music
 
 Status Code **200**
 
-*The record that was deleted*
-
-|Name|Type|Required|Restrictions|Description|
+|Name|Type|Description|
 |---|---|---|---|---|
-
-undefined
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1334,9 +2839,7 @@ ApiKeyAuth
 > Code samples
 
 ```javascript
-const inputBody = '{
-  "label": "Comrad Records"
-}';
+const inputBody = '{}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -1366,9 +2869,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Music
 > Body parameter
 
 ```json
-{
-  "label": "Comrad Records"
-}
+{}
 ```
 
 <h3 id="update-parameters">Parameters</h3>
@@ -1419,12 +2920,8 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Music
 
 Status Code **200**
 
-*The new, updated record*
-
-|Name|Type|Required|Restrictions|Description|
+|Name|Type|Description|
 |---|---|---|---|---|
-
-undefined
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1579,7 +3076,159 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 
 <h3 id="search-responseschema">Response Schema</h3>
 
-undefined
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+<h1 id="comrad-api-playlists">Playlists</h1>
+
+## Recent Plays
+
+<a id="opIdRecentPlays"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/recent-plays',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /recent-plays`
+
+Returns the 10 most recents items played. Items can be tracks, voice breaks, comments, or traffic. Only returns items from the past 24 hours.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "type": "track",
+    "track": {
+      "name": "Morning Morning",
+      "album": "Second Album",
+      "album_artist": "The Fugs",
+      "artists": [
+        "The Fugs"
+      ],
+      "duration_in_seconds": 129
+    }
+  },
+  {
+    "type": "track",
+    "track": {
+      "name": "Watt",
+      "album": "Floored by Four",
+      "album_artist": "Floored by Four",
+      "artists": [
+        "Floored by Four"
+      ],
+      "duration_in_seconds": 237
+    }
+  },
+  {
+    "type": "traffic",
+    "traffic": {
+      "type": "Legal ID",
+      "title": "Legal Id"
+    }
+  },
+  {
+    "type": "track",
+    "track": {
+      "name": "Restless",
+      "album": "Toss Up",
+      "album_artist": "Kevin Krauter",
+      "artists": [
+        "Kevin Krauter"
+      ],
+      "duration_in_seconds": 183
+    }
+  },
+  {
+    "type": "traffic",
+    "traffic": {
+      "type": "Legal ID",
+      "title": "Legal Id"
+    }
+  },
+  {
+    "type": "voice_break"
+  },
+  {
+    "type": "track",
+    "track": {
+      "name": "Clash",
+      "album": "Fantasma",
+      "album_artist": "Cornelius",
+      "artists": [
+        "Cornelius"
+      ],
+      "duration_in_seconds": 356
+    }
+  },
+  {
+    "type": "track",
+    "track": {
+      "name": "Clash",
+      "album": "Night Wave",
+      "album_artist": "Yuko Fujiyama",
+      "artists": [
+        "Yuko Fujiyama"
+      ],
+      "duration_in_seconds": 60
+    }
+  },
+  {
+    "type": "traffic",
+    "traffic": {
+      "type": "Announcement",
+      "title": "Ongoing Promo"
+    }
+  },
+  {
+    "type": "comment",
+    "description": "<p>test comment</p>"
+  }
+]
+```
+
+<h3 id="recent-plays-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of the 10 most recent items played|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="recent-plays-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Description|
+|---|---|---|---|---|
+|Array of items played|[object]|Array of objects, where each object is an item played. Array appears in the order the items were played.|
+|» type|string|The type of item. Possible values: `track`, `traffic`, `comment, `voice_break`|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1739,8 +3388,6 @@ The following roles can access this API endpoint: `Admin`
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
 <h3 id="find-all-responseschema">Response Schema</h3>
-
-undefined
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1950,6 +3597,8 @@ A link to an external file that can Comrad users can reference. This could be an
 
 ```
 
+Show
+
 ### Properties
 
 |Name|Type|Required|Description|
@@ -2117,7 +3766,7 @@ Represents a user that can log into Comrad, have an API to Comrad, and host show
 
 |Name|Type|Required|Description|
 |---|---|---|---|---|
-|frequency|integer|true|A value specifying the interval at which events should repeat.<br><br>Values:<br>0 = Repeat yearly<br>1 = Repeat monthly<br>2 = Repeat weekly<br>3 = Repeat daily<br>4 = Repeat hourly<br>5 = Repeat minutely<br>6 = Repeat secondly|
+|frequency|integer|true|A value specifying the interval at which events should repeat.<br /><br />Values:<br />0 = Repeat yearly<br />1 = Repeat monthly<br />2 = Repeat weekly<br />3 = Repeat daily<br />4 = Repeat hourly<br />5 = Repeat minutely<br />6 = Repeat secondly|
 |repeat_start_date|string(date-time)|true|The date/time to start repeating|
 |repeat_end_date|string(date-time)|true|The date/time to end repeating|
 |count|integer|false|The maximum number of occurrences to be generated|
