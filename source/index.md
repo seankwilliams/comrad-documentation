@@ -1301,6 +1301,783 @@ ApiKeyAuth
 
 <h1 id="comrad-api-shows">Shows</h1>
 
+## Create
+
+<a id="opIdCreateShow"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "repeat_rule": {
+    "byweekday": [
+      "MO",
+      "TU",
+      "WE",
+      "TH",
+      "FR"
+    ],
+    "repeat_start_date": "2011-03-28T15:30:00.000Z",
+    "frequency": 2,
+    "repeat_end_date": "9999-01-01T06:00:00.000Z"
+  },
+  "show_details": {
+    "host_type": "User",
+    "title": "Morning Sound Alternative",
+    "summary": "Diverse and eclectic sounds, on the mellow side.",
+    "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+    "producer": null,
+    "host": null,
+    "custom": {
+      "a_custom_property": "Custom value"
+    }
+  },
+  "status": "active",
+  "_id": "5f35a6ef783e63454cd918f1",
+  "start_time_utc": "2011-03-28T15:30:00.000Z",
+  "end_time_utc": "2011-03-28T18:06:00.000Z",
+  "is_recurring": true,
+  "created_at": "2020-08-13T20:47:43.675Z",
+  "updated_at": "2020-08-13T20:47:43.675Z",
+  "__v": 0
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/shows',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /events/shows`
+
+Create a new Show record.
+
+If `startDate` and `endDate` are provided in the request body, the API endpoint will return the show instances that occur between the start date and end date. Otherwise, no data will be returned.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`
+
+> Body parameter
+
+```json
+{
+  "repeat_rule": {
+    "byweekday": [
+      "MO",
+      "TU",
+      "WE",
+      "TH",
+      "FR"
+    ],
+    "repeat_start_date": "2011-03-28T15:30:00.000Z",
+    "frequency": 2,
+    "repeat_end_date": "9999-01-01T06:00:00.000Z"
+  },
+  "show_details": {
+    "host_type": "User",
+    "title": "Morning Sound Alternative",
+    "summary": "Diverse and eclectic sounds, on the mellow side.",
+    "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+    "producer": null,
+    "host": null,
+    "custom": {
+      "a_custom_property": "Custom value"
+    }
+  },
+  "status": "active",
+  "_id": "5f35a6ef783e63454cd918f1",
+  "start_time_utc": "2011-03-28T15:30:00.000Z",
+  "end_time_utc": "2011-03-28T18:06:00.000Z",
+  "is_recurring": true,
+  "created_at": "2020-08-13T20:47:43.675Z",
+  "updated_at": "2020-08-13T20:47:43.675Z",
+  "__v": 0
+}
+```
+
+<h3 id="create-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[Show](#schemashow)|false|none|
+
+> Example responses
+
+> 201 Response
+
+```json
+[
+  [
+    {
+      "repeat_rule": {
+        "byweekday": [
+          "MO",
+          "TU",
+          "WE",
+          "TH",
+          "FR"
+        ],
+        "repeat_start_date": "2011-03-28T15:30:00.000Z",
+        "frequency": 2,
+        "repeat_end_date": "9999-01-01T06:00:00.000Z"
+      },
+      "show_details": {
+        "host_type": "User",
+        "guests": [
+          null
+        ],
+        "title": "Morning Sound Alternative",
+        "summary": "Diverse and eclectic sounds, on the mellow side.",
+        "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+        "producer": null,
+        "host": null,
+        "custom": {
+          "my_custom_property": "Custom value"
+        }
+      },
+      "status": "active",
+      "_id": "5f35a6ef783e63454cd918f1",
+      "start_time_utc": "2020-09-16T15:30:00Z",
+      "end_time_utc": "2020-09-16T18:06:00Z",
+      "is_recurring": true,
+      "created_at": "2020-08-13T20:47:43.675Z",
+      "updated_at": "2020-08-13T20:47:43.675Z",
+      "__v": 0,
+      "master_event_id": {
+        "_id": "5f35a6ef783e63454cd918f1"
+      },
+      "master_time_id": "5f35a6ef783e63454cd918f1-1600270200000"
+    }
+  ]
+]
+```
+
+<h3 id="create-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the parameters you provided. See response for more details|
+
+<h3 id="create-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Search
+
+<a id="opIdSearchShows"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/shows',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /events/shows`
+
+Search for a show series, looking for the provided search string in the show title.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+<h3 id="search-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|s|query|undefined|true|Find series matching this search string|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  [
+    {
+      "show_details": {
+        "host_type": "User",
+        "title": "Sleepless Nights",
+        "summary": "Late night freeform radio",
+        "description": "<p>This freeform show makes room for everything, combining the aesthetics of the Morning and Afternoon shows and leaving the door open for more extreme and intense audio excursions.</p>",
+        "producer": null,
+        "host": null,
+        "custom": {
+          "record_audio": "1",
+          "url": "sleepless",
+          "source": "KGNU"
+        }
+      },
+      "_id": "5f7211d1ab735642446f66f8",
+      "start_time_utc": "2011-03-27T06:00:00.000Z",
+      "score": 0.75
+    }
+  ]
+]
+```
+
+<h3 id="search-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the parameters you provided. See response for more details|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="search-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Create Instance from Series
+
+<a id="opIdCreateInstanceShow"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "start_time_utc": "2020-11-03T16:30:00Z",
+  "end_time_utc": "2020-11-03T18:00:00Z",
+  "show_details": {
+    "host": "5f720bae0504f73464bd83eb"
+  }
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/shows/{id}',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /events/shows/{id}`
+
+Creates an instance for the show series
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. In addition, `DJ` users can access this endpoint for show series on which they are the host.
+
+> Body parameter
+
+```json
+{
+  "start_time_utc": "2020-11-03T16:30:00Z",
+  "end_time_utc": "2020-11-03T18:00:00Z",
+  "show_details": {
+    "host": "5f720bae0504f73464bd83eb"
+  }
+}
+```
+
+<h3 id="create-instance-from-series-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|any|false|none|
+|id|path|undefined|true|The id of the show series or instance to update|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "repeat_rule": {
+      "byweekday": [
+        "MO",
+        "TU",
+        "WE",
+        "TH",
+        "FR"
+      ],
+      "repeat_start_date": "2020-11-03T16:30:00.000Z",
+      "frequency": 2,
+      "repeat_end_date": "2020-11-03T18:00:00.000Z"
+    },
+    "show_details": {
+      "host_type": "User",
+      "guests": [],
+      "title": "Morning Sound Alternative",
+      "summary": "Diverse and eclectic sounds, on the mellow side.",
+      "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+      "producer": null,
+      "host": {
+        "on_air_name": "DJ Cool Software",
+        "_id": "5f720bae0504f73464bd83eb",
+        "first_name": "Comrad",
+        "last_name": "Develpment"
+      },
+      "custom": {
+        "record_audio": "1",
+        "url": "morningsound",
+        "source": "KGNU"
+      }
+    },
+    "status": "active",
+    "_id": "5fa17ce4f13d484dc0922aef",
+    "start_time_utc": "2020-11-03T16:30:00Z",
+    "end_time_utc": "2020-11-03T18:00:00Z",
+    "is_recurring": false,
+    "created_at": "2020-11-03T15:53:08.207Z",
+    "updated_at": "2020-11-03T15:53:08.207Z",
+    "__v": 0,
+    "master_event_id": {
+      "repeat_rule": {
+        "byweekday": [
+          "MO",
+          "TU",
+          "WE",
+          "TH",
+          "FR"
+        ],
+        "repeat_start_date": "2011-03-28T15:30:00.000Z",
+        "frequency": 2,
+        "repeat_end_date": "9999-01-01T06:00:00.000Z"
+      },
+      "show_details": {
+        "host_type": "User",
+        "guests": [
+          null
+        ],
+        "title": "Morning Sound Alternative",
+        "summary": "Diverse and eclectic sounds, on the mellow side.",
+        "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+        "producer": null,
+        "host": null,
+        "custom": {
+          "record_audio": "1",
+          "url": "morningsound",
+          "source": "KGNU"
+        }
+      },
+      "status": "active",
+      "_id": "5f7211d1ab735642446f672c",
+      "start_time_utc": "2011-03-28T15:30:00.000Z",
+      "end_time_utc": "2011-03-28T18:06:00.000Z",
+      "is_recurring": true,
+      "created_at": "2020-09-28T16:39:45.464Z",
+      "updated_at": "2020-09-28T16:39:45.464Z",
+      "__v": 0
+    },
+    "replace_event_date": "2020-11-03T16:30:00.000Z",
+    "master_time_id": "5f7211d1ab735642446f672c-1604421000000"
+  }
+]
+```
+
+<h3 id="create-instance-from-series-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The populated show record of the newly created instance|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|A server error occurred. Check the response for more details.|
+
+<h3 id="create-instance-from-series-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Get by ID
+
+<a id="opIdGetByIdShows"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/shows/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /events/shows/{id}`
+
+Get a show by ID, or by a show id with a master time id
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+<h3 id="get-by-id-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|The id of the show series or instance to update|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "repeat_rule": {
+    "byweekday": [
+      "MO",
+      "TU",
+      "WE",
+      "TH",
+      "FR"
+    ],
+    "repeat_start_date": "2011-03-28T15:30:00.000Z",
+    "frequency": 2,
+    "repeat_end_date": "9999-01-01T06:00:00.000Z"
+  },
+  "show_details": {
+    "host_type": "User",
+    "guests": [
+      "Sample Guest"
+    ],
+    "title": "Morning Sound Alternative",
+    "summary": "Diverse and eclectic sounds, on the mellow side.",
+    "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+    "producer": null,
+    "host": null,
+    "custom": {
+      "custom_property": "Custom value"
+    }
+  },
+  "status": "active",
+  "_id": "5f7211d1ab735642446f672c",
+  "start_time_utc": "2020-10-19T15:30:00Z",
+  "end_time_utc": "2020-10-19T18:06:00Z",
+  "is_recurring": true,
+  "created_at": "2020-09-28T16:39:45.464Z",
+  "updated_at": "2020-09-28T16:39:45.464Z",
+  "__v": 0,
+  "master_event_id": {
+    "_id": "5f7211d1ab735642446f672c"
+  },
+  "master_time_id": "5f7211d1ab735642446f672c-1603121400000"
+}
+```
+
+<h3 id="get-by-id-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="get-by-id-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Delete
+
+<a id="opIdDeleteShow"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/shows/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /events/shows/{id}`
+
+Deletes a show with the specified ID. Returns the deleted show.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`
+
+<h3 id="delete-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|The id of the show series or instance to update|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fa4a53f65691339fcda6c10",
+  "repeat_rule": {
+    "byweekday": []
+  },
+  "show_details": {
+    "host_type": "User",
+    "guests": [],
+    "title": "test show"
+  },
+  "status": "deleted",
+  "start_time_utc": "2020-10-28T11:00:00.000Z",
+  "end_time_utc": "2020-10-28T12:00:00.000Z",
+  "created_at": "2020-11-06T01:22:07.965Z",
+  "updated_at": "2020-11-06T01:22:07.965Z",
+  "__v": 0,
+  "master_time_id": "5fa4a53f65691339fcda6c10"
+}
+```
+
+<h3 id="delete-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="delete-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Update
+
+<a id="opIdUpdateShow"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/shows/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /events/shows/{id}`
+
+Update a show series or show instance.
+
+If the time of a show series is updated with a new start/end time, the start/end time of all future occurrences will also be updated.
+
+If `startDate` and `endDate` are provided in the request body, the API endpoint will return the show instances that occur between the start date and end date.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. In addition, `DJ` users can access this endpoint for show series on which they are the host.
+
+> Body parameter
+
+```json
+{}
+```
+
+<h3 id="update-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|true|JSON object of properties to update|
+|id|path|undefined|true|The id of the show series or instance to update|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "repeat_rule": {
+      "byweekday": [
+        "MO",
+        "TU",
+        "WE",
+        "TH",
+        "FR"
+      ],
+      "repeat_start_date": "2020-11-03T16:30:00.000Z",
+      "frequency": 2,
+      "repeat_end_date": "2020-11-03T18:00:00.000Z"
+    },
+    "show_details": {
+      "host_type": "User",
+      "guests": [
+        "Sample guest 1",
+        "Sample guest 2"
+      ],
+      "title": "Morning Sound Alternative",
+      "summary": "Diverse and eclectic sounds, on the mellow side.",
+      "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+      "producer": null,
+      "host": {
+        "on_air_name": "DJ Cool Software",
+        "_id": "5f720bae0504f73464bd83eb",
+        "first_name": "Comrad",
+        "last_name": "Develpment"
+      },
+      "custom": {
+        "record_audio": "1",
+        "url": "morningsound",
+        "source": "KGNU"
+      }
+    },
+    "status": "active",
+    "_id": "5fa17ce4f13d484dc0922aef",
+    "start_time_utc": "2020-11-03T16:30:00Z",
+    "end_time_utc": "2020-11-03T18:00:00Z",
+    "is_recurring": false,
+    "created_at": "2020-11-03T15:53:08.207Z",
+    "updated_at": "2020-11-03T15:53:08.207Z",
+    "__v": 0,
+    "master_event_id": {
+      "repeat_rule": {
+        "byweekday": [
+          "MO",
+          "TU",
+          "WE",
+          "TH",
+          "FR"
+        ],
+        "repeat_start_date": "2011-03-28T15:30:00.000Z",
+        "frequency": 2,
+        "repeat_end_date": "9999-01-01T06:00:00.000Z"
+      },
+      "show_details": {
+        "host_type": "User",
+        "guests": [
+          null
+        ],
+        "title": "Morning Sound Alternative",
+        "summary": "Diverse and eclectic sounds, on the mellow side.",
+        "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+        "producer": null,
+        "host": null,
+        "custom": {
+          "record_audio": "1",
+          "url": "morningsound",
+          "source": "KGNU"
+        }
+      },
+      "status": "active",
+      "_id": "5f7211d1ab735642446f672c",
+      "start_time_utc": "2011-03-28T15:30:00.000Z",
+      "end_time_utc": "2011-03-28T18:06:00.000Z",
+      "is_recurring": true,
+      "created_at": "2020-09-28T16:39:45.464Z",
+      "updated_at": "2020-09-28T16:39:45.464Z",
+      "__v": 0
+    },
+    "replace_event_date": "2020-11-03T16:30:00.000Z",
+    "master_time_id": "5f7211d1ab735642446f672c-1604421000000"
+  }
+]
+```
+
+<h3 id="update-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
+
+<h3 id="update-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Description|
+|---|---|---|---|---|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
 ## Current Show
 
 <a id="opIdCurrentShow"></a>
@@ -1515,114 +2292,6 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The show that is currently playing, including its playlist. `null` if there is no show currently playing.|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-ApiKeyAuth
-</aside>
-
-## Find
-
-<a id="opIdFindShows"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'API_KEY'
-};
-
-fetch('/events/shows',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /events/shows`
-
-Returns shows in a given timeframe, ordered by time from earliest to latest
-
-The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
-
-<h3 id="find-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|startDate|query|undefined|true|Retrieve events with either a start time or end time at or after this value. Should be parseable by `Date` constructor in JavaScript.|
-|endDate|query|undefined|true|Retrieve events with either a start time or end time at or before this value. Should be parseable by `Date` constructor in JavaScript.|
-|host|query|undefined|false|Return only shows hosted by the user specified by the id, or a host group containing that user|
-|showsWithNoHost|query|undefined|false|If true, will only return shows that have no host|
-
-> Example responses
-
-> 200 Response
-
-```json
-[
-  {
-    "repeat_rule": {
-      "byweekday": [
-        "MO",
-        "TU",
-        "WE",
-        "TH",
-        "FR"
-      ],
-      "repeat_start_date": "2011-03-28T15:30:00.000Z",
-      "frequency": 2,
-      "repeat_end_date": "9999-01-01T06:00:00.000Z"
-    },
-    "show_details": {
-      "host_type": "User",
-      "guests": [
-        null
-      ],
-      "title": "Morning Sound Alternative",
-      "summary": "Diverse and eclectic sounds, on the mellow side.",
-      "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
-      "producer": null,
-      "host": null,
-      "custom": {
-        "my_custom_property": "Custom value"
-      }
-    },
-    "status": "active",
-    "_id": "5f35a6ef783e63454cd918f1",
-    "start_time_utc": "2020-09-16T15:30:00Z",
-    "end_time_utc": "2020-09-16T18:06:00Z",
-    "is_recurring": true,
-    "created_at": "2020-08-13T20:47:43.675Z",
-    "updated_at": "2020-08-13T20:47:43.675Z",
-    "__v": 0,
-    "master_event_id": {
-      "_id": "5f35a6ef783e63454cd918f1"
-    },
-    "master_time_id": "5f35a6ef783e63454cd918f1-1600270200000"
-  }
-]
-```
-
-<h3 id="find-responses">Responses</h3>
-
-|Status|Meaning|Description|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
-|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the parameters you provided. See response for more details|
-|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
-
-<h3 id="find-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -2069,7 +2738,251 @@ To perform this operation, you must be authenticated by means of one of the foll
 ApiKeyAuth
 </aside>
 
+## Delete Instance from Series
+
+<a id="opIdDeleteInstanceFromSeries"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/traffic/{id}/remove-instance-from-series',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /events/traffic/{id}/remove-instance-from-series`
+
+Creates an exceptioin to a series's usual repeat rule so that there will not be a traffic instance at the specified date/time.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`
+
+<h3 id="delete-instance-from-series-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|The id of the traffic series|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "repeat_rule": {
+    "byweekday": [],
+    "repeat_start_date": "2020-11-09T16:00:00.000Z",
+    "repeat_end_date": "2020-11-09T16:01:00.000Z"
+  },
+  "status": "deleted",
+  "_id": "5fa94dcd72207e3b289d5197",
+  "master_event_id": "5f7211f2ab735642446feead",
+  "start_time_utc": "2020-11-09T16:00:00.000Z",
+  "end_time_utc": "2020-11-09T16:01:00.000Z",
+  "replace_event_date": "2020-11-09T16:00:00.000Z",
+  "is_recurring": false,
+  "created_at": "2020-11-09T14:10:21.299Z",
+  "updated_at": "2020-11-09T14:10:21.299Z",
+  "__v": 0,
+  "master_time_id": "5f7211f2ab735642446feead-1604937600000"
+}
+```
+
+<h3 id="delete-instance-from-series-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="delete-instance-from-series-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
 <h1 id="comrad-api-traffic">Traffic</h1>
+
+## Create
+
+<a id="opIdCreateTraffic"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "repeat_rule": {
+    "byweekday": [
+      "MO",
+      "TU",
+      "WE",
+      "TH",
+      "FR"
+    ],
+    "repeat_start_date": "2011-03-28T15:30:00.000Z",
+    "frequency": 2,
+    "repeat_end_date": "9999-01-01T06:00:00.000Z"
+  },
+  "show_details": {
+    "host_type": "User",
+    "title": "Morning Sound Alternative",
+    "summary": "Diverse and eclectic sounds, on the mellow side.",
+    "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+    "producer": null,
+    "host": null,
+    "custom": {
+      "a_custom_property": "Custom value"
+    }
+  },
+  "status": "active",
+  "_id": "5f35a6ef783e63454cd918f1",
+  "start_time_utc": "2011-03-28T15:30:00.000Z",
+  "end_time_utc": "2011-03-28T18:06:00.000Z",
+  "is_recurring": true,
+  "created_at": "2020-08-13T20:47:43.675Z",
+  "updated_at": "2020-08-13T20:47:43.675Z",
+  "__v": 0
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/traffic',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /events/traffic`
+
+Create a new Traffic record.
+
+If `startDate` and `endDate` are provided in the request body, the API endpoint will return the show instances that occur between the start date and end date. Otherwise, no data will be returned.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Underwriting`
+
+> Body parameter
+
+```json
+{
+  "repeat_rule": {
+    "byweekday": [
+      "MO",
+      "TU",
+      "WE",
+      "TH",
+      "FR"
+    ],
+    "repeat_start_date": "2011-03-28T15:30:00.000Z",
+    "frequency": 2,
+    "repeat_end_date": "9999-01-01T06:00:00.000Z"
+  },
+  "show_details": {
+    "host_type": "User",
+    "title": "Morning Sound Alternative",
+    "summary": "Diverse and eclectic sounds, on the mellow side.",
+    "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+    "producer": null,
+    "host": null,
+    "custom": {
+      "a_custom_property": "Custom value"
+    }
+  },
+  "status": "active",
+  "_id": "5f35a6ef783e63454cd918f1",
+  "start_time_utc": "2011-03-28T15:30:00.000Z",
+  "end_time_utc": "2011-03-28T18:06:00.000Z",
+  "is_recurring": true,
+  "created_at": "2020-08-13T20:47:43.675Z",
+  "updated_at": "2020-08-13T20:47:43.675Z",
+  "__v": 0
+}
+```
+
+<h3 id="create-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[Show](#schemashow)|false|none|
+
+> Example responses
+
+> 201 Response
+
+```json
+[
+  [
+    {
+      "_id": "5f35a719783e63454cd9a071",
+      "repeat_rule": {
+        "byweekday": [],
+        "repeat_start_date": "2011-03-29T16:00:00.000Z",
+        "frequency": 3,
+        "repeat_end_date": "9999-01-01T06:00:00.000Z"
+      },
+      "traffic_details": {
+        "type": "Legal ID",
+        "title": "Legal Id",
+        "description": "\"KGNU, Boulder, Denver and Fort Collins\"",
+        "producer": null,
+        "custom": {
+          "custom_property": "A custom value"
+        }
+      },
+      "status": "active",
+      "start_time_utc": "2020-09-16T16:00:00Z",
+      "end_time_utc": "2020-09-16T16:01:00Z",
+      "is_recurring": true,
+      "created_at": "2020-08-13T20:48:25.305Z",
+      "updated_at": "2020-08-13T20:48:25.305Z",
+      "__v": 0
+    }
+  ]
+]
+```
+
+<h3 id="create-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the parameters you provided. See response for more details|
+
+<h3 id="create-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
 
 ## Find
 
@@ -2168,6 +3081,469 @@ To perform this operation, you must be authenticated by means of one of the foll
 ApiKeyAuth
 </aside>
 
+## Update
+
+<a id="opIdUpdateTraffic"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/traffic/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /events/traffic/{id}`
+
+Update a traffic series or show instance.
+
+If the time of a traffic series is updated with a new start/end time, the start/end time of all future occurrences will also be updated.
+
+If `startDate` and `endDate` are provided in the request body, the API endpoint will return the show instances that occur between the start date and end date.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Underwriting`.
+
+> Body parameter
+
+```json
+{}
+```
+
+<h3 id="update-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|true|JSON object of properties to update|
+|id|path|undefined|true|The id of the traffic series or instance to update|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "repeat_rule": {
+      "byweekday": [],
+      "repeat_start_date": "2020-11-03T22:00:00.000Z",
+      "frequency": 3,
+      "repeat_end_date": "2020-11-03T22:00:00.000Z"
+    },
+    "traffic_details": {
+      "type": "Legal ID",
+      "title": "Legal Id",
+      "description": "This is an updated description",
+      "producer": null,
+      "custom": {
+        "custom_property": "custom value"
+      }
+    },
+    "status": "active",
+    "_id": "5fa180826a7cc716704afe0f",
+    "start_time_utc": "2020-11-03T22:00:00Z",
+    "end_time_utc": "2020-11-03T22:00:00Z",
+    "is_recurring": false,
+    "created_at": "2020-11-03T16:08:34.371Z",
+    "updated_at": "2020-11-03T16:08:34.371Z",
+    "__v": 0,
+    "master_event_id": {
+      "repeat_rule": {
+        "byweekday": [],
+        "repeat_start_date": "2011-05-30T21:00:00.000Z",
+        "frequency": 3,
+        "repeat_end_date": "9999-01-01T06:00:00.000Z"
+      },
+      "traffic_details": {
+        "type": "Legal ID",
+        "title": "Legal Id",
+        "description": "test desc",
+        "producer": null,
+        "custom": {
+          "custom_property": "custom value"
+        }
+      },
+      "status": "active",
+      "_id": "5f7211f2ab735642446fee9c",
+      "start_time_utc": "2011-05-30T21:00:00.000Z",
+      "end_time_utc": "2011-05-30T21:01:00.000Z",
+      "is_recurring": true,
+      "created_at": "2020-09-28T16:40:18.625Z",
+      "updated_at": "2020-09-28T16:40:18.625Z",
+      "__v": 0
+    },
+    "replace_event_date": "2020-11-03T22:00:00.000Z",
+    "master_time_id": "5f7211f2ab735642446fee9c-1604440800000"
+  }
+]
+```
+
+<h3 id="update-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
+
+<h3 id="update-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Description|
+|---|---|---|---|---|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Delete
+
+<a id="opIdDeleteTraffic"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/traffic/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /events/traffic/{id}`
+
+Deletes the traffic event with the specified ID
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Underwriting`
+
+<h3 id="delete-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|The id of the traffic series or instance to update|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fa180826a7cc716704afe0f",
+  "repeat_rule": {
+    "byweekday": [],
+    "repeat_start_date": "2020-11-03T22:00:00.000Z",
+    "frequency": 3,
+    "repeat_end_date": "2020-11-03T22:00:00.000Z"
+  },
+  "status": "deleted",
+  "start_time_utc": "2020-11-03T22:00:00.000Z",
+  "end_time_utc": "2020-11-03T22:00:00.000Z",
+  "is_recurring": false,
+  "created_at": "2020-11-03T16:08:34.371Z",
+  "updated_at": "2020-11-03T16:08:34.371Z",
+  "__v": 0,
+  "master_event_id": "5f7211f2ab735642446fee9c",
+  "replace_event_date": "2020-11-03T22:00:00.000Z",
+  "traffic_details": {
+    "description": "This is an updated description"
+  },
+  "master_time_id": "5f7211f2ab735642446fee9c-1604440800000"
+}
+```
+
+<h3 id="delete-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="delete-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Find Earliest
+
+<a id="opIdFindTrafficEarliest"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/traffic/earliest',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /events/traffic/earliest`
+
+Returns the earliest occurring traffic event of a specific type.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+<h3 id="find-earliest-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|type|query|undefined|true|Filter by this type of traffic|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "repeat_rule": {
+      "byweekday": [
+        "WE"
+      ],
+      "repeat_start_date": "2020-01-01T16:00:00.000Z",
+      "frequency": 2,
+      "repeat_end_date": "2020-12-31T16:00:00.000Z"
+    },
+    "traffic_details": {
+      "type": "Underwriting",
+      "title": "Grant Farms",
+      "description": "<p>This program is supported by you, the KGNU listener-member, and by Grant Family Farms. Grant Family Farms CSA delivers locally grown, organic vegetables, fruit, eggs, and farm-raised meats year&lsquo;round to neighborhoods in Boulder, Denver, and beyond.</p>",
+      "producer": null,
+      "custom": {
+        "custom_value": "sample custom value"
+      },
+      "underwriter_name": "Grant Farms"
+    },
+    "status": "active",
+    "_id": "5f7211f2ab735642446feeb3",
+    "start_time_utc": "2012-05-02T16:00:00.000Z",
+    "end_time_utc": "2012-05-02T16:01:00.000Z",
+    "is_recurring": true,
+    "created_at": "2020-09-28T16:40:18.668Z",
+    "updated_at": "2020-09-28T16:40:18.668Z",
+    "__v": 0
+  }
+]
+```
+
+<h3 id="find-earliest-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the parameters you provided. See response for more details|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="find-earliest-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Search
+
+<a id="opIdSearchTraffic"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/traffic/search',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /events/traffic/search`
+
+Search for a traffic series, looking for the provided search string in the traffic title.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+<h3 id="search-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|s|query|undefined|true|Find series matching this search string|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  [
+    {
+      "traffic_details": {
+        "type": "Underwriting",
+        "title": "Rocky Mountain Oysters",
+        "description": "<p>Description of the underwriting event</p>",
+        "producer": null,
+        "custom": {
+          "custom_property": "test"
+        },
+        "underwriter_name": "Rocky Mountain Oysters"
+      },
+      "_id": "5f7211f4ab735642446ff94a",
+      "start_time_utc": "2013-06-11T01:00:00.000Z",
+      "score": 1.3333333333333333
+    }
+  ]
+]
+```
+
+<h3 id="search-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the parameters you provided. See response for more details|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="search-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Search Underwriters
+
+<a id="opIdSearchUnderwriters"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/traffic/search-underwriters',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /events/traffic/search-underwriters`
+
+Return a list of underwriters matching the search string.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+<h3 id="search-underwriters-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|s|query|undefined|true|Find underwriters matching the search string|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  [
+    "Blue Ribbon Farm",
+    "Grant Farms",
+    "Grant Family Farms",
+    "The Farm"
+  ]
+]
+```
+
+<h3 id="search-underwriters-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the parameters you provided. See response for more details|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="search-underwriters-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
 <h1 id="comrad-api-genres">Genres</h1>
 
 ## Find All
@@ -2234,6 +3610,479 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+<h1 id="comrad-api-host-groups">Host Groups</h1>
+
+## Create
+
+<a id="opIdCreateHostGroup"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "users": [
+    "5f35a3cf783e63454ccd7525",
+    "5f35a651783e63454cd916d4",
+    "5f35a651783e63454cd1425d",
+    "5f35a651783e63454cd97ae4"
+  ],
+  "_id": "5f35abd3661c7f37f047dbcb",
+  "on_air_name": "The Way Low Down",
+  "__v": 0
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/host-groups/',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /host-groups/`
+
+Create a host group.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`
+
+> Body parameter
+
+```json
+{
+  "users": [
+    "5f35a3cf783e63454ccd7525",
+    "5f35a651783e63454cd916d4",
+    "5f35a651783e63454cd1425d",
+    "5f35a651783e63454cd97ae4"
+  ],
+  "_id": "5f35abd3661c7f37f047dbcb",
+  "on_air_name": "The Way Low Down",
+  "__v": 0
+}
+```
+
+<h3 id="create-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[HostGroup](#schemahostgroup)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "users": [
+    "5f720bae0504f73464bd83eb",
+    "5f72114fab735642446f64ed"
+  ],
+  "_id": "5f8f42482d687150ac9373ba",
+  "on_air_name": "Sean and Barry",
+  "__v": 0
+}
+```
+
+<h3 id="create-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="create-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Find by Hosts
+
+<a id="opIdFindHostGroup"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/host-groups/',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /host-groups/`
+
+Gets host groups that exactly match all of the provided user ids.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+<h3 id="find-by-hosts-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|host[]|query|undefined|true|Ids of users that must be represented in the host group. Pass multiple values as ?host[]=IdOfFirstHost&host[]=IdOfSecondHost|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "users": [
+      "5f720bae0504f73464bd83eb",
+      "5f72114fab735642446f64ed"
+    ],
+    "_id": "5f8f42482d687150ac9373ba",
+    "on_air_name": "Sean and Barry",
+    "__v": 0
+  }
+]
+```
+
+<h3 id="find-by-hosts-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="find-by-hosts-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Find All
+
+<a id="opIdFindHostGroup"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/host-groups/all',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /host-groups/all`
+
+Returns a list of all host groups, sorted by their on-air name.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "users": [
+      "5f720bae0504f73464bd83eb",
+      "5f72114fab735642446f64ed"
+    ],
+    "_id": "5f8f42482d687150ac9373ba",
+    "on_air_name": "Sean and Barry",
+    "__v": 0
+  },
+  {
+    "users": [
+      "5f720bae0504f73464bd83eb",
+      "5f72114fab735642446f64ed"
+    ],
+    "_id": "5f8f42482d687150ac9373bb",
+    "on_air_name": "The Way Low Down",
+    "__v": 0
+  }
+]
+```
+
+<h3 id="find-all-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="find-all-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Find by Id
+
+<a id="opIdFindHostGroupById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/host-groups/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /host-groups/{id}`
+
+Gets host groups by its id.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+<h3 id="find-by-id-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "users": [
+    "5f720bae0504f73464bd83eb",
+    "5f72114fab735642446f64ed"
+  ],
+  "_id": "5f8f42482d687150ac9373ba",
+  "on_air_name": "Sean and Barry",
+  "__v": 0
+}
+```
+
+<h3 id="find-by-id-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="find-by-id-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Delete
+
+<a id="opIdDeleteHostGroup"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/host-groups/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /host-groups/{id}`
+
+Deletes a host group by its id.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`
+
+<h3 id="delete-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "users": [
+    "5f720bae0504f73464bd83eb",
+    "5f72114fab735642446f64ed"
+  ],
+  "_id": "5f8f42482d687150ac9373ba",
+  "on_air_name": "Prairie Lakes Band",
+  "__v": 0
+}
+```
+
+<h3 id="delete-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The host group cannot be deleted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="delete-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Update
+
+<a id="opIdUpdateHostGroup"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/host-groups/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /host-groups/{id}`
+
+Updates a host group by its id.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`
+
+> Body parameter
+
+```json
+{}
+```
+
+<h3 id="update-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
+|id|path|undefined|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "users": [
+    "5f720bae0504f73464bd83eb",
+    "5f72114fab735642446f64ed"
+  ],
+  "_id": "5f8f42482d687150ac9373ba",
+  "on_air_name": "Prairie Lakes Band",
+  "__v": 0
+}
+```
+
+<h3 id="update-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="update-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
