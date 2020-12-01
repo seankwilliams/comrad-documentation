@@ -391,12 +391,52 @@
               <ul class="toc-list-h2">
                 
                   <li>
+                    <a href="#check-if-can-delete" class="toc-h2 toc-link" data-title="">Check if Can Delete</a>
+                    
+                  </li>
+                
+                  <li>
                     <a href="#create-6" class="toc-h2 toc-link" data-title="">Create</a>
                     
                   </li>
                 
                   <li>
                     <a href="#find-all-5" class="toc-h2 toc-link" data-title="">Find All</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="#create-api-key" class="toc-h2 toc-link" data-title="">Create API Key</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="#delete-api-key" class="toc-h2 toc-link" data-title="">Delete API Key</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="#find-by-id-2" class="toc-h2 toc-link" data-title="">Find by ID</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="#delete-5" class="toc-h2 toc-link" data-title="">Delete</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="#update-5" class="toc-h2 toc-link" data-title="">Update</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="#search-4" class="toc-h2 toc-link" data-title="">Search</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="#search-hosts" class="toc-h2 toc-link" data-title="">Search Hosts</a>
                     
                   </li>
                 
@@ -3543,6 +3583,84 @@ To perform this operation, you must be authenticated by means of one of the foll
 ApiKeyAuth
 </aside>
 <h1 id="comrad-api-users">Users</h1>
+<h2 id="check-if-can-delete">Check if Can Delete</h2>
+<p><a id="opIdUsersCanDelete"></a></p>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="language-javascript"><code class="language-javascript"><br><span class="token keyword">const</span> headers <span class="token operator">=</span> <span class="token punctuation">{</span><br>  <span class="token string">'Accept'</span><span class="token operator">:</span><span class="token string">'application/json'</span><span class="token punctuation">,</span><br>  <span class="token string">'Authorization'</span><span class="token operator">:</span><span class="token string">'API_KEY'</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'/users/{id}/can-delete'</span><span class="token punctuation">,</span><br><span class="token punctuation">{</span><br>  method<span class="token operator">:</span> <span class="token string">'GET'</span><span class="token punctuation">,</span><br><br>  headers<span class="token operator">:</span> headers<br><span class="token punctuation">}</span><span class="token punctuation">)</span><br><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">body</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br></code></pre>
+<p><code>GET /users/{id}/can-delete</code></p>
+<p>Returns a value indicating whether the existing user can be deleted. Users can be deleted if they are not hosts of any shows.</p>
+<p>The following roles can access this API endpoint: <code>Admin</code></p>
+<h3 id="check-if-can-delete-parameters">Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>path</td>
+<td>undefined</td>
+<td>true</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="language-json"><code class="language-json"><span class="token boolean">true</span></code></pre>
+<h3 id="check-if-can-delete-responses">Responses</h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>A value indicating whether the user can be deleted</td>
+</tr>
+<tr>
+<td>401</td>
+<td><a href="https://tools.ietf.org/html/rfc7235#section-3.1">Unauthorized</a></td>
+<td>The authentication you provided to access the API is invalid</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Your API key or account does not have permission to access this</td>
+</tr>
+<tr>
+<td>422</td>
+<td><a href="https://tools.ietf.org/html/rfc2518#section-10.3">Unprocessable Entity</a></td>
+<td>There was an issue with the data you provided. Check the response for more details.</td>
+</tr>
+<tr>
+<td>500</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.6.1">Internal Server Error</a></td>
+<td>Server error. Check the response for more details.</td>
+</tr>
+</tbody>
+</table>
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
 <h2 id="create-6">Create</h2>
 <p><a id="opIdCreateUser"></a></p>
 <blockquote>
@@ -3655,6 +3773,623 @@ ApiKeyAuth
 </tbody>
 </table>
 <h3 id="find-all-responseschema">Response Schema</h3>
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+<h2 id="create-api-key">Create API Key</h2>
+<p><a id="opIdUsersCreateApiKey"></a></p>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="language-javascript"><code class="language-javascript"><br><span class="token keyword">const</span> headers <span class="token operator">=</span> <span class="token punctuation">{</span><br>  <span class="token string">'Accept'</span><span class="token operator">:</span><span class="token string">'application/json'</span><span class="token punctuation">,</span><br>  <span class="token string">'Authorization'</span><span class="token operator">:</span><span class="token string">'API_KEY'</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'/users/{id}/api-key'</span><span class="token punctuation">,</span><br><span class="token punctuation">{</span><br>  method<span class="token operator">:</span> <span class="token string">'POST'</span><span class="token punctuation">,</span><br><br>  headers<span class="token operator">:</span> headers<br><span class="token punctuation">}</span><span class="token punctuation">)</span><br><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">body</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br></code></pre>
+<p><code>POST /users/{id}/api-key</code></p>
+<p>Creates an API key for the specified user. If the user already has an API key, calling this will replace the user’s existing API key.</p>
+<p>The following roles can access this API endpoint: <code>Admin</code></p>
+<h3 id="create-api-key-parameters">Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>path</td>
+<td>undefined</td>
+<td>true</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span><br>  <span class="token property">"doc"</span><span class="token operator">:</span> <span class="token punctuation">{</span><br>    <span class="token property">"api_key"</span><span class="token operator">:</span> <span class="token punctuation">{</span><br>      <span class="token property">"last_used"</span><span class="token operator">:</span> <span class="token string">"2020-11-19T21:04:08.704Z"</span><span class="token punctuation">,</span><br>      <span class="token property">"token"</span><span class="token operator">:</span> <span class="token string">"exists"</span><br>    <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>    <span class="token property">"primary_phone"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>    <span class="token property">"roles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span><br>    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"Active"</span><span class="token punctuation">,</span><br>    <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5fb6dd9becaa3904742d2339"</span><span class="token punctuation">,</span><br>    <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"s2@getcomrad.org"</span><span class="token punctuation">,</span><br>    <span class="token property">"first_name"</span><span class="token operator">:</span> <span class="token string">"Sean"</span><span class="token punctuation">,</span><br>    <span class="token property">"last_name"</span><span class="token operator">:</span> <span class="token string">"Williams"</span><span class="token punctuation">,</span><br>    <span class="token property">"__v"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span><br>    <span class="token property">"can_delete"</span><span class="token operator">:</span> <span class="token boolean">true</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token property">"api_key"</span><span class="token operator">:</span> <span class="token string">"753713e1-9a8a-477a-a720-7fa761f4f37c"</span><br><span class="token punctuation">}</span></code></pre>
+<h3 id="create-api-key-responses">Responses</h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>The User’s api key was created successfully</td>
+</tr>
+<tr>
+<td>401</td>
+<td><a href="https://tools.ietf.org/html/rfc7235#section-3.1">Unauthorized</a></td>
+<td>The authentication you provided to access the API is invalid</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Your API key or account does not have permission to access this</td>
+</tr>
+<tr>
+<td>500</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.6.1">Internal Server Error</a></td>
+<td>Server error. Check the response for more details.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="create-api-key-responseschema">Response Schema</h3>
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+<h2 id="delete-api-key">Delete API Key</h2>
+<p><a id="opIdUsersDeleteApiKey"></a></p>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="language-javascript"><code class="language-javascript"><br><span class="token keyword">const</span> headers <span class="token operator">=</span> <span class="token punctuation">{</span><br>  <span class="token string">'Accept'</span><span class="token operator">:</span><span class="token string">'application/json'</span><span class="token punctuation">,</span><br>  <span class="token string">'Authorization'</span><span class="token operator">:</span><span class="token string">'API_KEY'</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'/users/{id}/api-key'</span><span class="token punctuation">,</span><br><span class="token punctuation">{</span><br>  method<span class="token operator">:</span> <span class="token string">'DELETE'</span><span class="token punctuation">,</span><br><br>  headers<span class="token operator">:</span> headers<br><span class="token punctuation">}</span><span class="token punctuation">)</span><br><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">body</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br></code></pre>
+<p><code>DELETE /users/{id}/api-key</code></p>
+<p>Deletes the API key for the specified user.</p>
+<p>The following roles can access this API endpoint: <code>Admin</code></p>
+<h3 id="delete-api-key-parameters">Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>path</td>
+<td>undefined</td>
+<td>true</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span><br>  <span class="token property">"api_key"</span><span class="token operator">:</span> <span class="token punctuation">{</span><br>    <span class="token property">"last_used"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>    <span class="token property">"token"</span><span class="token operator">:</span> <span class="token null keyword">null</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>  <span class="token property">"primary_phone"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>  <span class="token property">"roles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span><br>  <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"Active"</span><span class="token punctuation">,</span><br>  <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5fb6dd9becaa3904742d2339"</span><span class="token punctuation">,</span><br>  <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"s2@getcomrad.org"</span><span class="token punctuation">,</span><br>  <span class="token property">"first_name"</span><span class="token operator">:</span> <span class="token string">"Sean"</span><span class="token punctuation">,</span><br>  <span class="token property">"last_name"</span><span class="token operator">:</span> <span class="token string">"Williams"</span><span class="token punctuation">,</span><br>  <span class="token property">"__v"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span><br>  <span class="token property">"can_delete"</span><span class="token operator">:</span> <span class="token boolean">true</span><br><span class="token punctuation">}</span></code></pre>
+<h3 id="delete-api-key-responses">Responses</h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>The user’s API key was deleted successfully</td>
+</tr>
+<tr>
+<td>401</td>
+<td><a href="https://tools.ietf.org/html/rfc7235#section-3.1">Unauthorized</a></td>
+<td>The authentication you provided to access the API is invalid</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Your API key or account does not have permission to access this</td>
+</tr>
+<tr>
+<td>500</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.6.1">Internal Server Error</a></td>
+<td>Server error. Check the response for more details.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="delete-api-key-responseschema">Response Schema</h3>
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+<h2 id="find-by-id-2">Find by ID</h2>
+<p><a id="opIdUseresFindById"></a></p>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="language-javascript"><code class="language-javascript"><br><span class="token keyword">const</span> headers <span class="token operator">=</span> <span class="token punctuation">{</span><br>  <span class="token string">'Accept'</span><span class="token operator">:</span><span class="token string">'application/json'</span><span class="token punctuation">,</span><br>  <span class="token string">'Authorization'</span><span class="token operator">:</span><span class="token string">'API_KEY'</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'/users/{id}'</span><span class="token punctuation">,</span><br><span class="token punctuation">{</span><br>  method<span class="token operator">:</span> <span class="token string">'GET'</span><span class="token punctuation">,</span><br><br>  headers<span class="token operator">:</span> headers<br><span class="token punctuation">}</span><span class="token punctuation">)</span><br><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">body</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br></code></pre>
+<p><code>GET /users/{id}</code></p>
+<p>Gets a user by their ID</p>
+<p>The following roles can access this API endpoint for any user: <code>Admin</code></p>
+<p>All users can use this endpoint for their own user ID.</p>
+<h3 id="find-by-id-parameters">Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>path</td>
+<td>undefined</td>
+<td>true</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span><br>  <span class="token property">"api_key"</span><span class="token operator">:</span> <span class="token punctuation">{</span><br>    <span class="token property">"last_used"</span><span class="token operator">:</span> <span class="token string">"2020-12-01T12:35:19.837Z"</span><span class="token punctuation">,</span><br>    <span class="token property">"token"</span><span class="token operator">:</span> <span class="token string">"exists"</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token string">"DJ Cool Software"</span><span class="token punctuation">,</span><br>  <span class="token property">"primary_phone"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>  <span class="token property">"roles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br>    <span class="token string">"Admin"</span><br>  <span class="token punctuation">]</span><span class="token punctuation">,</span><br>  <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"Active"</span><span class="token punctuation">,</span><br>  <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5f720bae0504f73464bd83eb"</span><span class="token punctuation">,</span><br>  <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"comrad.development@gmail.com"</span><span class="token punctuation">,</span><br>  <span class="token property">"first_name"</span><span class="token operator">:</span> <span class="token string">"Comrad"</span><span class="token punctuation">,</span><br>  <span class="token property">"last_name"</span><span class="token operator">:</span> <span class="token string">"Develpment"</span><span class="token punctuation">,</span><br>  <span class="token property">"__v"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span><br>  <span class="token property">"can_delete"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span><br>  <span class="token property">"host_groups"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br>    <span class="token punctuation">{</span><br>      <span class="token property">"users"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br>        <span class="token string">"5f720bae0504f73464bd83eb"</span><span class="token punctuation">,</span><br>        <span class="token string">"5f72114fab735642446f64ed"</span><br>      <span class="token punctuation">]</span><span class="token punctuation">,</span><br>      <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5f8f456552431919908e84b3"</span><span class="token punctuation">,</span><br>      <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token string">"Sean and Barry"</span><span class="token punctuation">,</span><br>      <span class="token property">"__v"</span><span class="token operator">:</span> <span class="token number">0</span><br>    <span class="token punctuation">}</span><br>  <span class="token punctuation">]</span><br><span class="token punctuation">}</span></code></pre>
+<h3 id="find-by-id-responses">Responses</h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Returns the user record matching the ID</td>
+</tr>
+<tr>
+<td>401</td>
+<td><a href="https://tools.ietf.org/html/rfc7235#section-3.1">Unauthorized</a></td>
+<td>The authentication you provided to access the API is invalid</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Your API key or account does not have permission to access this</td>
+</tr>
+<tr>
+<td>404</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
+<td>There is no user with the specified id</td>
+</tr>
+<tr>
+<td>500</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.6.1">Internal Server Error</a></td>
+<td>Server error. Check the response for more details.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="find-by-id-responseschema">Response Schema</h3>
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+<h2 id="delete-5">Delete</h2>
+<p><a id="opIdDeleteUser"></a></p>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="language-javascript"><code class="language-javascript"><br><span class="token keyword">const</span> headers <span class="token operator">=</span> <span class="token punctuation">{</span><br>  <span class="token string">'Accept'</span><span class="token operator">:</span><span class="token string">'application/json'</span><span class="token punctuation">,</span><br>  <span class="token string">'Authorization'</span><span class="token operator">:</span><span class="token string">'API_KEY'</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'/users/{id}'</span><span class="token punctuation">,</span><br><span class="token punctuation">{</span><br>  method<span class="token operator">:</span> <span class="token string">'DELETE'</span><span class="token punctuation">,</span><br><br>  headers<span class="token operator">:</span> headers<br><span class="token punctuation">}</span><span class="token punctuation">)</span><br><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">body</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br></code></pre>
+<p><code>DELETE /users/{id}</code></p>
+<p>Deletes a user. Users cannot be deleted if they are hosts on a show.</p>
+<p>There must always be at least one admin user in the database. This API endpoint will not allow you to delete the last Admin user.</p>
+<p>The following roles can access this API endpoint for any user: <code>Admin</code></p>
+<h3 id="delete-parameters">Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>path</td>
+<td>undefined</td>
+<td>true</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="language-json"><code class="language-json"><span class="token null keyword">null</span></code></pre>
+<h3 id="delete-responses">Responses</h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td></td>
+</tr>
+<tr>
+<td>401</td>
+<td><a href="https://tools.ietf.org/html/rfc7235#section-3.1">Unauthorized</a></td>
+<td>The authentication you provided to access the API is invalid</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Your API key or account does not have permission to access this</td>
+</tr>
+<tr>
+<td>422</td>
+<td><a href="https://tools.ietf.org/html/rfc2518#section-10.3">Unprocessable Entity</a></td>
+<td>There was an issue with the data you provided. Check the response for more details.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="delete-responseschema">Response Schema</h3>
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+<h2 id="update-5">Update</h2>
+<p><a id="opIdUpdateUser"></a></p>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> inputBody <span class="token operator">=</span> <span class="token string">'{}'</span><span class="token punctuation">;</span><br><span class="token keyword">const</span> headers <span class="token operator">=</span> <span class="token punctuation">{</span><br>  <span class="token string">'Content-Type'</span><span class="token operator">:</span><span class="token string">'application/json'</span><span class="token punctuation">,</span><br>  <span class="token string">'Accept'</span><span class="token operator">:</span><span class="token string">'application/json'</span><span class="token punctuation">,</span><br>  <span class="token string">'Authorization'</span><span class="token operator">:</span><span class="token string">'API_KEY'</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'/users/{id}'</span><span class="token punctuation">,</span><br><span class="token punctuation">{</span><br>  method<span class="token operator">:</span> <span class="token string">'PUT'</span><span class="token punctuation">,</span><br>  body<span class="token operator">:</span> inputBody<span class="token punctuation">,</span><br>  headers<span class="token operator">:</span> headers<br><span class="token punctuation">}</span><span class="token punctuation">)</span><br><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">body</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br></code></pre>
+<p><code>PUT /users/{id}</code></p>
+<p>Update a user</p>
+<p>The following roles can access this API endpoint for any user: <code>Admin</code></p>
+<p>All users can use this endpoint for their own user ID, but only to update password, first_name, last_name, email and on_air_name.</p>
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
+<h3 id="update-parameters">Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td>object</td>
+<td>true</td>
+<td>JSON object of properties to update</td>
+</tr>
+<tr>
+<td>id</td>
+<td>path</td>
+<td>undefined</td>
+<td>true</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span><br>  <span class="token property">"api_key"</span><span class="token operator">:</span> <span class="token punctuation">{</span><br>    <span class="token property">"last_used"</span><span class="token operator">:</span> <span class="token string">"2020-12-01T14:31:33.305Z"</span><span class="token punctuation">,</span><br>    <span class="token property">"token"</span><span class="token operator">:</span> <span class="token string">"exists"</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token string">"DJ Coolest Software"</span><span class="token punctuation">,</span><br>  <span class="token property">"primary_phone"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>  <span class="token property">"roles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br>    <span class="token string">"Admin"</span><br>  <span class="token punctuation">]</span><span class="token punctuation">,</span><br>  <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"Active"</span><span class="token punctuation">,</span><br>  <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5f720bae0504f73464bd83eb"</span><span class="token punctuation">,</span><br>  <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"comrad.development@gmail.com"</span><span class="token punctuation">,</span><br>  <span class="token property">"first_name"</span><span class="token operator">:</span> <span class="token string">"Comrad"</span><span class="token punctuation">,</span><br>  <span class="token property">"last_name"</span><span class="token operator">:</span> <span class="token string">"Develpment"</span><span class="token punctuation">,</span><br>  <span class="token property">"__v"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span><br>  <span class="token property">"can_delete"</span><span class="token operator">:</span> <span class="token boolean">false</span><br><span class="token punctuation">}</span></code></pre>
+<h3 id="update-responses">Responses</h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td></td>
+</tr>
+<tr>
+<td>401</td>
+<td><a href="https://tools.ietf.org/html/rfc7235#section-3.1">Unauthorized</a></td>
+<td>The authentication you provided to access the API is invalid</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Your API key or account does not have permission to access this</td>
+</tr>
+<tr>
+<td>422</td>
+<td><a href="https://tools.ietf.org/html/rfc2518#section-10.3">Unprocessable Entity</a></td>
+<td>There was an issue with the data you provided. Check the response for more details.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="update-responseschema">Response Schema</h3>
+<p>Status Code <strong>200</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+<h2 id="search-4">Search</h2>
+<p><a id="opIdUsersSearch"></a></p>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="language-javascript"><code class="language-javascript"><br><span class="token keyword">const</span> headers <span class="token operator">=</span> <span class="token punctuation">{</span><br>  <span class="token string">'Accept'</span><span class="token operator">:</span><span class="token string">'application/json'</span><span class="token punctuation">,</span><br>  <span class="token string">'Authorization'</span><span class="token operator">:</span><span class="token string">'API_KEY'</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'/users/search'</span><span class="token punctuation">,</span><br><span class="token punctuation">{</span><br>  method<span class="token operator">:</span> <span class="token string">'GET'</span><span class="token punctuation">,</span><br><br>  headers<span class="token operator">:</span> headers<br><span class="token punctuation">}</span><span class="token punctuation">)</span><br><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">body</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br></code></pre>
+<p><code>GET /users/search</code></p>
+<p>Returns users whose email, first name or last name match the search string provided by the <code>q</code> parameter.</p>
+<p>The following roles can access this API endpoint: <code>Admin</code></p>
+<h3 id="search-parameters">Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>q</td>
+<td>query</td>
+<td>undefined</td>
+<td>true</td>
+<td>The string to search for</td>
+</tr>
+<tr>
+<td>status</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>If provided, this endpoint will only return users matching the specified status</td>
+</tr>
+</tbody>
+</table>
+<h4 id="enumerated-values-3">Enumerated Values</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>status</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Inactive</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">[</span><br>  <span class="token punctuation">{</span><br>    <span class="token property">"api_key"</span><span class="token operator">:</span> <span class="token punctuation">{</span><br>      <span class="token property">"last_used"</span><span class="token operator">:</span> <span class="token string">"2020-11-19T21:32:46.261Z"</span><span class="token punctuation">,</span><br>      <span class="token property">"token"</span><span class="token operator">:</span> <span class="token string">"exists"</span><br>    <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token string">"DJ Cool Software"</span><span class="token punctuation">,</span><br>    <span class="token property">"primary_phone"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>    <span class="token property">"roles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br>      <span class="token string">"Admin"</span><br>    <span class="token punctuation">]</span><span class="token punctuation">,</span><br>    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"Active"</span><span class="token punctuation">,</span><br>    <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5f720bae0504f73464bd83eb"</span><span class="token punctuation">,</span><br>    <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"comrad.development@gmail.com"</span><span class="token punctuation">,</span><br>    <span class="token property">"first_name"</span><span class="token operator">:</span> <span class="token string">"Comrad"</span><span class="token punctuation">,</span><br>    <span class="token property">"last_name"</span><span class="token operator">:</span> <span class="token string">"Develpment"</span><span class="token punctuation">,</span><br>    <span class="token property">"__v"</span><span class="token operator">:</span> <span class="token number">0</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span><br>    <span class="token property">"api_key"</span><span class="token operator">:</span> <span class="token punctuation">{</span><br>      <span class="token property">"last_used"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>      <span class="token property">"token"</span><span class="token operator">:</span> <span class="token null keyword">null</span><br>    <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token string">"DJ Show Producer"</span><span class="token punctuation">,</span><br>    <span class="token property">"primary_phone"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>    <span class="token property">"roles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br>      <span class="token string">"Show Producer"</span><br>    <span class="token punctuation">]</span><span class="token punctuation">,</span><br>    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"Active"</span><span class="token punctuation">,</span><br>    <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5f720bae0504f73464bd83ee"</span><span class="token punctuation">,</span><br>    <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"show.producer@comrad.com"</span><span class="token punctuation">,</span><br>    <span class="token property">"first_name"</span><span class="token operator">:</span> <span class="token string">"Show Producer"</span><span class="token punctuation">,</span><br>    <span class="token property">"last_name"</span><span class="token operator">:</span> <span class="token string">"Test"</span><span class="token punctuation">,</span><br>    <span class="token property">"__v"</span><span class="token operator">:</span> <span class="token number">0</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span><br>    <span class="token property">"api_key"</span><span class="token operator">:</span> <span class="token punctuation">{</span><br>      <span class="token property">"last_used"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>      <span class="token property">"token"</span><span class="token operator">:</span> <span class="token null keyword">null</span><br>    <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token string">"DJ Full Access"</span><span class="token punctuation">,</span><br>    <span class="token property">"primary_phone"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>    <span class="token property">"roles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br>      <span class="token string">"Full Access"</span><br>    <span class="token punctuation">]</span><span class="token punctuation">,</span><br>    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"Active"</span><span class="token punctuation">,</span><br>    <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5f720bae0504f73464bd83ed"</span><span class="token punctuation">,</span><br>    <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"full.access@comrad.com"</span><span class="token punctuation">,</span><br>    <span class="token property">"first_name"</span><span class="token operator">:</span> <span class="token string">"Full Access"</span><span class="token punctuation">,</span><br>    <span class="token property">"last_name"</span><span class="token operator">:</span> <span class="token string">"Test"</span><span class="token punctuation">,</span><br>    <span class="token property">"__v"</span><span class="token operator">:</span> <span class="token number">0</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span><br>    <span class="token property">"api_key"</span><span class="token operator">:</span> <span class="token punctuation">{</span><br>      <span class="token property">"last_used"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>      <span class="token property">"token"</span><span class="token operator">:</span> <span class="token null keyword">null</span><br>    <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token string">"DJ Underwriting"</span><span class="token punctuation">,</span><br>    <span class="token property">"primary_phone"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>    <span class="token property">"roles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br>      <span class="token string">"Underwriting"</span><br>    <span class="token punctuation">]</span><span class="token punctuation">,</span><br>    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"Active"</span><span class="token punctuation">,</span><br>    <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5f720bae0504f73464bd83ef"</span><span class="token punctuation">,</span><br>    <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"underwriting@comrad.com"</span><span class="token punctuation">,</span><br>    <span class="token property">"first_name"</span><span class="token operator">:</span> <span class="token string">"Underwriting"</span><span class="token punctuation">,</span><br>    <span class="token property">"last_name"</span><span class="token operator">:</span> <span class="token string">"Test"</span><span class="token punctuation">,</span><br>    <span class="token property">"__v"</span><span class="token operator">:</span> <span class="token number">0</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span><br>    <span class="token property">"api_key"</span><span class="token operator">:</span> <span class="token punctuation">{</span><br>      <span class="token property">"last_used"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>      <span class="token property">"token"</span><span class="token operator">:</span> <span class="token null keyword">null</span><br>    <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token string">"DJ Admin"</span><span class="token punctuation">,</span><br>    <span class="token property">"primary_phone"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>    <span class="token property">"roles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br>      <span class="token string">"Admin"</span><br>    <span class="token punctuation">]</span><span class="token punctuation">,</span><br>    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"Active"</span><span class="token punctuation">,</span><br>    <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5f720bae0504f73464bd83ec"</span><span class="token punctuation">,</span><br>    <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"admin@comrad.com"</span><span class="token punctuation">,</span><br>    <span class="token property">"first_name"</span><span class="token operator">:</span> <span class="token string">"Admin"</span><span class="token punctuation">,</span><br>    <span class="token property">"last_name"</span><span class="token operator">:</span> <span class="token string">"Test"</span><span class="token punctuation">,</span><br>    <span class="token property">"__v"</span><span class="token operator">:</span> <span class="token number">0</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span><br>    <span class="token property">"api_key"</span><span class="token operator">:</span> <span class="token punctuation">{</span><br>      <span class="token property">"last_used"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>      <span class="token property">"token"</span><span class="token operator">:</span> <span class="token null keyword">null</span><br>    <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token string">"DJ Guest"</span><span class="token punctuation">,</span><br>    <span class="token property">"primary_phone"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>    <span class="token property">"roles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br>      <span class="token string">"Guest"</span><br>    <span class="token punctuation">]</span><span class="token punctuation">,</span><br>    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"Active"</span><span class="token punctuation">,</span><br>    <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5f720bae0504f73464bd83f1"</span><span class="token punctuation">,</span><br>    <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"guest@comrad.com"</span><span class="token punctuation">,</span><br>    <span class="token property">"first_name"</span><span class="token operator">:</span> <span class="token string">"Guest"</span><span class="token punctuation">,</span><br>    <span class="token property">"last_name"</span><span class="token operator">:</span> <span class="token string">"Test"</span><span class="token punctuation">,</span><br>    <span class="token property">"__v"</span><span class="token operator">:</span> <span class="token number">0</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span><br>    <span class="token property">"api_key"</span><span class="token operator">:</span> <span class="token punctuation">{</span><br>      <span class="token property">"last_used"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>      <span class="token property">"token"</span><span class="token operator">:</span> <span class="token null keyword">null</span><br>    <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>    <span class="token property">"primary_phone"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span><br>    <span class="token property">"roles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span><br>    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"Active"</span><span class="token punctuation">,</span><br>    <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5fb6dd9becaa3904742d2339"</span><span class="token punctuation">,</span><br>    <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"s2@getcomrad.org"</span><span class="token punctuation">,</span><br>    <span class="token property">"first_name"</span><span class="token operator">:</span> <span class="token string">"Sean"</span><span class="token punctuation">,</span><br>    <span class="token property">"last_name"</span><span class="token operator">:</span> <span class="token string">"Williams"</span><span class="token punctuation">,</span><br>    <span class="token property">"__v"</span><span class="token operator">:</span> <span class="token number">0</span><br>  <span class="token punctuation">}</span><br><span class="token punctuation">]</span></code></pre>
+<h3 id="search-responses">Responses</h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Returns a list of matching users, in no particular order</td>
+</tr>
+<tr>
+<td>401</td>
+<td><a href="https://tools.ietf.org/html/rfc7235#section-3.1">Unauthorized</a></td>
+<td>The authentication you provided to access the API is invalid</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Your API key or account does not have permission to access this</td>
+</tr>
+<tr>
+<td>422</td>
+<td><a href="https://tools.ietf.org/html/rfc2518#section-10.3">Unprocessable Entity</a></td>
+<td>There was an issue with the data you provided. Check the response for more details.</td>
+</tr>
+<tr>
+<td>500</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.6.1">Internal Server Error</a></td>
+<td>Server error. Check the response for more details.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="search-responseschema">Response Schema</h3>
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+<h2 id="search-hosts">Search Hosts</h2>
+<p><a id="opIdUsersSearchHosts"></a></p>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="language-javascript"><code class="language-javascript"><br><span class="token keyword">const</span> headers <span class="token operator">=</span> <span class="token punctuation">{</span><br>  <span class="token string">'Accept'</span><span class="token operator">:</span><span class="token string">'application/json'</span><span class="token punctuation">,</span><br>  <span class="token string">'Authorization'</span><span class="token operator">:</span><span class="token string">'API_KEY'</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'/users/search-hosts'</span><span class="token punctuation">,</span><br><span class="token punctuation">{</span><br>  method<span class="token operator">:</span> <span class="token string">'GET'</span><span class="token punctuation">,</span><br><br>  headers<span class="token operator">:</span> headers<br><span class="token punctuation">}</span><span class="token punctuation">)</span><br><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">body</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br></code></pre>
+<p><code>GET /users/search-hosts</code></p>
+<p>Returns users and host groups whose on-air name, first name or last name match the search string provided by the <code>q</code> parameter.</p>
+<p>The following roles can access this API endpoint: <code>Admin</code>, <code>Full Access</code>, <code>Show Captain</code>, <code>Underwriting</code>, <code>DJ</code>, <code>Music Library Admin</code></p>
+<h3 id="search-hosts-parameters">Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>q</td>
+<td>query</td>
+<td>undefined</td>
+<td>true</td>
+<td>The string to search for</td>
+</tr>
+<tr>
+<td>status</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>If provided, this endpoint will only return users matching the specified status</td>
+</tr>
+<tr>
+<td>maxResults</td>
+<td>query</td>
+<td>undefined</td>
+<td>false</td>
+<td>The maximum number of results to provide. Defaults to 10.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="enumerated-values-4">Enumerated Values</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>status</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Inactive</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">[</span><br>  <span class="token punctuation">{</span><br>    <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token string">"Sean Williams"</span><span class="token punctuation">,</span><br>    <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5f721174ab735642446f6583"</span><span class="token punctuation">,</span><br>    <span class="token property">"first_name"</span><span class="token operator">:</span> <span class="token string">"Sean"</span><span class="token punctuation">,</span><br>    <span class="token property">"last_name"</span><span class="token operator">:</span> <span class="token string">"Williams"</span><span class="token punctuation">,</span><br>    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"User"</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span><br>    <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5f8f456552431919908e84b3"</span><span class="token punctuation">,</span><br>    <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token string">"Sean and Barry"</span><span class="token punctuation">,</span><br>    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"HostGroup"</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span><br>    <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token string">"Indra, Sean, And Patrick"</span><span class="token punctuation">,</span><br>    <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5f721164ab735642446f6542"</span><span class="token punctuation">,</span><br>    <span class="token property">"first_name"</span><span class="token operator">:</span> <span class="token string">"Indra,"</span><span class="token punctuation">,</span><br>    <span class="token property">"last_name"</span><span class="token operator">:</span> <span class="token string">"Sean, And Patrick"</span><span class="token punctuation">,</span><br>    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"User"</span><br>  <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span><br>    <span class="token property">"on_air_name"</span><span class="token operator">:</span> <span class="token string">"Ean Parmar"</span><span class="token punctuation">,</span><br>    <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"5f7211a9ab735642446f665a"</span><span class="token punctuation">,</span><br>    <span class="token property">"first_name"</span><span class="token operator">:</span> <span class="token string">"Ean"</span><span class="token punctuation">,</span><br>    <span class="token property">"last_name"</span><span class="token operator">:</span> <span class="token string">"Parmar"</span><span class="token punctuation">,</span><br>    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"User"</span><br>  <span class="token punctuation">}</span><br><span class="token punctuation">]</span></code></pre>
+<h3 id="search-hosts-responses">Responses</h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Returns a list of matching users and host groups, ordered by relevance to the search string</td>
+</tr>
+<tr>
+<td>401</td>
+<td><a href="https://tools.ietf.org/html/rfc7235#section-3.1">Unauthorized</a></td>
+<td>The authentication you provided to access the API is invalid</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Your API key or account does not have permission to access this</td>
+</tr>
+<tr>
+<td>422</td>
+<td><a href="https://tools.ietf.org/html/rfc2518#section-10.3">Unprocessable Entity</a></td>
+<td>There was an issue with the data you provided. Check the response for more details.</td>
+</tr>
+<tr>
+<td>500</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.6.1">Internal Server Error</a></td>
+<td>Server error. Check the response for more details.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="search-hosts-responseschema">Response Schema</h3>
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
@@ -3957,7 +4692,7 @@ ApiKeyAuth
 </tr>
 </tbody>
 </table>
-<h4 id="enumerated-values-3">Enumerated Values</h4>
+<h4 id="enumerated-values-5">Enumerated Values</h4>
 <table>
 <thead>
 <tr>
@@ -4053,7 +4788,7 @@ ApiKeyAuth
 </tr>
 </tbody>
 </table>
-<h4 id="enumerated-values-4">Enumerated Values</h4>
+<h4 id="enumerated-values-6">Enumerated Values</h4>
 <table>
 <thead>
 <tr>
@@ -4138,7 +4873,7 @@ ApiKeyAuth
 </tr>
 </tbody>
 </table>
-<h4 id="enumerated-values-5">Enumerated Values</h4>
+<h4 id="enumerated-values-7">Enumerated Values</h4>
 <table>
 <thead>
 <tr>
@@ -4230,7 +4965,7 @@ ApiKeyAuth
 </tr>
 </tbody>
 </table>
-<h4 id="enumerated-values-6">Enumerated Values</h4>
+<h4 id="enumerated-values-8">Enumerated Values</h4>
 <table>
 <thead>
 <tr>
