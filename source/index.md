@@ -5086,6 +5086,68 @@ ApiKeyAuth
 
 <h1 id="comrad-api-users">Users</h1>
 
+## Check if Can Delete
+
+<a id="opIdUsersCanDelete"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/users/{id}/can-delete',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /users/{id}/can-delete`
+
+Returns a value indicating whether the existing user can be deleted. Users can be deleted if they are not hosts of any shows.
+
+The following roles can access this API endpoint: `Admin`
+
+<h3 id="check-if-can-delete-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+true
+```
+
+<h3 id="check-if-can-delete-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|A value indicating whether the user can be deleted|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
 ## Create
 
 <a id="opIdCreateUser"></a>
@@ -5237,6 +5299,709 @@ The following roles can access this API endpoint: `Admin`
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
 <h3 id="find-all-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Create API Key
+
+<a id="opIdUsersCreateApiKey"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/users/{id}/api-key',
+{
+  method: 'POST',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /users/{id}/api-key`
+
+Creates an API key for the specified user. If the user already has an API key, calling this will replace the user's existing API key.
+
+The following roles can access this API endpoint: `Admin`
+
+<h3 id="create-api-key-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "doc": {
+    "api_key": {
+      "last_used": "2020-11-19T21:04:08.704Z",
+      "token": "exists"
+    },
+    "on_air_name": null,
+    "primary_phone": null,
+    "roles": [],
+    "status": "Active",
+    "_id": "5fb6dd9becaa3904742d2339",
+    "email": "s2@getcomrad.org",
+    "first_name": "Sean",
+    "last_name": "Williams",
+    "__v": 0,
+    "can_delete": true
+  },
+  "api_key": "753713e1-9a8a-477a-a720-7fa761f4f37c"
+}
+```
+
+<h3 id="create-api-key-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The User's api key was created successfully|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="create-api-key-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Delete API Key
+
+<a id="opIdUsersDeleteApiKey"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/users/{id}/api-key',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /users/{id}/api-key`
+
+Deletes the API key for the specified user.
+
+The following roles can access this API endpoint: `Admin`
+
+<h3 id="delete-api-key-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "api_key": {
+    "last_used": null,
+    "token": null
+  },
+  "on_air_name": null,
+  "primary_phone": null,
+  "roles": [],
+  "status": "Active",
+  "_id": "5fb6dd9becaa3904742d2339",
+  "email": "s2@getcomrad.org",
+  "first_name": "Sean",
+  "last_name": "Williams",
+  "__v": 0,
+  "can_delete": true
+}
+```
+
+<h3 id="delete-api-key-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The user's API key was deleted successfully|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="delete-api-key-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Find by ID
+
+<a id="opIdUseresFindById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/users/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /users/{id}`
+
+Gets a user by their ID
+
+The following roles can access this API endpoint for any user: `Admin`
+
+All users can use this endpoint for their own user ID.
+
+<h3 id="find-by-id-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "api_key": {
+    "last_used": "2020-12-01T12:35:19.837Z",
+    "token": "exists"
+  },
+  "on_air_name": "DJ Cool Software",
+  "primary_phone": null,
+  "roles": [
+    "Admin"
+  ],
+  "status": "Active",
+  "_id": "5f720bae0504f73464bd83eb",
+  "email": "comrad.development@gmail.com",
+  "first_name": "Comrad",
+  "last_name": "Develpment",
+  "__v": 0,
+  "can_delete": false,
+  "host_groups": [
+    {
+      "users": [
+        "5f720bae0504f73464bd83eb",
+        "5f72114fab735642446f64ed"
+      ],
+      "_id": "5f8f456552431919908e84b3",
+      "on_air_name": "Sean and Barry",
+      "__v": 0
+    }
+  ]
+}
+```
+
+<h3 id="find-by-id-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns the user record matching the ID|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|There is no user with the specified id|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="find-by-id-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Delete
+
+<a id="opIdDeleteUser"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/users/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /users/{id}`
+
+Deletes a user. Users cannot be deleted if they are hosts on a show.
+
+There must always be at least one admin user in the database. This API endpoint will not allow you to delete the last Admin user.
+
+The following roles can access this API endpoint for any user: `Admin`
+
+<h3 id="delete-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+null
+```
+
+<h3 id="delete-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
+
+<h3 id="delete-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Update
+
+<a id="opIdUpdateUser"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/users/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /users/{id}`
+
+Update a user
+
+The following roles can access this API endpoint for any user: `Admin`
+
+All users can use this endpoint for their own user ID, but only to update password, first_name, last_name, email and on_air_name.
+
+> Body parameter
+
+```json
+{}
+```
+
+<h3 id="update-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|true|JSON object of properties to update|
+|id|path|undefined|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "api_key": {
+    "last_used": "2020-12-01T14:31:33.305Z",
+    "token": "exists"
+  },
+  "on_air_name": "DJ Coolest Software",
+  "primary_phone": null,
+  "roles": [
+    "Admin"
+  ],
+  "status": "Active",
+  "_id": "5f720bae0504f73464bd83eb",
+  "email": "comrad.development@gmail.com",
+  "first_name": "Comrad",
+  "last_name": "Develpment",
+  "__v": 0,
+  "can_delete": false
+}
+```
+
+<h3 id="update-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
+
+<h3 id="update-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Description|
+|---|---|---|---|---|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Search
+
+<a id="opIdUsersSearch"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/users/search',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /users/search`
+
+Returns users whose email, first name or last name match the search string provided by the `q` parameter.
+
+The following roles can access this API endpoint: `Admin`
+
+<h3 id="search-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|q|query|undefined|true|The string to search for|
+|status|query|string|false|If provided, this endpoint will only return users matching the specified status|
+
+#### Enumerated Values
+
+|Parameter|Value|
+|---|---|
+|status|Active|
+|status|Inactive|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "api_key": {
+      "last_used": "2020-11-19T21:32:46.261Z",
+      "token": "exists"
+    },
+    "on_air_name": "DJ Cool Software",
+    "primary_phone": null,
+    "roles": [
+      "Admin"
+    ],
+    "status": "Active",
+    "_id": "5f720bae0504f73464bd83eb",
+    "email": "comrad.development@gmail.com",
+    "first_name": "Comrad",
+    "last_name": "Develpment",
+    "__v": 0
+  },
+  {
+    "api_key": {
+      "last_used": null,
+      "token": null
+    },
+    "on_air_name": "DJ Show Producer",
+    "primary_phone": null,
+    "roles": [
+      "Show Producer"
+    ],
+    "status": "Active",
+    "_id": "5f720bae0504f73464bd83ee",
+    "email": "show.producer@comrad.com",
+    "first_name": "Show Producer",
+    "last_name": "Test",
+    "__v": 0
+  },
+  {
+    "api_key": {
+      "last_used": null,
+      "token": null
+    },
+    "on_air_name": "DJ Full Access",
+    "primary_phone": null,
+    "roles": [
+      "Full Access"
+    ],
+    "status": "Active",
+    "_id": "5f720bae0504f73464bd83ed",
+    "email": "full.access@comrad.com",
+    "first_name": "Full Access",
+    "last_name": "Test",
+    "__v": 0
+  },
+  {
+    "api_key": {
+      "last_used": null,
+      "token": null
+    },
+    "on_air_name": "DJ Underwriting",
+    "primary_phone": null,
+    "roles": [
+      "Underwriting"
+    ],
+    "status": "Active",
+    "_id": "5f720bae0504f73464bd83ef",
+    "email": "underwriting@comrad.com",
+    "first_name": "Underwriting",
+    "last_name": "Test",
+    "__v": 0
+  },
+  {
+    "api_key": {
+      "last_used": null,
+      "token": null
+    },
+    "on_air_name": "DJ Admin",
+    "primary_phone": null,
+    "roles": [
+      "Admin"
+    ],
+    "status": "Active",
+    "_id": "5f720bae0504f73464bd83ec",
+    "email": "admin@comrad.com",
+    "first_name": "Admin",
+    "last_name": "Test",
+    "__v": 0
+  },
+  {
+    "api_key": {
+      "last_used": null,
+      "token": null
+    },
+    "on_air_name": "DJ Guest",
+    "primary_phone": null,
+    "roles": [
+      "Guest"
+    ],
+    "status": "Active",
+    "_id": "5f720bae0504f73464bd83f1",
+    "email": "guest@comrad.com",
+    "first_name": "Guest",
+    "last_name": "Test",
+    "__v": 0
+  },
+  {
+    "api_key": {
+      "last_used": null,
+      "token": null
+    },
+    "on_air_name": null,
+    "primary_phone": null,
+    "roles": [],
+    "status": "Active",
+    "_id": "5fb6dd9becaa3904742d2339",
+    "email": "s2@getcomrad.org",
+    "first_name": "Sean",
+    "last_name": "Williams",
+    "__v": 0
+  }
+]
+```
+
+<h3 id="search-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns a list of matching users, in no particular order|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="search-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Search Hosts
+
+<a id="opIdUsersSearchHosts"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/users/search-hosts',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /users/search-hosts`
+
+Returns users and host groups whose on-air name, first name or last name match the search string provided by the `q` parameter.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+<h3 id="search-hosts-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|q|query|undefined|true|The string to search for|
+|status|query|string|false|If provided, this endpoint will only return users matching the specified status|
+|maxResults|query|undefined|false|The maximum number of results to provide. Defaults to 10.|
+
+#### Enumerated Values
+
+|Parameter|Value|
+|---|---|
+|status|Active|
+|status|Inactive|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "on_air_name": "Sean Williams",
+    "_id": "5f721174ab735642446f6583",
+    "first_name": "Sean",
+    "last_name": "Williams",
+    "type": "User"
+  },
+  {
+    "_id": "5f8f456552431919908e84b3",
+    "on_air_name": "Sean and Barry",
+    "type": "HostGroup"
+  },
+  {
+    "on_air_name": "Indra, Sean, And Patrick",
+    "_id": "5f721164ab735642446f6542",
+    "first_name": "Indra,",
+    "last_name": "Sean, And Patrick",
+    "type": "User"
+  },
+  {
+    "on_air_name": "Ean Parmar",
+    "_id": "5f7211a9ab735642446f665a",
+    "first_name": "Ean",
+    "last_name": "Parmar",
+    "type": "User"
+  }
+]
+```
+
+<h3 id="search-hosts-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns a list of matching users and host groups, ordered by relevance to the search string|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="search-hosts-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
