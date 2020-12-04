@@ -949,96 +949,11 @@ To perform this operation, you must be authenticated by means of one of the foll
 ApiKeyAuth
 </aside>
 
-<h1 id="comrad-api-access-control">Access Control</h1>
-
-## Create
-
-<a id="opIdCreateAccessControl"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "role": "Admin",
-  "resource": "TestResource",
-  "action": "create:any",
-  "attributes": "*"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'Authorization':'API_KEY'
-};
-
-fetch('/access-control',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`POST /access-control`
-
-Create a new AccessControl record
-
-The following roles can access this API endpoint: `Admin`, `Full Access`
-
-> Body parameter
-
-```json
-{
-  "role": "Admin",
-  "resource": "TestResource",
-  "action": "create:any",
-  "attributes": "*"
-}
-```
-
-<h3 id="create-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[AccessControl](#schemaaccesscontrol)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "_id": "5f3d436c50dacd5124dc6ae6",
-  "role": "Admin",
-  "resource": "TestResource",
-  "action": "create:any",
-  "attributes": "*",
-  "__v": 0
-}
-```
-
-<h3 id="create-responses">Responses</h3>
-
-|Status|Meaning|Description|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The AccessControl record was created successfully|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
-|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-ApiKeyAuth
-</aside>
+<h1 id="comrad-api-genres">Genres</h1>
 
 ## Find All
 
-<a id="opIdFindAllAccessControls"></a>
+<a id="opIdFindAllGenres"></a>
 
 > Code samples
 
@@ -1049,7 +964,7 @@ const headers = {
   'Authorization':'API_KEY'
 };
 
-fetch('/access-control',
+fetch('/genres',
 {
   method: 'GET',
 
@@ -1063,9 +978,9 @@ fetch('/access-control',
 
 ```
 
-`GET /access-control`
+`GET /genres`
 
-Retrieve all AccessControl records
+Retrieve all Genres
 
 The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
 
@@ -1076,19 +991,17 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 ```json
 [
   {
-    "_id": "5f35ab60541a624afc4db9b8",
-    "role": "Admin",
-    "resource": "Genres",
-    "action": "create:any",
-    "attributes": "*",
+    "_id": "5f35a41e783e63454ccee914",
+    "name": "Bluegrass",
+    "created_at": "2020-08-13T20:35:42.440Z",
+    "updated_at": "2020-08-13T20:35:42.440Z",
     "__v": 0
   },
   {
-    "_id": "5f35ab60541a624afc4db9b9",
-    "role": "Admin",
-    "resource": "Genres",
-    "action": "read:any",
-    "attributes": "*",
+    "_id": "5f35a41e783e63454ccee90c",
+    "name": "Blues",
+    "created_at": "2020-08-13T20:35:42.424Z",
+    "updated_at": "2020-08-13T20:35:42.424Z",
     "__v": 0
   }
 ]
@@ -1101,197 +1014,6 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
-|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-ApiKeyAuth
-</aside>
-
-<h1 id="comrad-api-configuration">Configuration</h1>
-
-## Get Custom Fields for Entity
-
-<a id="opIdConfigCustomFields"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'API_KEY'
-};
-
-fetch('/config/fields/{entity name}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /config/fields/{entity name}`
-
-Returns an array with the different custom fields available for the given `entity name`.
-
-The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
-
-<h3 id="get-custom-fields-for-entity-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|entity name|path|undefined|true|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-[
-  {
-    "name": "local_artist",
-    "label": "Local Artist",
-    "editFieldType": "checkbox"
-  },
-  {
-    "name": "location",
-    "label": "Location",
-    "editFieldType": "dropdown",
-    "options": [
-      "New Releases Bin",
-      "Library",
-      "Was in Library, but Lost"
-    ]
-  }
-]
-```
-
-<h3 id="get-custom-fields-for-entity-responses">Responses</h3>
-
-|Status|Meaning|Description|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
-|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-ApiKeyAuth
-</aside>
-
-## Compliance Reporting Period
-
-<a id="opIdConfigInComplianceReportingPeriod"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'API_KEY'
-};
-
-fetch('/config/compliance-reporting-period',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /config/compliance-reporting-period`
-
-Returns a boolean value indicating whether we are currently in a compliance reporting period
-
-The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
-
-> Example responses
-
-> 200 Response
-
-```json
-true
-```
-
-<h3 id="compliance-reporting-period-responses">Responses</h3>
-
-|Status|Meaning|Description|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
-|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-ApiKeyAuth
-</aside>
-
-## Resources - Get Categories
-
-<a id="opIdConfigResourcesCategories"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'API_KEY'
-};
-
-fetch('/config/resources-categories',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /config/resources-categories`
-
-Returns an array with the different categories available for the Resources section
-
-The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
-
-> Example responses
-
-> 200 Response
-
-```json
-[
-  "Announcements",
-  "Policies",
-  "Fund Drives",
-  "Other Important Documents"
-]
-```
-
-<h3 id="resources---get-categories-responses">Responses</h3>
-
-|Status|Meaning|Description|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
 <aside class="warning">
@@ -3544,11 +3266,96 @@ To perform this operation, you must be authenticated by means of one of the foll
 ApiKeyAuth
 </aside>
 
-<h1 id="comrad-api-genres">Genres</h1>
+<h1 id="comrad-api-access-control">Access Control</h1>
+
+## Create
+
+<a id="opIdCreateAccessControl"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "role": "Admin",
+  "resource": "TestResource",
+  "action": "create:any",
+  "attributes": "*"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/access-control',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /access-control`
+
+Create a new AccessControl record
+
+The following roles can access this API endpoint: `Admin`, `Full Access`
+
+> Body parameter
+
+```json
+{
+  "role": "Admin",
+  "resource": "TestResource",
+  "action": "create:any",
+  "attributes": "*"
+}
+```
+
+<h3 id="create-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[AccessControl](#schemaaccesscontrol)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5f3d436c50dacd5124dc6ae6",
+  "role": "Admin",
+  "resource": "TestResource",
+  "action": "create:any",
+  "attributes": "*",
+  "__v": 0
+}
+```
+
+<h3 id="create-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The AccessControl record was created successfully|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
 
 ## Find All
 
-<a id="opIdFindAllGenres"></a>
+<a id="opIdFindAllAccessControls"></a>
 
 > Code samples
 
@@ -3559,7 +3366,7 @@ const headers = {
   'Authorization':'API_KEY'
 };
 
-fetch('/genres',
+fetch('/access-control',
 {
   method: 'GET',
 
@@ -3573,9 +3380,9 @@ fetch('/genres',
 
 ```
 
-`GET /genres`
+`GET /access-control`
 
-Retrieve all Genres
+Retrieve all AccessControl records
 
 The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
 
@@ -3586,17 +3393,19 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 ```json
 [
   {
-    "_id": "5f35a41e783e63454ccee914",
-    "name": "Bluegrass",
-    "created_at": "2020-08-13T20:35:42.440Z",
-    "updated_at": "2020-08-13T20:35:42.440Z",
+    "_id": "5f35ab60541a624afc4db9b8",
+    "role": "Admin",
+    "resource": "Genres",
+    "action": "create:any",
+    "attributes": "*",
     "__v": 0
   },
   {
-    "_id": "5f35a41e783e63454ccee90c",
-    "name": "Blues",
-    "created_at": "2020-08-13T20:35:42.424Z",
-    "updated_at": "2020-08-13T20:35:42.424Z",
+    "_id": "5f35ab60541a624afc4db9b9",
+    "role": "Admin",
+    "resource": "Genres",
+    "action": "read:any",
+    "attributes": "*",
     "__v": 0
   }
 ]
@@ -3609,6 +3418,197 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+<h1 id="comrad-api-configuration">Configuration</h1>
+
+## Get Custom Fields for Entity
+
+<a id="opIdConfigCustomFields"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/config/fields/{entity name}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /config/fields/{entity name}`
+
+Returns an array with the different custom fields available for the given `entity name`.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+<h3 id="get-custom-fields-for-entity-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|entity name|path|undefined|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "name": "local_artist",
+    "label": "Local Artist",
+    "editFieldType": "checkbox"
+  },
+  {
+    "name": "location",
+    "label": "Location",
+    "editFieldType": "dropdown",
+    "options": [
+      "New Releases Bin",
+      "Library",
+      "Was in Library, but Lost"
+    ]
+  }
+]
+```
+
+<h3 id="get-custom-fields-for-entity-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Compliance Reporting Period
+
+<a id="opIdConfigInComplianceReportingPeriod"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/config/compliance-reporting-period',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /config/compliance-reporting-period`
+
+Returns a boolean value indicating whether we are currently in a compliance reporting period
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+> Example responses
+
+> 200 Response
+
+```json
+true
+```
+
+<h3 id="compliance-reporting-period-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Resources - Get Categories
+
+<a id="opIdConfigResourcesCategories"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/config/resources-categories',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /config/resources-categories`
+
+Returns an array with the different categories available for the Resources section
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  "Announcements",
+  "Policies",
+  "Fund Drives",
+  "Other Important Documents"
+]
+```
+
+<h3 id="resources---get-categories-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
 <aside class="warning">
@@ -4932,6 +4932,1454 @@ ApiKeyAuth
 
 <h1 id="comrad-api-playlists">Playlists</h1>
 
+## Saved Items: Add Comment
+
+<a id="opIdPlaylistsAddCommentToSavedItems"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists/:playlistId/saved-items/comment',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /playlists/:playlistId/saved-items/comment`
+
+Adds a comment to the Saved Items of the specified playlist.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
+
+> Body parameter
+
+```json
+{}
+```
+
+<h3 id="saved-items:-add-comment-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
+|playlistId|path|undefined|true|The id of the playlist to affect|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fc9715ecd36da3cc05fafbf",
+  "type": "comment",
+  "description": "This is a comment entered into Saved Items",
+  "executed_time_utc": "2020-12-03T23:14:38.020Z"
+}
+```
+
+<h3 id="saved-items:-add-comment-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="saved-items:-add-comment-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Scratchpad: Add Comment
+
+<a id="opIdPlaylistsAddCommentToScratchpad"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists/:playlistId/scratchpad/comment',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /playlists/:playlistId/scratchpad/comment`
+
+Adds a comment to the scratchpad of the specified playlist.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
+
+> Body parameter
+
+```json
+{}
+```
+
+<h3 id="scratchpad:-add-comment-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
+|playlistId|path|undefined|true|The id of the playlist to affect|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fc970f847ee2b5130d739c3",
+  "type": "comment",
+  "description": "This is a comment entered into a playlist"
+}
+```
+
+<h3 id="scratchpad:-add-comment-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="scratchpad:-add-comment-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Saved Items: Add Track
+
+<a id="opIdPlaylistsAddTrackToSavedItems"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists/:playlistId/saved-items/track',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /playlists/:playlistId/saved-items/track`
+
+Adds a track to the scratchpad of the specified playlist.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
+
+> Body parameter
+
+```json
+{}
+```
+
+<h3 id="saved-items:-add-track-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
+|playlistId|path|undefined|true|The id of the playlist to affect|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fc96ad8c276474f1c11db3d",
+  "type": "track",
+  "track": {
+    "popularity": 0,
+    "_id": "5f721090ab735642446aa414",
+    "name": "The Up And Down",
+    "album": {
+      "popularity": 0,
+      "_id": "5f720efe66320235249b9b04",
+      "name": "Take One",
+      "artist": "5f720eda663202352499f795",
+      "label": "Destination Unknown",
+      "genre": "5f720ef466320235249b2d93",
+      "compilation": false,
+      "custom": {
+        "itunes_id": null,
+        "old_comrad_id": "1111177433",
+        "local": "0",
+        "location": "Digital Library"
+      },
+      "type": "album",
+      "created_at": "2020-09-28T16:27:42.994Z",
+      "updated_at": "2020-09-28T16:27:42.994Z"
+    },
+    "track_number": 5,
+    "disk_number": 1,
+    "duration_in_seconds": 252,
+    "custom": {
+      "old_comrad_id": "279476"
+    },
+    "type": "track",
+    "artists": [
+      {
+        "popularity": 0,
+        "_id": "5f720eda663202352499f795",
+        "name": "The Way Low Down",
+        "type": "artist",
+        "created_at": "2020-09-28T16:27:06.069Z",
+        "updated_at": "2020-09-28T16:27:06.069Z"
+      }
+    ],
+    "created_at": "2020-09-28T16:34:24.830Z",
+    "updated_at": "2020-09-28T16:34:24.830Z"
+  },
+  "executed_time_utc": "2020-12-03T22:46:48.754Z"
+}
+```
+
+<h3 id="saved-items:-add-track-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="saved-items:-add-track-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Scratchpad: Add Track
+
+<a id="opIdPlaylistsAddTrackToScratchpad"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists/:playlistId/scratchpad/track',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /playlists/:playlistId/scratchpad/track`
+
+Adds a track to the scratchpad of the specified playlist.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
+
+> Body parameter
+
+```json
+{}
+```
+
+<h3 id="scratchpad:-add-track-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
+|playlistId|path|undefined|true|The id of the playlist to affect|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fc969a23000804d54f7b3de",
+  "type": "track",
+  "track": {
+    "popularity": 0,
+    "_id": "5f72105dab73564244691d04",
+    "name": "JACKSON",
+    "album": {
+      "popularity": 0,
+      "_id": "5f720ef966320235249b7172",
+      "name": "The Legend of Johnny Cash",
+      "artist": "5f720ed9663202352499be4a",
+      "label": "Legacy",
+      "genre": "5f720ef466320235249b2d9a",
+      "compilation": false,
+      "custom": {
+        "itunes_id": null,
+        "old_comrad_id": "36377",
+        "local": "0",
+        "location": "Gnu Bin",
+        "library_number": "36377"
+      },
+      "type": "album",
+      "created_at": "2020-09-28T16:27:37.791Z",
+      "updated_at": "2020-09-28T16:27:37.791Z"
+    },
+    "track_number": 0,
+    "disk_number": 1,
+    "duration_in_seconds": 0,
+    "custom": {
+      "old_comrad_id": "79970"
+    },
+    "type": "track",
+    "artists": [
+      {
+        "popularity": 61,
+        "_id": "5f720ed9663202352499be4a",
+        "name": "Johnny Cash",
+        "type": "artist",
+        "created_at": "2020-09-28T16:27:05.308Z",
+        "updated_at": "2020-09-28T16:27:05.308Z"
+      }
+    ],
+    "created_at": "2020-09-28T16:33:33.436Z",
+    "updated_at": "2020-09-28T16:33:33.436Z"
+  }
+}
+```
+
+<h3 id="scratchpad:-add-track-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="scratchpad:-add-track-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Saved Items: Add Traffic
+
+<a id="opIdPlaylistsAddTrafficToSavedItems"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists/:playlistId/saved-items/traffic',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /playlists/:playlistId/saved-items/traffic`
+
+Adds a traffic event to the scratchpad of the specified playlist.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
+
+> Body parameter
+
+```json
+{}
+```
+
+<h3 id="saved-items:-add-traffic-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
+|playlistId|path|undefined|true|The id of the playlist to affect|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fc97224f5f6b95288c7d241",
+  "type": "traffic",
+  "executed_time_utc": "2020-12-03T23:17:56.374Z",
+  "traffic": {
+    "repeat_rule": {
+      "byweekday": [
+        "TH"
+      ],
+      "repeat_start_date": "2020-03-19T15:30:00.000Z",
+      "frequency": 2,
+      "repeat_end_date": "2022-11-24T16:30:00.000Z"
+    },
+    "traffic_details": {
+      "type": "Underwriting",
+      "title": "Yellow Scene Magazine",
+      "description": "<p>Please play from Underwriting folder on the Wavecart</p>",
+      "producer": null,
+      "custom": {
+        "old_comrad_event_id": "215",
+        "old_comrad_scheduled_event_ids": [
+          "17451"
+        ]
+      },
+      "underwriter_name": "Yellow Scene Magazine"
+    },
+    "status": "active",
+    "_id": "5f7211f2ab735642446fefd9",
+    "start_time_utc": "2020-12-03T16:30:00.000Z",
+    "end_time_utc": "2020-12-03T16:31:00.000Z",
+    "is_recurring": true,
+    "created_at": "2020-09-28T16:40:18.890Z",
+    "updated_at": "2020-09-28T16:40:18.890Z",
+    "__v": 0,
+    "master_event_id": "5f7211f2ab735642446fefd9"
+  },
+  "master_time_id": "5f7211f2ab735642446fefd9-1607013000000"
+}
+```
+
+<h3 id="saved-items:-add-traffic-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="saved-items:-add-traffic-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Saved Items: Add Voice Break
+
+<a id="opIdPlaylistsAddVoiceBreakToSavedItems"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists/:playlistId/saved-items/voice-break',
+{
+  method: 'PUT',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /playlists/:playlistId/saved-items/voice-break`
+
+Adds a voice break to the Saved Items of the specified playlist.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
+
+<h3 id="saved-items:-add-voice-break-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|playlistId|path|undefined|true|The id of the playlist to affect|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fc97059a8044c269c48f937",
+  "type": "voice_break",
+  "executed_time_utc": "2020-12-03T23:10:17.856Z"
+}
+```
+
+<h3 id="saved-items:-add-voice-break-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="saved-items:-add-voice-break-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Scratchpad: Add Voice Break
+
+<a id="opIdPlaylistsAddVoiceBreakToScratchpad"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists/:playlistId/scratchpad/voice-break',
+{
+  method: 'PUT',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /playlists/:playlistId/scratchpad/voice-break`
+
+Adds a voice break to the scratchpad of the specified playlist.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
+
+<h3 id="scratchpad:-add-voice-break-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|playlistId|path|undefined|true|The id of the playlist to affect|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fc96ff500dce7269c97ef58",
+  "type": "voice_break"
+}
+```
+
+<h3 id="scratchpad:-add-voice-break-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="scratchpad:-add-voice-break-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Scratchpad: Delete Item
+
+<a id="opIdPlaylistsDeleteItemFromScratchpad"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists/:playlistId/scratchpad/:itemId',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /playlists/:playlistId/scratchpad/:itemId`
+
+Removes the specified item from the scratchpad of the specified playlist, if the item exists.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
+
+<h3 id="scratchpad:-delete-item-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|playlistId|path|undefined|true|The id of the playlist to affect|
+|itemId|path|undefined|true|The id of the item to update|
+
+> Example responses
+
+<h3 id="scratchpad:-delete-item-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="scratchpad:-delete-item-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Scratchpad: Update Item
+
+<a id="opIdPlaylistsUpdateScratchpadItem"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists/:playlistId/scratchpad/:itemId',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /playlists/:playlistId/scratchpad/:itemId`
+
+Updates the `occurs_after_time_utc` and/or `occurs_before_time_utc` properties of a scratchpad item. Scratchpad items appear in an ordered array within the playlist, and will display in that order. But, traffic events that occur in the playlist's timespan will also show in a track's playlist (unless that traffic event is already "executed" - meaning it is in the playlist's Saved Items list). The `occurs_after_time_utc` and `occurs_before_time_utc` inform Comrad's front-end how to display the scratchpad items relative to the unexecuted traffic items.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
+
+> Body parameter
+
+```json
+{}
+```
+
+<h3 id="scratchpad:-update-item-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
+|playlistId|path|undefined|true|The id of the playlist to affect|
+|itemId|path|undefined|true|The id of the item to update|
+
+> Example responses
+
+<h3 id="scratchpad:-update-item-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="scratchpad:-update-item-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Find One
+
+<a id="opIdFindOnePlaylists"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /playlists`
+
+Get a playlist based on its start and end time, if it exists.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+<h3 id="find-one-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|startTime|query|undefined|true|The time the playlist starts at|
+|endTime|query|undefined|true|The time the playlist ends at|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fc96303bd1238436c43c74b",
+  "start_time_utc": "2020-12-03T16:30:00.000Z",
+  "end_time_utc": "2020-12-03T19:06:00.000Z",
+  "scratchpad": [
+    {
+      "_id": "5fc96318bd1238436c43c74c",
+      "type": "track",
+      "track": {
+        "popularity": 0,
+        "_id": "5f72109dab735642446ae259",
+        "name": "Mile After Mile",
+        "album": {
+          "popularity": 0,
+          "_id": "5f720f0b66320235249c156d",
+          "name": "Easy Livin'",
+          "artist": "5f720eda66320235249a336e",
+          "label": "Blind Pig Records",
+          "genre": "5f720ef466320235249b2d97",
+          "compilation": false,
+          "created_at": "2013-06-23T00:01:14.000Z",
+          "custom": {
+            "itunes_id": "596610087",
+            "old_comrad_id": "44122",
+            "local": null,
+            "location": "Personal",
+            "library_number": "44122"
+          },
+          "type": "album",
+          "updated_at": "2020-09-28T16:27:55.577Z"
+        },
+        "track_number": 4,
+        "disk_number": 1,
+        "duration_in_seconds": 136,
+        "custom": {
+          "old_comrad_id": "295468"
+        },
+        "type": "track",
+        "artists": [
+          {
+            "popularity": 0,
+            "_id": "5f720eda66320235249a336e",
+            "name": "Southern Hospitality",
+            "type": "artist",
+            "created_at": "2020-09-28T16:27:06.778Z",
+            "updated_at": "2020-09-28T16:27:06.778Z"
+          }
+        ],
+        "created_at": "2020-09-28T16:34:37.153Z",
+        "updated_at": "2020-09-28T16:34:37.153Z"
+      }
+    }
+  ],
+  "saved_items": [
+    {
+      "_id": "5fc96329bd1238436c43c74e",
+      "type": "traffic",
+      "executed_time_utc": "2020-12-03T22:14:01.558Z",
+      "traffic": {
+        "repeat_rule": {
+          "byweekday": [
+            "TH"
+          ],
+          "repeat_start_date": "2020-03-19T15:30:00.000Z",
+          "frequency": 2,
+          "repeat_end_date": "2022-11-24T16:30:00.000Z"
+        },
+        "traffic_details": {
+          "type": "Underwriting",
+          "title": "Yellow Scene Magazine",
+          "description": "<p>Please play from Underwriting folder on the Wavecart</p>",
+          "producer": null,
+          "custom": {
+            "old_comrad_event_id": "215",
+            "old_comrad_scheduled_event_ids": [
+              "17451"
+            ]
+          },
+          "underwriter_name": "Yellow Scene Magazine"
+        },
+        "status": "active",
+        "_id": "5f7211f2ab735642446fefd9",
+        "start_time_utc": "2020-12-03T16:30:00Z",
+        "end_time_utc": "2020-12-03T16:31:00Z",
+        "is_recurring": true,
+        "created_at": "2020-09-28T16:40:18.890Z",
+        "updated_at": "2020-09-28T16:40:18.890Z",
+        "__v": 0,
+        "master_event_id": {
+          "_id": "5f7211f2ab735642446fefd9"
+        },
+        "master_time_id": "5f7211f2ab735642446fefd9-1607013000000"
+      },
+      "master_time_id": "5f7211f2ab735642446fefd9-1607013000000"
+    },
+    {
+      "_id": "5fc9631abd1238436c43c74d",
+      "type": "track",
+      "track": {
+        "popularity": 0,
+        "_id": "5f721071ab7356424469d206",
+        "name": "Mile After Mile",
+        "album": {
+          "popularity": 0,
+          "_id": "5f720f0566320235249bb304",
+          "name": "Apples Acre",
+          "artist": "5f720eda663202352499feab",
+          "label": "Dead Oceans",
+          "genre": "5f720ef466320235249b2d91",
+          "compilation": false,
+          "created_at": "2011-08-11T13:51:14.000Z",
+          "custom": {
+            "itunes_id": null,
+            "old_comrad_id": "42584",
+            "local": "0",
+            "location": "Library",
+            "library_number": "42584"
+          },
+          "type": "album",
+          "updated_at": "2020-09-28T16:27:49.052Z"
+        },
+        "track_number": 2,
+        "disk_number": 1,
+        "duration_in_seconds": 256,
+        "custom": {
+          "old_comrad_id": "225474"
+        },
+        "type": "track",
+        "artists": [
+          {
+            "popularity": 0,
+            "_id": "5f720eda663202352499feab",
+            "name": "Nurses",
+            "type": "artist",
+            "created_at": "2020-09-28T16:27:06.158Z",
+            "updated_at": "2020-09-28T16:27:06.158Z"
+          }
+        ],
+        "created_at": "2020-09-28T16:33:53.258Z",
+        "updated_at": "2020-09-28T16:33:53.258Z"
+      },
+      "executed_time_utc": "2020-12-03T22:13:46.733Z"
+    },
+    {
+      "_id": "5fc9632dbd1238436c43c751",
+      "type": "traffic",
+      "executed_time_utc": "2020-12-03T22:14:05.985Z",
+      "traffic": {
+        "repeat_rule": {
+          "byweekday": [],
+          "repeat_start_date": "2011-03-29T16:00:00.000Z",
+          "frequency": 3,
+          "repeat_end_date": "9999-01-01T06:00:00.000Z"
+        },
+        "traffic_details": {
+          "type": "Legal ID",
+          "title": "Legal Id",
+          "description": "\"KGNU, Boulder, Denver and Fort Collins\"",
+          "producer": null,
+          "custom": {
+            "old_comrad_event_id": "2",
+            "old_comrad_scheduled_event_ids": [
+              "20"
+            ]
+          }
+        },
+        "status": "active",
+        "_id": "5f7211f2ab735642446feeac",
+        "start_time_utc": "2020-12-03T17:00:00Z",
+        "end_time_utc": "2020-12-03T17:01:00Z",
+        "is_recurring": true,
+        "created_at": "2020-09-28T16:40:18.631Z",
+        "updated_at": "2020-09-28T16:40:18.631Z",
+        "__v": 0,
+        "master_event_id": {
+          "_id": "5f7211f2ab735642446feeac"
+        },
+        "master_time_id": "5f7211f2ab735642446feeac-1607014800000"
+      },
+      "master_time_id": "5f7211f2ab735642446feeac-1607014800000"
+    }
+  ],
+  "created_at": "2020-12-03T22:13:23.386Z",
+  "updated_at": "2020-12-03T22:13:23.386Z",
+  "__v": 0
+}
+```
+
+<h3 id="find-one-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="find-one-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Find or Create
+
+<a id="opIdFindOrCreatePlaylist"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists',
+{
+  method: 'PUT',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /playlists`
+
+Get a playlist based on its start and end time, if it exists. Otherwise, creates the playlist.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+<h3 id="find-or-create-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|startTime|query|undefined|true|The time the playlist starts at|
+|endTime|query|undefined|true|The time the playlist ends at|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fc96465070d4b34fc036fdf",
+  "start_time_utc": "2020-12-03T19:06:00.000Z",
+  "end_time_utc": "2020-12-03T20:00:00.000Z",
+  "scratchpad": [],
+  "saved_items": [],
+  "created_at": "2020-12-03T22:19:17.824Z",
+  "updated_at": "2020-12-03T22:19:17.824Z",
+  "__v": 0
+}
+```
+
+<h3 id="find-or-create-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="find-or-create-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Scratchpad: Move Item to Saved Items
+
+<a id="opIdPlaylistsMoveItemFromSavedItemsToScratchpad"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists/:playlistId/saved-items/:itemId',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /playlists/:playlistId/saved-items/:itemId`
+
+Moves the specified item from Saved Items to Scratchpad, within a playlist.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
+
+<h3 id="scratchpad:-move-item-to-saved-items-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|playlistId|path|undefined|true|The id of the playlist to affect|
+|itemId|path|undefined|true|The id of the item to move to the scratchpad|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fc96318bd1238436c43c74c",
+  "type": "track",
+  "track": {
+    "popularity": 0,
+    "_id": "5f72109dab735642446ae259",
+    "name": "Mile After Mile",
+    "album": {
+      "popularity": 0,
+      "_id": "5f720f0b66320235249c156d",
+      "name": "Easy Livin'",
+      "artist": "5f720eda66320235249a336e",
+      "label": "Blind Pig Records",
+      "genre": "5f720ef466320235249b2d97",
+      "compilation": false,
+      "created_at": "2013-06-23T00:01:14.000Z",
+      "custom": {
+        "itunes_id": "596610087",
+        "old_comrad_id": "44122",
+        "local": null,
+        "location": "Personal",
+        "library_number": "44122"
+      },
+      "type": "album",
+      "updated_at": "2020-09-28T16:27:55.577Z"
+    },
+    "track_number": 4,
+    "disk_number": 1,
+    "duration_in_seconds": 136,
+    "custom": {
+      "old_comrad_id": "295468"
+    },
+    "type": "track",
+    "artists": [
+      {
+        "popularity": 0,
+        "_id": "5f720eda66320235249a336e",
+        "name": "Southern Hospitality",
+        "type": "artist",
+        "created_at": "2020-09-28T16:27:06.778Z",
+        "updated_at": "2020-09-28T16:27:06.778Z"
+      }
+    ],
+    "created_at": "2020-09-28T16:34:37.153Z",
+    "updated_at": "2020-09-28T16:34:37.153Z"
+  }
+}
+```
+
+<h3 id="scratchpad:-move-item-to-saved-items-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="scratchpad:-move-item-to-saved-items-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Saved Items: Move Item to Scratchpad
+
+<a id="opIdPlaylistsMoveItemFromScratchpadToSavedItems"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists/:id/saved-items',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /playlists/:id/saved-items`
+
+Moves the specified item from Scratchpad to Saved Items, within a playlist.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
+
+> Body parameter
+
+```json
+{}
+```
+
+<h3 id="saved-items:-move-item-to-scratchpad-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
+|id|path|undefined|true|The id of the playlist to affect|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fc96318bd1238436c43c74c",
+  "type": "track",
+  "track": {
+    "popularity": 0,
+    "_id": "5f72109dab735642446ae259",
+    "name": "Mile After Mile",
+    "album": {
+      "popularity": 0,
+      "_id": "5f720f0b66320235249c156d",
+      "name": "Easy Livin'",
+      "artist": "5f720eda66320235249a336e",
+      "label": "Blind Pig Records",
+      "genre": "5f720ef466320235249b2d97",
+      "compilation": false,
+      "created_at": "2013-06-23T00:01:14.000Z",
+      "custom": {
+        "itunes_id": "596610087",
+        "old_comrad_id": "44122",
+        "local": null,
+        "location": "Personal",
+        "library_number": "44122"
+      },
+      "type": "album",
+      "updated_at": "2020-09-28T16:27:55.577Z"
+    },
+    "track_number": 4,
+    "disk_number": 1,
+    "duration_in_seconds": 136,
+    "custom": {
+      "old_comrad_id": "295468"
+    },
+    "type": "track",
+    "artists": [
+      {
+        "popularity": 0,
+        "_id": "5f720eda66320235249a336e",
+        "name": "Southern Hospitality",
+        "type": "artist",
+        "created_at": "2020-09-28T16:27:06.778Z",
+        "updated_at": "2020-09-28T16:27:06.778Z"
+      }
+    ],
+    "created_at": "2020-09-28T16:34:37.153Z",
+    "updated_at": "2020-09-28T16:34:37.153Z"
+  }
+}
+```
+
+<h3 id="saved-items:-move-item-to-scratchpad-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="saved-items:-move-item-to-scratchpad-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Saved Items: Rearrange Item
+
+<a id="opIdPlaylistsSavedItemsRearrangeItem"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists/:playlistId/saved-items/:itemId/rearrange',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /playlists/:playlistId/saved-items/:itemId/rearrange`
+
+Moves the specified Saved Items item to a new position within the Saved Items array
+
+Calling this endpoint will not affect the `executed_time_utc` value of any items on the Saved Items list.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
+
+> Body parameter
+
+```json
+{}
+```
+
+<h3 id="saved-items:-rearrange-item-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
+|playlistId|path|undefined|true|The id of the playlist to affect|
+
+> Example responses
+
+<h3 id="saved-items:-rearrange-item-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="saved-items:-rearrange-item-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Scratchpad: Rearrange Item
+
+<a id="opIdPlaylistsScratchpadRearrangeItem"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/playlists/:playlistId/scratchpad/:itemId/rearrange',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /playlists/:playlistId/scratchpad/:itemId/rearrange`
+
+Moves the specified Scratchpad item to a new position within the Scratchpad array
+
+If moving the item around other items that have `occurs_after_time_utc` or `occurs_before_time_utc` set, you will want to call the Scratchpad: Update Item endpoint after moving the item to adjust those values as well. The moved item should be updated with the `occurs_before_time_utc` value of the item after it in the sequence (after the move is complete). And, similarly, the moved item shoul dbe updated with the `occurs_after_time_utc` of the item before it in the sequence (after the move is complete).
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
+
+> Body parameter
+
+```json
+{}
+```
+
+<h3 id="scratchpad:-rearrange-item-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
+|playlistId|path|undefined|true|The id of the playlist to affect|
+
+> Example responses
+
+<h3 id="scratchpad:-rearrange-item-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="scratchpad:-rearrange-item-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
 ## Recent Plays
 
 <a id="opIdRecentPlays"></a>
@@ -5078,6 +6526,333 @@ Status Code **200**
 |---|---|---|---|---|
 |Array of items played|[object]|Array of objects, where each object is an item played. Array appears in the order the items were played.|
 |» type|string|The type of item. Possible values: `track`, `traffic`, `comment, `voice_break`|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+<h1 id="comrad-api-resources">Resources</h1>
+
+## Create
+
+<a id="opIdCreateResource"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '[
+  {
+    "category": "Announcements",
+    "description": "ON-AIR - Online Ticket Giveaways",
+    "link": "https://getcomrad.org/example/On-AirTicketGiveawayInstructions.pdf"
+  }
+]';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/resources',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /resources`
+
+Returns a list of all resources.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`
+
+> Body parameter
+
+```json
+[
+  {
+    "category": "Announcements",
+    "description": "ON-AIR - Online Ticket Giveaways",
+    "link": "https://getcomrad.org/example/On-AirTicketGiveawayInstructions.pdf"
+  }
+]
+```
+
+<h3 id="create-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[Resource](#schemaresource)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fc9260689069141b89a775c",
+  "category": "Announcements",
+  "description": "Sample Announcement Guidelines",
+  "link": "https://getcomrad.org/announcements",
+  "__v": 0
+}
+```
+
+<h3 id="create-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="create-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Find All
+
+<a id="opIdFindAllResources"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/resources',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /resources`
+
+Returns a list of all resources.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "_id": "5f720bae0504f73464bd83b6",
+    "category": "Announcements",
+    "description": "ON-AIR - Online Ticket Giveaways",
+    "link": "https://getcomrad.org/onlineticketgiveaways.pdf",
+    "__v": 0
+  },
+  {
+    "_id": "5f720bae0504f73464bd83b7",
+    "category": "Policies",
+    "description": "Non-commercial Policy",
+    "link": "https://getcomrad.org/noncommercialpolicy.pdf",
+    "__v": 0
+  },
+  {
+    "_id": "5f720bae0504f73464bd83b8",
+    "category": "Other Important Documents",
+    "description": "2019-2023 Strategic Plan",
+    "link": "https://getcomrad.org/other-important-documents",
+    "__v": 0
+  }
+]
+```
+
+<h3 id="find-all-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="find-all-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Delete
+
+<a id="opIdDeleteResource"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/resources/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /resources/{id}`
+
+Delete a resource
+
+The following roles can access this API endpoint: `Admin`, `Full Access`
+
+<h3 id="delete-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fc928cc6df1040ae4bedf2c",
+  "category": "Announcements",
+  "description": "Sample Announcement Guidelines",
+  "link": "https://getcomrad.org/announcements",
+  "__v": 0
+}
+```
+
+<h3 id="delete-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Resource does not exist|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|A server error occurred. Check the error message for more details.|
+
+<h3 id="delete-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Description|
+|---|---|---|---|---|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Update
+
+<a id="opIdUpdateResource"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/resouces/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /resouces/{id}`
+
+Update a resource
+
+The following roles can access this API endpoint: `Admin`, `Full Access`
+
+> Body parameter
+
+```json
+{}
+```
+
+<h3 id="update-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|true|JSON object of properties to update|
+|id|path|undefined|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fc929663d904b472c5ba2c7",
+  "category": "Other Important Documents",
+  "description": "Sample Announcement Guidelines",
+  "link": "https://getcomrad.org/announcements",
+  "__v": 0
+}
+```
+
+<h3 id="update-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
+
+<h3 id="update-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Description|
+|---|---|---|---|---|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
