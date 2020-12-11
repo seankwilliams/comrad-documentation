@@ -1,5 +1,8 @@
 # Slate v3 POC
 
+## Requirements
+Node > 10.3
+
 ![Build](https://github.com/Mermade/reslate/workflows/Build/badge.svg)
 
 Proof-of-concept Slate v3 using [eleventy](https://www.11ty.dev/) as the static site generator.
