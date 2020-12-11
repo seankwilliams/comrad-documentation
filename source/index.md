@@ -1642,7 +1642,14 @@ ApiKeyAuth
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "show_details": {
+    "guests": [
+      "Sample guest 1",
+      "Sample guest 2"
+    ]
+  }
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -1676,7 +1683,14 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 > Body parameter
 
 ```json
-{}
+{
+  "show_details": {
+    "guests": [
+      "Sample guest 1",
+      "Sample guest 2"
+    ]
+  }
+}
 ```
 
 <h3 id="update-parameters">Parameters</h3>
@@ -2810,7 +2824,11 @@ ApiKeyAuth
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "traffic_details": {
+    "description": "This is an updated description"
+  }
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -2844,7 +2862,11 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Under
 > Body parameter
 
 ```json
-{}
+{
+  "traffic_details": {
+    "description": "This is an updated description"
+  }
+}
 ```
 
 <h3 id="update-parameters">Parameters</h3>
@@ -4017,7 +4039,9 @@ ApiKeyAuth
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "on_air_name": "Prairie Lakes Band"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -4047,7 +4071,9 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 > Body parameter
 
 ```json
-{}
+{
+  "on_air_name": "Prairie Lakes Band"
+}
 ```
 
 <h3 id="update-parameters">Parameters</h3>
@@ -4688,7 +4714,9 @@ ApiKeyAuth
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "label": "Comrad Records"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -4718,7 +4746,9 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Music
 > Body parameter
 
 ```json
-{}
+{
+  "label": "Comrad Records"
+}
 ```
 
 <h3 id="update-parameters">Parameters</h3>
@@ -4932,14 +4962,16 @@ ApiKeyAuth
 
 <h1 id="comrad-api-playlists">Playlists</h1>
 
-## Saved Items: Add Comment
+## Saved Items - Add Comment
 
 <a id="opIdPlaylistsAddCommentToSavedItems"></a>
 
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "description": "This is a comment entered into Saved Items"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -4969,10 +5001,12 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 > Body parameter
 
 ```json
-{}
+{
+  "description": "This is a comment entered into Saved Items"
+}
 ```
 
-<h3 id="saved-items:-add-comment-parameters">Parameters</h3>
+<h3 id="saved-items---add-comment-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -4992,7 +5026,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 }
 ```
 
-<h3 id="saved-items:-add-comment-responses">Responses</h3>
+<h3 id="saved-items---add-comment-responses">Responses</h3>
 
 |Status|Meaning|Description|
 |---|---|---|---|
@@ -5002,21 +5036,23 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="saved-items:-add-comment-responseschema">Response Schema</h3>
+<h3 id="saved-items---add-comment-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
 </aside>
 
-## Scratchpad: Add Comment
+## Scratchpad - Add Comment
 
 <a id="opIdPlaylistsAddCommentToScratchpad"></a>
 
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "description": "This is a comment entered into a playlist"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -5046,10 +5082,12 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 > Body parameter
 
 ```json
-{}
+{
+  "description": "This is a comment entered into a playlist"
+}
 ```
 
-<h3 id="scratchpad:-add-comment-parameters">Parameters</h3>
+<h3 id="scratchpad---add-comment-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -5068,7 +5106,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 }
 ```
 
-<h3 id="scratchpad:-add-comment-responses">Responses</h3>
+<h3 id="scratchpad---add-comment-responses">Responses</h3>
 
 |Status|Meaning|Description|
 |---|---|---|---|
@@ -5078,21 +5116,23 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="scratchpad:-add-comment-responseschema">Response Schema</h3>
+<h3 id="scratchpad---add-comment-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
 </aside>
 
-## Saved Items: Add Track
+## Saved Items - Add Track
 
 <a id="opIdPlaylistsAddTrackToSavedItems"></a>
 
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "trackId": "5f721090ab735642446aa414"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -5122,10 +5162,12 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 > Body parameter
 
 ```json
-{}
+{
+  "trackId": "5f721090ab735642446aa414"
+}
 ```
 
-<h3 id="saved-items:-add-track-parameters">Parameters</h3>
+<h3 id="saved-items---add-track-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -5186,7 +5228,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 }
 ```
 
-<h3 id="saved-items:-add-track-responses">Responses</h3>
+<h3 id="saved-items---add-track-responses">Responses</h3>
 
 |Status|Meaning|Description|
 |---|---|---|---|
@@ -5196,21 +5238,23 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="saved-items:-add-track-responseschema">Response Schema</h3>
+<h3 id="saved-items---add-track-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
 </aside>
 
-## Scratchpad: Add Track
+## Scratchpad - Add Track
 
 <a id="opIdPlaylistsAddTrackToScratchpad"></a>
 
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "trackId": "5fc96318bd1238436c43c74c"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -5240,10 +5284,12 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 > Body parameter
 
 ```json
-{}
+{
+  "trackId": "5fc96318bd1238436c43c74c"
+}
 ```
 
-<h3 id="scratchpad:-add-track-parameters">Parameters</h3>
+<h3 id="scratchpad---add-track-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -5304,7 +5350,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 }
 ```
 
-<h3 id="scratchpad:-add-track-responses">Responses</h3>
+<h3 id="scratchpad---add-track-responses">Responses</h3>
 
 |Status|Meaning|Description|
 |---|---|---|---|
@@ -5314,21 +5360,23 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="scratchpad:-add-track-responseschema">Response Schema</h3>
+<h3 id="scratchpad---add-track-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
 </aside>
 
-## Saved Items: Add Traffic
+## Saved Items - Add Traffic
 
 <a id="opIdPlaylistsAddTrafficToSavedItems"></a>
 
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "masterTimeId": "5f721090ab735642446aa414"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -5358,10 +5406,12 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 > Body parameter
 
 ```json
-{}
+{
+  "masterTimeId": "5f721090ab735642446aa414"
+}
 ```
 
-<h3 id="saved-items:-add-traffic-parameters">Parameters</h3>
+<h3 id="saved-items---add-traffic-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -5413,7 +5463,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 }
 ```
 
-<h3 id="saved-items:-add-traffic-responses">Responses</h3>
+<h3 id="saved-items---add-traffic-responses">Responses</h3>
 
 |Status|Meaning|Description|
 |---|---|---|---|
@@ -5423,14 +5473,14 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="saved-items:-add-traffic-responseschema">Response Schema</h3>
+<h3 id="saved-items---add-traffic-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
 </aside>
 
-## Saved Items: Add Voice Break
+## Saved Items - Add Voice Break
 
 <a id="opIdPlaylistsAddVoiceBreakToSavedItems"></a>
 
@@ -5463,7 +5513,7 @@ Adds a voice break to the Saved Items of the specified playlist.
 
 The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
 
-<h3 id="saved-items:-add-voice-break-parameters">Parameters</h3>
+<h3 id="saved-items---add-voice-break-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -5481,7 +5531,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 }
 ```
 
-<h3 id="saved-items:-add-voice-break-responses">Responses</h3>
+<h3 id="saved-items---add-voice-break-responses">Responses</h3>
 
 |Status|Meaning|Description|
 |---|---|---|---|
@@ -5491,14 +5541,14 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="saved-items:-add-voice-break-responseschema">Response Schema</h3>
+<h3 id="saved-items---add-voice-break-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
 </aside>
 
-## Scratchpad: Add Voice Break
+## Scratchpad - Add Voice Break
 
 <a id="opIdPlaylistsAddVoiceBreakToScratchpad"></a>
 
@@ -5531,7 +5581,7 @@ Adds a voice break to the scratchpad of the specified playlist.
 
 The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
 
-<h3 id="scratchpad:-add-voice-break-parameters">Parameters</h3>
+<h3 id="scratchpad---add-voice-break-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -5548,7 +5598,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 }
 ```
 
-<h3 id="scratchpad:-add-voice-break-responses">Responses</h3>
+<h3 id="scratchpad---add-voice-break-responses">Responses</h3>
 
 |Status|Meaning|Description|
 |---|---|---|---|
@@ -5558,14 +5608,14 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="scratchpad:-add-voice-break-responseschema">Response Schema</h3>
+<h3 id="scratchpad---add-voice-break-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
 </aside>
 
-## Scratchpad: Delete Item
+## Scratchpad - Delete Item
 
 <a id="opIdPlaylistsDeleteItemFromScratchpad"></a>
 
@@ -5598,7 +5648,7 @@ Removes the specified item from the scratchpad of the specified playlist, if the
 
 The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
 
-<h3 id="scratchpad:-delete-item-parameters">Parameters</h3>
+<h3 id="scratchpad---delete-item-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -5607,7 +5657,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 
 > Example responses
 
-<h3 id="scratchpad:-delete-item-responses">Responses</h3>
+<h3 id="scratchpad---delete-item-responses">Responses</h3>
 
 |Status|Meaning|Description|
 |---|---|---|---|
@@ -5617,21 +5667,23 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="scratchpad:-delete-item-responseschema">Response Schema</h3>
+<h3 id="scratchpad---delete-item-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
 </aside>
 
-## Scratchpad: Update Item
+## Scratchpad - Update Item
 
 <a id="opIdPlaylistsUpdateScratchpadItem"></a>
 
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "occurs_before_time_utc": "2020-12-03T18:00:00Z"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -5661,10 +5713,12 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 > Body parameter
 
 ```json
-{}
+{
+  "occurs_before_time_utc": "2020-12-03T18:00:00Z"
+}
 ```
 
-<h3 id="scratchpad:-update-item-parameters">Parameters</h3>
+<h3 id="scratchpad---update-item-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -5674,7 +5728,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 
 > Example responses
 
-<h3 id="scratchpad:-update-item-responses">Responses</h3>
+<h3 id="scratchpad---update-item-responses">Responses</h3>
 
 |Status|Meaning|Description|
 |---|---|---|---|
@@ -5684,7 +5738,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="scratchpad:-update-item-responseschema">Response Schema</h3>
+<h3 id="scratchpad---update-item-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6015,7 +6069,7 @@ To perform this operation, you must be authenticated by means of one of the foll
 ApiKeyAuth
 </aside>
 
-## Scratchpad: Move Item to Saved Items
+## Scratchpad - Move Item to Saved Items
 
 <a id="opIdPlaylistsMoveItemFromSavedItemsToScratchpad"></a>
 
@@ -6048,7 +6102,7 @@ Moves the specified item from Saved Items to Scratchpad, within a playlist.
 
 The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`. The `DJ` role can also access the endpoint when the playlist spans a show where the user is a host.
 
-<h3 id="scratchpad:-move-item-to-saved-items-parameters">Parameters</h3>
+<h3 id="scratchpad---move-item-to-saved-items-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -6109,7 +6163,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 }
 ```
 
-<h3 id="scratchpad:-move-item-to-saved-items-responses">Responses</h3>
+<h3 id="scratchpad---move-item-to-saved-items-responses">Responses</h3>
 
 |Status|Meaning|Description|
 |---|---|---|---|
@@ -6119,21 +6173,23 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="scratchpad:-move-item-to-saved-items-responseschema">Response Schema</h3>
+<h3 id="scratchpad---move-item-to-saved-items-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
 </aside>
 
-## Saved Items: Move Item to Scratchpad
+## Saved Items - Move Item to Scratchpad
 
 <a id="opIdPlaylistsMoveItemFromScratchpadToSavedItems"></a>
 
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "itemId": "5fc96318bd1238436c43c74c"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -6163,10 +6219,12 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 > Body parameter
 
 ```json
-{}
+{
+  "itemId": "5fc96318bd1238436c43c74c"
+}
 ```
 
-<h3 id="saved-items:-move-item-to-scratchpad-parameters">Parameters</h3>
+<h3 id="saved-items---move-item-to-scratchpad-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -6227,7 +6285,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 }
 ```
 
-<h3 id="saved-items:-move-item-to-scratchpad-responses">Responses</h3>
+<h3 id="saved-items---move-item-to-scratchpad-responses">Responses</h3>
 
 |Status|Meaning|Description|
 |---|---|---|---|
@@ -6237,21 +6295,23 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="saved-items:-move-item-to-scratchpad-responseschema">Response Schema</h3>
+<h3 id="saved-items---move-item-to-scratchpad-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
 </aside>
 
-## Saved Items: Rearrange Item
+## Saved Items - Rearrange Item
 
 <a id="opIdPlaylistsSavedItemsRearrangeItem"></a>
 
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "toIndex": "0"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -6283,10 +6343,12 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 > Body parameter
 
 ```json
-{}
+{
+  "toIndex": "0"
+}
 ```
 
-<h3 id="saved-items:-rearrange-item-parameters">Parameters</h3>
+<h3 id="saved-items---rearrange-item-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -6295,7 +6357,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 
 > Example responses
 
-<h3 id="saved-items:-rearrange-item-responses">Responses</h3>
+<h3 id="saved-items---rearrange-item-responses">Responses</h3>
 
 |Status|Meaning|Description|
 |---|---|---|---|
@@ -6305,21 +6367,23 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="saved-items:-rearrange-item-responseschema">Response Schema</h3>
+<h3 id="saved-items---rearrange-item-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 ApiKeyAuth
 </aside>
 
-## Scratchpad: Rearrange Item
+## Scratchpad - Rearrange Item
 
 <a id="opIdPlaylistsScratchpadRearrangeItem"></a>
 
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "toIndex": "0"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -6351,10 +6415,12 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 > Body parameter
 
 ```json
-{}
+{
+  "toIndex": "0"
+}
 ```
 
-<h3 id="scratchpad:-rearrange-item-parameters">Parameters</h3>
+<h3 id="scratchpad---rearrange-item-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -6363,7 +6429,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 
 > Example responses
 
-<h3 id="scratchpad:-rearrange-item-responses">Responses</h3>
+<h3 id="scratchpad---rearrange-item-responses">Responses</h3>
 
 |Status|Meaning|Description|
 |---|---|---|---|
@@ -6373,7 +6439,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was a problem with the data you submitted. Check the response for more details.|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="scratchpad:-rearrange-item-responseschema">Response Schema</h3>
+<h3 id="scratchpad---rearrange-item-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6784,7 +6850,9 @@ ApiKeyAuth
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "category": "Other Important Documents"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -6814,7 +6882,9 @@ The following roles can access this API endpoint: `Admin`, `Full Access`
 > Body parameter
 
 ```json
-{}
+{
+  "category": "Other Important Documents"
+}
 ```
 
 <h3 id="update-parameters">Parameters</h3>
@@ -7405,7 +7475,9 @@ ApiKeyAuth
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "on_air_name": "DJ Coolest Software"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json',
@@ -7437,7 +7509,9 @@ All users can use this endpoint for their own user ID, but only to update passwo
 > Body parameter
 
 ```json
-{}
+{
+  "on_air_name": "DJ Coolest Software"
+}
 ```
 
 <h3 id="update-parameters">Parameters</h3>
