@@ -347,7 +347,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="current-show-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The show that is currently playing, including its playlist. `null` if there is no show currently playing.|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
@@ -567,7 +567,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="next-show-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|An object containing the next show, including its playlist. `null` if no shows occur during the next day.|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
@@ -787,8 +787,281 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="previous-show-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|an object containing the previous snow, or `null` if no shows occurred within the previous day|
+|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|an object containing the previous show, or `null` if no shows occurred within the previous day|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Recent Shows
+
+<a id="opIdRecentShows"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/recent-shows',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /recent-shows`
+
+Returns an array of the most recent shows, including the current show. The array is sorted by the show time, descending, so the current show is first in the array and the oldest show is last.
+
+Only returns shows from the past week, and will return a maximum of 50 shows.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "repeat_rule": {
+      "byweekday": [
+        "TU"
+      ],
+      "repeat_start_date": "2011-04-12T00:30:00.000Z",
+      "frequency": 2,
+      "repeat_end_date": "9999-01-01T06:00:00.000Z"
+    },
+    "show_details": {
+      "host_type": "User",
+      "guests": [
+        null
+      ],
+      "title": "Outsources",
+      "summary": "Gay, Lesbian, Bisexual, Transgender News and Interviews.",
+      "description": "<p>Presenting news and information from the local GLBT community and beyond.</p>",
+      "producer": null,
+      "host": null,
+      "custom": {
+        "record_audio": "1",
+        "url": "outsources",
+        "source": "KGNU"
+      }
+    },
+    "status": "active",
+    "_id": "5f7211d1ab735642446f6734",
+    "start_time_utc": "2020-12-22T01:30:00Z",
+    "end_time_utc": "2020-12-22T02:00:00Z",
+    "is_recurring": true,
+    "created_at": "2020-09-28T16:39:45.553Z",
+    "updated_at": "2020-09-28T16:39:45.553Z",
+    "__v": 0,
+    "master_event_id": {
+      "_id": "5f7211d1ab735642446f6734"
+    },
+    "master_time_id": "5f7211d1ab735642446f6734-1608600600000",
+    "playlist_executed": [
+      {
+        "_id": "5fe150d34e533440f014e7ec",
+        "type": "traffic",
+        "executed_time_utc": "2020-12-22T01:50:11.457Z",
+        "traffic": {
+          "repeat_rule": {
+            "byweekday": [
+              "TU"
+            ],
+            "repeat_start_date": "2019-04-02T00:30:00.000Z",
+            "frequency": 2,
+            "repeat_end_date": "2023-11-28T01:30:00.000Z"
+          },
+          "traffic_details": {
+            "type": "Underwriting",
+            "title": "Gay And Lesbian Fund For Colorado",
+            "description": "<p>**********A few Versions available to choose from. Please play from wav cart- Underwriting file********</p>",
+            "producer": null,
+            "custom": {
+              "old_comrad_event_id": "2172",
+              "old_comrad_scheduled_event_ids": [
+                "13925"
+              ]
+            },
+            "underwriter_name": "Gay And Lesbian Fund For Colorado"
+          },
+          "status": "active",
+          "_id": "5f7211faab73564244701108",
+          "start_time_utc": "2020-12-22T01:30:00Z",
+          "end_time_utc": "2020-12-22T01:31:00Z",
+          "is_recurring": true,
+          "created_at": "2020-09-28T16:40:26.782Z",
+          "updated_at": "2020-09-28T16:40:26.782Z",
+          "__v": 0,
+          "master_event_id": {
+            "_id": "5f7211faab73564244701108"
+          },
+          "master_time_id": "5f7211faab73564244701108-1608600600000"
+        },
+        "master_time_id": "5f7211faab73564244701108-1608600600000"
+      },
+      {
+        "_id": "5fe150fe4e533440f014e7ee",
+        "type": "track",
+        "track": {
+          "popularity": 0,
+          "_id": "5f721073ab7356424469e2d1",
+          "name": "Booker's Waltz",
+          "album": {
+            "popularity": 0,
+            "_id": "5f720f0566320235249bba6e",
+            "name": "Blue Glass Music",
+            "artist": "5f720eda66320235249a07c4",
+            "label": "test",
+            "genre": null,
+            "compilation": false,
+            "created_at": "2011-09-27T20:05:38.000Z",
+            "custom": {
+              "itunes_id": null,
+              "old_comrad_id": "1111189315",
+              "local": null,
+              "location": "Gnu Bin"
+            },
+            "type": "album",
+            "updated_at": "2020-09-28T16:27:49.218Z"
+          },
+          "track_number": 4,
+          "disk_number": 1,
+          "duration_in_seconds": 369,
+          "custom": {
+            "old_comrad_id": "229776"
+          },
+          "type": "track",
+          "artists": [
+            {
+              "popularity": 0,
+              "_id": "5f720eda66320235249a07c4",
+              "name": "Carol Morgan Quartet",
+              "type": "artist",
+              "created_at": "2020-09-28T16:27:06.262Z",
+              "updated_at": "2020-09-28T16:27:06.262Z"
+            }
+          ],
+          "created_at": "2020-09-28T16:33:55.737Z",
+          "updated_at": "2020-09-28T16:33:55.737Z"
+        },
+        "executed_time_utc": "2020-12-22T01:50:54.520Z"
+      }
+    ]
+  },
+  {
+    "repeat_rule": {
+      "byweekday": [
+        "TU"
+      ],
+      "repeat_start_date": "2015-09-08T00:00:00.000Z",
+      "frequency": 2,
+      "repeat_end_date": "9999-01-01T06:00:00.000Z"
+    },
+    "show_details": {
+      "host_type": "User",
+      "guests": [
+        null
+      ],
+      "title": "Labor Exchange",
+      "summary": "Interviews with Local and National Labor Activists and Workers",
+      "description": "<p>Interviews with local and national labor activists and workers every other Monday evening at 6pm.</p>",
+      "producer": null,
+      "host": {
+        "on_air_name": "Dennis Creese",
+        "_id": "5f7211bfab735642446f66b1",
+        "first_name": "Dennis",
+        "last_name": "Creese"
+      },
+      "custom": {
+        "record_audio": "1",
+        "url": "laborexchange",
+        "source": "KGNU"
+      }
+    },
+    "status": "active",
+    "_id": "5f7211d1ab735642446f6733",
+    "start_time_utc": "2020-12-22T01:00:00Z",
+    "end_time_utc": "2020-12-22T01:30:00Z",
+    "is_recurring": true,
+    "created_at": "2020-09-28T16:39:45.548Z",
+    "updated_at": "2020-09-28T16:39:45.548Z",
+    "__v": 0,
+    "master_event_id": {
+      "_id": "5f7211d1ab735642446f6733"
+    },
+    "master_time_id": "5f7211d1ab735642446f6733-1608598800000",
+    "playlist_executed": []
+  },
+  {
+    "repeat_rule": {
+      "byweekday": [
+        "TU"
+      ],
+      "repeat_start_date": "2015-09-15T00:00:00.000Z",
+      "frequency": 2,
+      "repeat_end_date": "9999-01-01T06:00:00.000Z"
+    },
+    "show_details": {
+      "host_type": "User",
+      "guests": [
+        null
+      ],
+      "title": "La Lucha Sigue",
+      "summary": "News About Latin America and the Caribbean",
+      "description": "<p><span style=\"font-family: Arial,sans-serif;\">La Lucha Sigue means \"The Struggle Continues\". This half hour news show, played every other Monday on KGNU, explores stories and issues from Latin America and the Caribbean that are seldom heard on US media.</span></p>",
+      "producer": null,
+      "host": {
+        "on_air_name": "Leo Gruip-Ruiz and Marge Taniwaki",
+        "_id": "5f7211bfab735642446f66b0",
+        "first_name": "Leo",
+        "last_name": "Gruip-Ruiz and Marge Taniwaki"
+      },
+      "custom": {
+        "record_audio": "1",
+        "url": "laluchasigue",
+        "source": "KGNU"
+      }
+    },
+    "status": "active",
+    "_id": "5f7211d1ab735642446f6732",
+    "start_time_utc": "2020-12-22T01:00:00Z",
+    "end_time_utc": "2020-12-22T01:30:00Z",
+    "is_recurring": true,
+    "created_at": "2020-09-28T16:39:45.543Z",
+    "updated_at": "2020-09-28T16:39:45.543Z",
+    "__v": 0,
+    "master_event_id": {
+      "_id": "5f7211d1ab735642446f6732"
+    },
+    "master_time_id": "5f7211d1ab735642446f6732-1608598800000",
+    "playlist_executed": []
+  }
+]
+```
+
+<h3 id="recent-shows-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns an array containing the current and recent shows|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
@@ -930,7 +1203,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="recent-plays-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of the 10 most recent items played|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
@@ -1010,7 +1283,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="find-all-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -1189,7 +1462,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="create-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -1202,9 +1475,9 @@ To perform this operation, you must be authenticated by means of one of the foll
 ApiKeyAuth
 </aside>
 
-## Search
+## Find
 
-<a id="opIdSearchShows"></a>
+<a id="opIdFindShows"></a>
 
 > Code samples
 
@@ -1231,15 +1504,18 @@ fetch('/events/shows',
 
 `GET /events/shows`
 
-Search for a show series, looking for the provided search string in the show title.
+Returns shows in a given timeframe, ordered by time from earliest to latest
 
 The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
 
-<h3 id="search-parameters">Parameters</h3>
+<h3 id="find-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|s|query|undefined|true|Find series matching this search string|
+|startDate|query|undefined|true|Retrieve events with either a start time or end time at or after this value. Should be parseable by `Date` constructor in JavaScript.|
+|endDate|query|undefined|true|Retrieve events with either a start time or end time at or before this value. Should be parseable by `Date` constructor in JavaScript.|
+|host|query|undefined|false|Return only shows hosted by the user specified by the id, or a host group containing that user|
+|showsWithNoHost|query|undefined|false|If true, will only return shows that have no host|
 
 > Example responses
 
@@ -1247,40 +1523,60 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 
 ```json
 [
-  [
-    {
-      "show_details": {
-        "host_type": "User",
-        "title": "Sleepless Nights",
-        "summary": "Late night freeform radio",
-        "description": "<p>This freeform show makes room for everything, combining the aesthetics of the Morning and Afternoon shows and leaving the door open for more extreme and intense audio excursions.</p>",
-        "producer": null,
-        "host": null,
-        "custom": {
-          "record_audio": "1",
-          "url": "sleepless",
-          "source": "KGNU"
-        }
-      },
-      "_id": "5f7211d1ab735642446f66f8",
-      "start_time_utc": "2011-03-27T06:00:00.000Z",
-      "score": 0.75
-    }
-  ]
+  {
+    "repeat_rule": {
+      "byweekday": [
+        "MO",
+        "TU",
+        "WE",
+        "TH",
+        "FR"
+      ],
+      "repeat_start_date": "2011-03-28T15:30:00.000Z",
+      "frequency": 2,
+      "repeat_end_date": "9999-01-01T06:00:00.000Z"
+    },
+    "show_details": {
+      "host_type": "User",
+      "guests": [
+        null
+      ],
+      "title": "Morning Sound Alternative",
+      "summary": "Diverse and eclectic sounds, on the mellow side.",
+      "description": "<p>Diverse and eclectic sounds, on the mellow side. You'll hear everything from Ambient Electronics to Reggae to Folk.</p>",
+      "producer": null,
+      "host": null,
+      "custom": {
+        "my_custom_property": "Custom value"
+      }
+    },
+    "status": "active",
+    "_id": "5f35a6ef783e63454cd918f1",
+    "start_time_utc": "2020-09-16T15:30:00Z",
+    "end_time_utc": "2020-09-16T18:06:00Z",
+    "is_recurring": true,
+    "created_at": "2020-08-13T20:47:43.675Z",
+    "updated_at": "2020-08-13T20:47:43.675Z",
+    "__v": 0,
+    "master_event_id": {
+      "_id": "5f35a6ef783e63454cd918f1"
+    },
+    "master_time_id": "5f35a6ef783e63454cd918f1-1600270200000"
+  }
 ]
 ```
 
-<h3 id="search-responses">Responses</h3>
+<h3 id="find-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the parameters you provided. See response for more details|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="search-responseschema">Response Schema</h3>
+<h3 id="find-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1439,7 +1735,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="create-instance-from-series-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The populated show record of the newly created instance|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -1542,7 +1838,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="get-by-id-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -1622,7 +1918,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="delete-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -1796,7 +2092,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="update-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -2024,10 +2320,168 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="current-show-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The show that is currently playing, including its playlist. `null` if there is no show currently playing.|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Find by Date and Name
+
+<a id="opIdFindShowByDateAndName"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/shows/{date}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /events/shows/{date}`
+
+Pull all shows on a particular date, filtered by those matching the optional `name` parameter.  If `name` is provided, only returns the most relevant results.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+<h3 id="find-by-date-and-name-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|name|query|undefined|false|Return shows matching this string|
+|date|path|undefined|true|The date on which to pull shows|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  [
+    {
+      "_id": "5f7211d1ab735642446f66fa",
+      "repeat_rule": {
+        "byweekday": [
+          "TU",
+          "WE",
+          "TH",
+          "FR"
+        ],
+        "repeat_start_date": "2011-03-29T09:00:00.000Z",
+        "frequency": 2,
+        "repeat_end_date": "9999-01-01T06:00:00.000Z"
+      },
+      "show_details": {
+        "host_type": "User",
+        "guests": [
+          null
+        ],
+        "title": "Restless Mornings",
+        "summary": "The proving ground for new talent",
+        "description": "<p><span style=\"font-family: Arial,sans-serif;\">Anything can happen as new DJs get their chops behind the mixing board.<br /></span></p>",
+        "producer": null,
+        "host": null,
+        "custom": {
+          "record_audio": "1",
+          "url": "restless",
+          "source": "KGNU"
+        }
+      },
+      "status": "active",
+      "start_time_utc": "2020-12-16T10:00:00Z",
+      "end_time_utc": "2020-12-16T12:30:00Z",
+      "is_recurring": true,
+      "created_at": "2020-09-28T16:39:45.137Z",
+      "updated_at": "2020-09-28T16:39:45.137Z",
+      "__v": 0,
+      "master_event_id": {
+        "_id": "5f7211d1ab735642446f66fa"
+      },
+      "master_time_id": "5f7211d1ab735642446f66fa-1608112800000",
+      "playlist_executed": [
+        {
+          "_id": "5fdb8857dd9f7341283d80dd",
+          "type": "track",
+          "track": {
+            "popularity": 0,
+            "_id": "5f72109aab735642446ad5f8",
+            "name": "I Think, Therefore I Am",
+            "album": {
+              "popularity": 0,
+              "_id": "5f720efe66320235249b9b04",
+              "name": "Take One",
+              "artist": "5f720eda663202352499f795",
+              "label": "Destination Unknown",
+              "genre": "5f720ef466320235249b2d93",
+              "compilation": false,
+              "custom": {
+                "itunes_id": null,
+                "old_comrad_id": "1111177433",
+                "local": "0",
+                "location": "Digital Library"
+              },
+              "type": "album",
+              "created_at": "2020-09-28T16:27:42.994Z",
+              "updated_at": "2020-09-28T16:27:42.994Z"
+            },
+            "track_number": 2,
+            "disk_number": 1,
+            "duration_in_seconds": 259,
+            "custom": {
+              "old_comrad_id": "292290"
+            },
+            "type": "track",
+            "artists": [
+              {
+                "popularity": 0,
+                "_id": "5f720eda663202352499f795",
+                "name": "The Way Low Down",
+                "type": "artist",
+                "created_at": "2020-09-28T16:27:06.069Z",
+                "updated_at": "2020-09-28T16:27:06.069Z"
+              }
+            ],
+            "created_at": "2020-09-28T16:34:34.312Z",
+            "updated_at": "2020-09-28T16:34:34.312Z"
+          },
+          "executed_time_utc": "2020-12-17T16:33:27.295Z"
+        }
+      ]
+    }
+  ]
+]
+```
+
+<h3 id="find-by-date-and-name-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the parameters you provided. See response for more details|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="find-by-date-and-name-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -2244,7 +2698,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="next-show-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|An object containing the next show, including its playlist. `null` if no shows occur during the next day.|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
@@ -2464,8 +2918,8 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="previous-show-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|an object containing the previous snow, or `null` if no shows occurred within the previous day|
+|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|an object containing the previous show, or `null` if no shows occurred within the previous day|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
@@ -2474,9 +2928,9 @@ To perform this operation, you must be authenticated by means of one of the foll
 ApiKeyAuth
 </aside>
 
-## Delete Instance from Series
+## Recent Shows
 
-<a id="opIdDeleteInstanceFromSeries"></a>
+<a id="opIdRecentShows"></a>
 
 > Code samples
 
@@ -2487,7 +2941,280 @@ const headers = {
   'Authorization':'API_KEY'
 };
 
-fetch('/events/traffic/{id}/remove-instance-from-series',
+fetch('/recent-shows',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /recent-shows`
+
+Returns an array of the most recent shows, including the current show. The array is sorted by the show time, descending, so the current show is first in the array and the oldest show is last.
+
+Only returns shows from the past week, and will return a maximum of 50 shows.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "repeat_rule": {
+      "byweekday": [
+        "TU"
+      ],
+      "repeat_start_date": "2011-04-12T00:30:00.000Z",
+      "frequency": 2,
+      "repeat_end_date": "9999-01-01T06:00:00.000Z"
+    },
+    "show_details": {
+      "host_type": "User",
+      "guests": [
+        null
+      ],
+      "title": "Outsources",
+      "summary": "Gay, Lesbian, Bisexual, Transgender News and Interviews.",
+      "description": "<p>Presenting news and information from the local GLBT community and beyond.</p>",
+      "producer": null,
+      "host": null,
+      "custom": {
+        "record_audio": "1",
+        "url": "outsources",
+        "source": "KGNU"
+      }
+    },
+    "status": "active",
+    "_id": "5f7211d1ab735642446f6734",
+    "start_time_utc": "2020-12-22T01:30:00Z",
+    "end_time_utc": "2020-12-22T02:00:00Z",
+    "is_recurring": true,
+    "created_at": "2020-09-28T16:39:45.553Z",
+    "updated_at": "2020-09-28T16:39:45.553Z",
+    "__v": 0,
+    "master_event_id": {
+      "_id": "5f7211d1ab735642446f6734"
+    },
+    "master_time_id": "5f7211d1ab735642446f6734-1608600600000",
+    "playlist_executed": [
+      {
+        "_id": "5fe150d34e533440f014e7ec",
+        "type": "traffic",
+        "executed_time_utc": "2020-12-22T01:50:11.457Z",
+        "traffic": {
+          "repeat_rule": {
+            "byweekday": [
+              "TU"
+            ],
+            "repeat_start_date": "2019-04-02T00:30:00.000Z",
+            "frequency": 2,
+            "repeat_end_date": "2023-11-28T01:30:00.000Z"
+          },
+          "traffic_details": {
+            "type": "Underwriting",
+            "title": "Gay And Lesbian Fund For Colorado",
+            "description": "<p>**********A few Versions available to choose from. Please play from wav cart- Underwriting file********</p>",
+            "producer": null,
+            "custom": {
+              "old_comrad_event_id": "2172",
+              "old_comrad_scheduled_event_ids": [
+                "13925"
+              ]
+            },
+            "underwriter_name": "Gay And Lesbian Fund For Colorado"
+          },
+          "status": "active",
+          "_id": "5f7211faab73564244701108",
+          "start_time_utc": "2020-12-22T01:30:00Z",
+          "end_time_utc": "2020-12-22T01:31:00Z",
+          "is_recurring": true,
+          "created_at": "2020-09-28T16:40:26.782Z",
+          "updated_at": "2020-09-28T16:40:26.782Z",
+          "__v": 0,
+          "master_event_id": {
+            "_id": "5f7211faab73564244701108"
+          },
+          "master_time_id": "5f7211faab73564244701108-1608600600000"
+        },
+        "master_time_id": "5f7211faab73564244701108-1608600600000"
+      },
+      {
+        "_id": "5fe150fe4e533440f014e7ee",
+        "type": "track",
+        "track": {
+          "popularity": 0,
+          "_id": "5f721073ab7356424469e2d1",
+          "name": "Booker's Waltz",
+          "album": {
+            "popularity": 0,
+            "_id": "5f720f0566320235249bba6e",
+            "name": "Blue Glass Music",
+            "artist": "5f720eda66320235249a07c4",
+            "label": "test",
+            "genre": null,
+            "compilation": false,
+            "created_at": "2011-09-27T20:05:38.000Z",
+            "custom": {
+              "itunes_id": null,
+              "old_comrad_id": "1111189315",
+              "local": null,
+              "location": "Gnu Bin"
+            },
+            "type": "album",
+            "updated_at": "2020-09-28T16:27:49.218Z"
+          },
+          "track_number": 4,
+          "disk_number": 1,
+          "duration_in_seconds": 369,
+          "custom": {
+            "old_comrad_id": "229776"
+          },
+          "type": "track",
+          "artists": [
+            {
+              "popularity": 0,
+              "_id": "5f720eda66320235249a07c4",
+              "name": "Carol Morgan Quartet",
+              "type": "artist",
+              "created_at": "2020-09-28T16:27:06.262Z",
+              "updated_at": "2020-09-28T16:27:06.262Z"
+            }
+          ],
+          "created_at": "2020-09-28T16:33:55.737Z",
+          "updated_at": "2020-09-28T16:33:55.737Z"
+        },
+        "executed_time_utc": "2020-12-22T01:50:54.520Z"
+      }
+    ]
+  },
+  {
+    "repeat_rule": {
+      "byweekday": [
+        "TU"
+      ],
+      "repeat_start_date": "2015-09-08T00:00:00.000Z",
+      "frequency": 2,
+      "repeat_end_date": "9999-01-01T06:00:00.000Z"
+    },
+    "show_details": {
+      "host_type": "User",
+      "guests": [
+        null
+      ],
+      "title": "Labor Exchange",
+      "summary": "Interviews with Local and National Labor Activists and Workers",
+      "description": "<p>Interviews with local and national labor activists and workers every other Monday evening at 6pm.</p>",
+      "producer": null,
+      "host": {
+        "on_air_name": "Dennis Creese",
+        "_id": "5f7211bfab735642446f66b1",
+        "first_name": "Dennis",
+        "last_name": "Creese"
+      },
+      "custom": {
+        "record_audio": "1",
+        "url": "laborexchange",
+        "source": "KGNU"
+      }
+    },
+    "status": "active",
+    "_id": "5f7211d1ab735642446f6733",
+    "start_time_utc": "2020-12-22T01:00:00Z",
+    "end_time_utc": "2020-12-22T01:30:00Z",
+    "is_recurring": true,
+    "created_at": "2020-09-28T16:39:45.548Z",
+    "updated_at": "2020-09-28T16:39:45.548Z",
+    "__v": 0,
+    "master_event_id": {
+      "_id": "5f7211d1ab735642446f6733"
+    },
+    "master_time_id": "5f7211d1ab735642446f6733-1608598800000",
+    "playlist_executed": []
+  },
+  {
+    "repeat_rule": {
+      "byweekday": [
+        "TU"
+      ],
+      "repeat_start_date": "2015-09-15T00:00:00.000Z",
+      "frequency": 2,
+      "repeat_end_date": "9999-01-01T06:00:00.000Z"
+    },
+    "show_details": {
+      "host_type": "User",
+      "guests": [
+        null
+      ],
+      "title": "La Lucha Sigue",
+      "summary": "News About Latin America and the Caribbean",
+      "description": "<p><span style=\"font-family: Arial,sans-serif;\">La Lucha Sigue means \"The Struggle Continues\". This half hour news show, played every other Monday on KGNU, explores stories and issues from Latin America and the Caribbean that are seldom heard on US media.</span></p>",
+      "producer": null,
+      "host": {
+        "on_air_name": "Leo Gruip-Ruiz and Marge Taniwaki",
+        "_id": "5f7211bfab735642446f66b0",
+        "first_name": "Leo",
+        "last_name": "Gruip-Ruiz and Marge Taniwaki"
+      },
+      "custom": {
+        "record_audio": "1",
+        "url": "laluchasigue",
+        "source": "KGNU"
+      }
+    },
+    "status": "active",
+    "_id": "5f7211d1ab735642446f6732",
+    "start_time_utc": "2020-12-22T01:00:00Z",
+    "end_time_utc": "2020-12-22T01:30:00Z",
+    "is_recurring": true,
+    "created_at": "2020-09-28T16:39:45.543Z",
+    "updated_at": "2020-09-28T16:39:45.543Z",
+    "__v": 0,
+    "master_event_id": {
+      "_id": "5f7211d1ab735642446f6732"
+    },
+    "master_time_id": "5f7211d1ab735642446f6732-1608598800000",
+    "playlist_executed": []
+  }
+]
+```
+
+<h3 id="recent-shows-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns an array containing the current and recent shows|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Delete Instance from Series
+
+<a id="opIdDeleteInstanceFromShowSeries"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/shows/{id}/remove-instance-from-series',
 {
   method: 'DELETE',
 
@@ -2501,9 +3228,9 @@ fetch('/events/traffic/{id}/remove-instance-from-series',
 
 ```
 
-`DELETE /events/traffic/{id}/remove-instance-from-series`
+`DELETE /events/shows/{id}/remove-instance-from-series`
 
-Creates an exceptioin to a series's usual repeat rule so that there will not be a traffic instance at the specified date/time.
+Creates an exceptioin to a series's usual repeat rule so that there will not be a show instance at the specified date/time.
 
 The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`
 
@@ -2511,7 +3238,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|id|path|undefined|true|The id of the traffic series|
+|id|path|undefined|true|The id of the show series|
 
 > Example responses
 
@@ -2521,33 +3248,122 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 {
   "repeat_rule": {
     "byweekday": [],
-    "repeat_start_date": "2020-11-09T16:00:00.000Z",
-    "repeat_end_date": "2020-11-09T16:01:00.000Z"
+    "repeat_start_date": "2020-11-09T16:30:00.000Z",
+    "repeat_end_date": "2020-11-09T19:06:00.000Z"
+  },
+  "show_details": {
+    "host_type": "User",
+    "guests": []
   },
   "status": "deleted",
-  "_id": "5fa94dcd72207e3b289d5197",
-  "master_event_id": "5f7211f2ab735642446feead",
-  "start_time_utc": "2020-11-09T16:00:00.000Z",
-  "end_time_utc": "2020-11-09T16:01:00.000Z",
-  "replace_event_date": "2020-11-09T16:00:00.000Z",
+  "_id": "5fa9377600452c4f3cf2c87b",
+  "master_event_id": "5f7211d1ab735642446f672c",
+  "start_time_utc": "2020-11-09T16:30:00.000Z",
+  "end_time_utc": "2020-11-09T19:06:00.000Z",
+  "replace_event_date": "2020-11-09T16:30:00.000Z",
   "is_recurring": false,
-  "created_at": "2020-11-09T14:10:21.299Z",
-  "updated_at": "2020-11-09T14:10:21.299Z",
+  "created_at": "2020-11-09T12:35:02.033Z",
+  "updated_at": "2020-11-09T12:35:02.033Z",
   "__v": 0,
-  "master_time_id": "5f7211f2ab735642446feead-1604937600000"
+  "master_time_id": "5f7211d1ab735642446f672c-1604939400000"
 }
 ```
 
 <h3 id="delete-instance-from-series-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
 <h3 id="delete-instance-from-series-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Search
+
+<a id="opIdSearchShows"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/shows/search',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /events/shows/search`
+
+Search for a show series, looking for the provided search string in the show title.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+<h3 id="search-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|s|query|undefined|true|Find series matching this search string|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  [
+    {
+      "show_details": {
+        "host_type": "User",
+        "title": "Sleepless Nights",
+        "summary": "Late night freeform radio",
+        "description": "<p>This freeform show makes room for everything, combining the aesthetics of the Morning and Afternoon shows and leaving the door open for more extreme and intense audio excursions.</p>",
+        "producer": null,
+        "host": null,
+        "custom": {
+          "record_audio": "1",
+          "url": "sleepless",
+          "source": "KGNU"
+        }
+      },
+      "_id": "5f7211d1ab735642446f66f8",
+      "start_time_utc": "2011-03-27T06:00:00.000Z",
+      "score": 0.75
+    }
+  ]
+]
+```
+
+<h3 id="search-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the parameters you provided. See response for more details|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="search-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -2707,7 +3523,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Under
 <h3 id="create-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -2803,7 +3619,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="find-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -2811,6 +3627,308 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
 <h3 id="find-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Create Instance from Series
+
+<a id="opIdCreateInstanceTraffic"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "start_time_utc": "2020-11-03T22:00:00.000Z",
+  "end_time_utc": "2020-11-03T22:00:00.000Z"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/traffic/{id}',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /events/traffic/{id}`
+
+Creates an instance for the traffic series
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Underwriting`.
+
+> Body parameter
+
+```json
+{
+  "start_time_utc": "2020-11-03T22:00:00.000Z",
+  "end_time_utc": "2020-11-03T22:00:00.000Z"
+}
+```
+
+<h3 id="create-instance-from-series-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|any|false|none|
+|id|path|undefined|true|The id of the traffic series or instance to update|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "repeat_rule": {
+      "byweekday": [],
+      "repeat_start_date": "2020-11-03T22:00:00.000Z",
+      "frequency": 3,
+      "repeat_end_date": "2020-11-03T22:00:00.000Z"
+    },
+    "status": "active",
+    "_id": "5fa180826a7cc716704afe0f",
+    "start_time_utc": "2020-11-03T22:00:00Z",
+    "end_time_utc": "2020-11-03T22:00:00Z",
+    "is_recurring": false,
+    "created_at": "2020-11-03T16:08:34.371Z",
+    "updated_at": "2020-11-03T16:08:34.371Z",
+    "__v": 0,
+    "master_event_id": {
+      "repeat_rule": {
+        "byweekday": [],
+        "repeat_start_date": "2011-05-30T21:00:00.000Z",
+        "frequency": 3,
+        "repeat_end_date": "9999-01-01T06:00:00.000Z"
+      },
+      "traffic_details": {
+        "type": "Legal ID",
+        "title": "Legal Id",
+        "description": "\"KGNU, Boulder, Denver and Fort Collins\"",
+        "producer": null,
+        "custom": {
+          "old_comrad_event_id": "2",
+          "old_comrad_scheduled_event_ids": [
+            "297"
+          ]
+        }
+      },
+      "status": "active",
+      "_id": "5f7211f2ab735642446fee9c",
+      "start_time_utc": "2011-05-30T21:00:00.000Z",
+      "end_time_utc": "2011-05-30T21:01:00.000Z",
+      "is_recurring": true,
+      "created_at": "2020-09-28T16:40:18.625Z",
+      "updated_at": "2020-09-28T16:40:18.625Z",
+      "__v": 0
+    },
+    "replace_event_date": "2020-11-03T22:00:00.000Z",
+    "traffic_details": {
+      "type": "Legal ID",
+      "title": "Legal Id",
+      "description": "\"KGNU, Boulder, Denver and Fort Collins\"",
+      "producer": null,
+      "custom": {
+        "old_comrad_event_id": "2",
+        "old_comrad_scheduled_event_ids": [
+          "297"
+        ]
+      }
+    },
+    "master_time_id": "5f7211f2ab735642446fee9c-1604440800000"
+  }
+]
+```
+
+<h3 id="create-instance-from-series-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The populated show record of the newly created instance|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the data you provided. Check the response for more details.|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|A server error occurred. Check the response for more details.|
+
+<h3 id="create-instance-from-series-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Get by ID
+
+<a id="opIdGetByIdTraffic"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/traffic/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /events/traffic/{id}`
+
+Get a traffic event by ID, or by a traffic id with a master time id
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
+
+<h3 id="get-by-id-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|The id of the traffic series or instance to update|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "traffic_details": {
+    "type": "Underwriting",
+    "title": "Rocky Mountain Oysters",
+    "description": "<p>a</p>",
+    "producer": null,
+    "custom": {
+      "custom_property": "Custom value"
+    },
+    "underwriter_name": "Rocky Mountain Oysters"
+  },
+  "status": "active",
+  "_id": "5f7211f4ab735642446ff94a",
+  "start_time_utc": "2013-06-11T01:00:00.000Z",
+  "end_time_utc": "2013-06-11T01:01:00.000Z",
+  "created_at": "2020-09-28T16:40:20.397Z",
+  "updated_at": "2020-09-28T16:40:20.397Z",
+  "__v": 0
+}
+```
+
+<h3 id="get-by-id-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="get-by-id-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Delete
+
+<a id="opIdDeleteTraffic"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/traffic/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /events/traffic/{id}`
+
+Deletes the traffic event with the specified ID
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Underwriting`
+
+<h3 id="delete-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|The id of the traffic series or instance to update|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "_id": "5fa180826a7cc716704afe0f",
+  "repeat_rule": {
+    "byweekday": [],
+    "repeat_start_date": "2020-11-03T22:00:00.000Z",
+    "frequency": 3,
+    "repeat_end_date": "2020-11-03T22:00:00.000Z"
+  },
+  "status": "deleted",
+  "start_time_utc": "2020-11-03T22:00:00.000Z",
+  "end_time_utc": "2020-11-03T22:00:00.000Z",
+  "is_recurring": false,
+  "created_at": "2020-11-03T16:08:34.371Z",
+  "updated_at": "2020-11-03T16:08:34.371Z",
+  "__v": 0,
+  "master_event_id": "5f7211f2ab735642446fee9c",
+  "replace_event_date": "2020-11-03T22:00:00.000Z",
+  "traffic_details": {
+    "description": "This is an updated description"
+  },
+  "master_time_id": "5f7211f2ab735642446fee9c-1604440800000"
+}
+```
+
+<h3 id="delete-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="delete-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -2940,7 +4058,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Under
 <h3 id="update-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -2958,9 +4076,9 @@ To perform this operation, you must be authenticated by means of one of the foll
 ApiKeyAuth
 </aside>
 
-## Delete
+## Find by Date and Name
 
-<a id="opIdDeleteTraffic"></a>
+<a id="opIdFindTrafficByDateAndName"></a>
 
 > Code samples
 
@@ -2971,7 +4089,7 @@ const headers = {
   'Authorization':'API_KEY'
 };
 
-fetch('/events/traffic/{id}',
+fetch('/events/traffic/{date}',
 {
   method: 'GET',
 
@@ -2985,57 +4103,117 @@ fetch('/events/traffic/{id}',
 
 ```
 
-`GET /events/traffic/{id}`
+`GET /events/traffic/{date}`
 
-Deletes the traffic event with the specified ID
+Pull all traffic on a particular date, filtered by those matching the optional `name` parameter. If `name` is provided, only returns the most relevant results.
 
-The following roles can access this API endpoint: `Admin`, `Full Access`, `Underwriting`
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`, `Underwriting`, `DJ`, `Music Library Admin`
 
-<h3 id="delete-parameters">Parameters</h3>
+<h3 id="find-by-date-and-name-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|id|path|undefined|true|The id of the traffic series or instance to update|
+|name|query|undefined|false|Return traffic matching this string|
+|date|path|undefined|true|The date on which to pull traffic|
 
 > Example responses
 
 > 200 Response
 
 ```json
-{
-  "_id": "5fa180826a7cc716704afe0f",
-  "repeat_rule": {
-    "byweekday": [],
-    "repeat_start_date": "2020-11-03T22:00:00.000Z",
-    "frequency": 3,
-    "repeat_end_date": "2020-11-03T22:00:00.000Z"
-  },
-  "status": "deleted",
-  "start_time_utc": "2020-11-03T22:00:00.000Z",
-  "end_time_utc": "2020-11-03T22:00:00.000Z",
-  "is_recurring": false,
-  "created_at": "2020-11-03T16:08:34.371Z",
-  "updated_at": "2020-11-03T16:08:34.371Z",
-  "__v": 0,
-  "master_event_id": "5f7211f2ab735642446fee9c",
-  "replace_event_date": "2020-11-03T22:00:00.000Z",
-  "traffic_details": {
-    "description": "This is an updated description"
-  },
-  "master_time_id": "5f7211f2ab735642446fee9c-1604440800000"
-}
+[
+  [
+    {
+      "_id": "5f7211f2ab735642446feeb1",
+      "repeat_rule": {
+        "byweekday": [
+          "MO",
+          "TU",
+          "WE",
+          "TH",
+          "FR"
+        ],
+        "repeat_start_date": "2011-04-11T14:01:00.000Z",
+        "frequency": 2,
+        "repeat_end_date": "9999-01-01T06:00:00.000Z"
+      },
+      "traffic_details": {
+        "type": "Feature",
+        "title": "BBC News Headlines",
+        "description": "<p>Found on Channel 10A.&nbsp; Listen for an out cue, you must cut away gracefully after 5 minutes.</p>",
+        "producer": "BBC",
+        "custom": {
+          "old_comrad_event_id": "14",
+          "old_comrad_scheduled_event_ids": [
+            "146"
+          ]
+        }
+      },
+      "status": "active",
+      "start_time_utc": "2020-12-16T15:01:00Z",
+      "end_time_utc": "2020-12-16T15:06:00Z",
+      "is_recurring": true,
+      "created_at": "2020-09-28T16:40:18.639Z",
+      "updated_at": "2020-09-28T16:40:18.639Z",
+      "__v": 0,
+      "master_event_id": {
+        "_id": "5f7211f2ab735642446feeb1"
+      },
+      "master_time_id": "5f7211f2ab735642446feeb1-1608130860000"
+    },
+    {
+      "_id": "5f7211f2ab735642446feeaf",
+      "repeat_rule": {
+        "byweekday": [
+          "MO",
+          "TU",
+          "WE",
+          "TH",
+          "FR"
+        ],
+        "repeat_start_date": "2015-07-14T18:01:00.000Z",
+        "frequency": 2,
+        "repeat_end_date": "9999-01-01T06:00:00.000Z"
+      },
+      "traffic_details": {
+        "type": "Feature",
+        "title": "BBC News Headlines",
+        "description": "<p>Found on Channel 10A.&nbsp; Listen for an out cue, you must cut away gracefully after 5 minutes.</p>",
+        "producer": "BBC",
+        "custom": {
+          "old_comrad_event_id": "14",
+          "old_comrad_scheduled_event_ids": [
+            "4873"
+          ]
+        }
+      },
+      "status": "active",
+      "start_time_utc": "2020-12-16T19:01:00Z",
+      "end_time_utc": "2020-12-16T19:06:00Z",
+      "is_recurring": true,
+      "created_at": "2020-09-28T16:40:18.634Z",
+      "updated_at": "2020-09-28T16:40:18.634Z",
+      "__v": 0,
+      "master_event_id": {
+        "_id": "5f7211f2ab735642446feeaf"
+      },
+      "master_time_id": "5f7211f2ab735642446feeaf-1608145260000"
+    }
+  ]
+]
 ```
 
-<h3 id="delete-responses">Responses</h3>
+<h3 id="find-by-date-and-name-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|There was an issue with the parameters you provided. See response for more details|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
-<h3 id="delete-responseschema">Response Schema</h3>
+<h3 id="find-by-date-and-name-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -3121,7 +4299,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="find-earliest-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -3129,6 +4307,86 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
 
 <h3 id="find-earliest-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+ApiKeyAuth
+</aside>
+
+## Delete Instance from Series
+
+<a id="opIdDeleteInstanceFromTrafficSeries"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'API_KEY'
+};
+
+fetch('/events/traffic/{id}/remove-instance-from-series',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /events/traffic/{id}/remove-instance-from-series`
+
+Creates an exceptioin to a series's usual repeat rule so that there will not be a traffic instance at the specified date/time.
+
+The following roles can access this API endpoint: `Admin`, `Full Access`, `Show Captain`
+
+<h3 id="delete-instance-from-series-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|undefined|true|The id of the traffic series|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "repeat_rule": {
+    "byweekday": [],
+    "repeat_start_date": "2020-11-09T16:00:00.000Z",
+    "repeat_end_date": "2020-11-09T16:01:00.000Z"
+  },
+  "status": "deleted",
+  "_id": "5fa94dcd72207e3b289d5197",
+  "master_event_id": "5f7211f2ab735642446feead",
+  "start_time_utc": "2020-11-09T16:00:00.000Z",
+  "end_time_utc": "2020-11-09T16:01:00.000Z",
+  "replace_event_date": "2020-11-09T16:00:00.000Z",
+  "is_recurring": false,
+  "created_at": "2020-11-09T14:10:21.299Z",
+  "updated_at": "2020-11-09T14:10:21.299Z",
+  "__v": 0,
+  "master_time_id": "5f7211f2ab735642446feead-1604937600000"
+}
+```
+
+<h3 id="delete-instance-from-series-responses">Responses</h3>
+
+|Status|Meaning|Description|
+|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
+
+<h3 id="delete-instance-from-series-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -3203,7 +4461,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="search-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -3274,7 +4532,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="search-underwriters-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -3364,7 +4622,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`
 <h3 id="create-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The AccessControl record was created successfully|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -3436,7 +4694,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="find-all-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -3515,7 +4773,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="get-custom-fields-for-entity-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
@@ -3569,7 +4827,7 @@ true
 <h3 id="compliance-reporting-period-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
@@ -3628,7 +4886,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="resources---get-categories-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
@@ -3725,7 +4983,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="create-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -3799,7 +5057,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="find-by-hosts-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -3876,7 +5134,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="find-all-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -3947,7 +5205,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="find-by-id-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -4018,7 +5276,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="delete-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -4102,7 +5360,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="update-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -4230,7 +5488,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Music
 <h3 id="create-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The Library record was created successfully|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -4384,7 +5642,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="find-all-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -4527,7 +5785,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Music
 <h3 id="create-many-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The Library records were created successfully|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -4617,7 +5875,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="get-by-id-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -4688,7 +5946,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Music
 <h3 id="delete-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -4789,7 +6047,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Music
 <h3 id="update-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -4947,7 +6205,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="search-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -5029,7 +6287,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="saved-items---add-comment-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -5109,7 +6367,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="scratchpad---add-comment-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -5231,7 +6489,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="saved-items---add-track-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -5353,7 +6611,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="scratchpad---add-track-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -5466,7 +6724,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="saved-items---add-traffic-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -5534,7 +6792,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="saved-items---add-voice-break-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -5601,7 +6859,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="scratchpad---add-voice-break-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -5660,7 +6918,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="scratchpad---delete-item-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -5731,7 +6989,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="scratchpad---update-item-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -5981,7 +7239,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="find-one-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -6055,7 +7313,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="find-or-create-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -6166,7 +7424,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="scratchpad---move-item-to-saved-items-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -6288,7 +7546,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="saved-items---move-item-to-scratchpad-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -6360,7 +7618,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="saved-items---rearrange-item-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -6432,7 +7690,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="scratchpad---rearrange-item-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -6579,7 +7837,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="recent-plays-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of the 10 most recent items played|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Server error. Check the response for more details.|
@@ -6675,7 +7933,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`
 <h3 id="create-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -6755,7 +8013,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="find-all-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -6824,7 +8082,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`
 <h3 id="delete-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -6911,7 +8169,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`
 <h3 id="update-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -6981,7 +8239,7 @@ true
 <h3 id="check-if-can-delete-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|A value indicating whether the user can be deleted|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -7061,7 +8319,7 @@ If the `SHOW_DEVELOPMENT_SIGN_UP` environment variable is set to `TRUE`, then al
 <h3 id="create-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The User record was created successfully|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -7137,7 +8395,7 @@ The following roles can access this API endpoint: `Admin`
 <h3 id="find-all-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -7218,7 +8476,7 @@ The following roles can access this API endpoint: `Admin`
 <h3 id="create-api-key-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The User's api key was created successfully|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -7296,7 +8554,7 @@ The following roles can access this API endpoint: `Admin`
 <h3 id="delete-api-key-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The user's API key was deleted successfully|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -7389,7 +8647,7 @@ All users can use this endpoint for their own user ID.
 <h3 id="find-by-id-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns the user record matching the ID|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -7455,7 +8713,7 @@ null
 <h3 id="delete-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -7549,7 +8807,7 @@ All users can use this endpoint for their own user ID, but only to update passwo
 <h3 id="update-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)||
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -7743,7 +9001,7 @@ The following roles can access this API endpoint: `Admin`
 <h3 id="search-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns a list of matching users, in no particular order|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
@@ -7843,7 +9101,7 @@ The following roles can access this API endpoint: `Admin`, `Full Access`, `Show 
 <h3 id="search-hosts-responses">Responses</h3>
 
 |Status|Meaning|Description|
-|---|---|---|---|
+|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns a list of matching users and host groups, ordered by relevance to the search string|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|The authentication you provided to access the API is invalid|
 |403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Your API key or account does not have permission to access this|
